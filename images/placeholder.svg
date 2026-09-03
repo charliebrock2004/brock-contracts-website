@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" role="img" aria-label="Project photograph coming soon">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#f2efe8"/>
+      <stop offset="100%" stop-color="#e4ded0"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="600" fill="url(#bg)"/>
+  <rect x="0.5" y="0.5" width="799" height="599" fill="none" stroke="#d8d1c1"/>
+  <g fill="none" stroke="#8c99ad" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" opacity="0.65">
+    <path d="M250 350 L400 215 L470 278 L470 215 L520 215 L520 322 L550 350"/>
+    <path d="M250 350 L250 430 L550 430 L550 350"/>
+    <path d="M370 430 L370 368 L430 368 L430 430"/>
+  </g>
+  <text x="400" y="500" text-anchor="middle"
+        font-family="Jost, Segoe UI, Arial, sans-serif" font-size="24"
+        letter-spacing="3" fill="#7c7d76">PHOTOGRAPH COMING SOON</text>
+</svg>

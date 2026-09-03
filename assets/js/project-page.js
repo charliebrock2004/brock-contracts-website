@@ -1,0 +1,164 @@
+/* ==========================================================================
+   Brock Contracts — individual project page
+   Reads ?p=<slug> from the address, finds that project in projects-data.js
+   and builds the page. Unknown slugs get a clear "not found" message rather
+   than an empty page.
+   ========================================================================== */
+(function () {
+  'use strict';
+
+  var params = new URLSearchParams(window.location.search);
+  var slug = params.get('p');
+  var project = slug ? BC.findProject(slug) : null;
+
+  var notFound = document.getElementById('project-not-found');
+  var article  = document.getElementById('project-article');
+
+  if (!project) {
+    if (notFound) notFound.hidden = false;
+    if (article) article.hidden = true;
+    document.title = 'Project not found | Brock Contracts';
+    return;
+  }
+
+  if (notFound) notFound.hidden = true;
+  if (article) article.hidden = false;
+
+  var esc = BC.esc;
+
+  /* ---- head / meta ------------------------------------------------------ */
+  document.title = project.title + ' | Brock Contracts';
+  var metaDesc = document.querySelector('meta[name="description"]');
+  if (metaDesc) metaDesc.setAttribute('content', project.summary || '');
+
+  function setText(id, value) {
+    var el = document.getElementById(id);
+    if (el) el.textContent = value;
+  }
+
+  /* ---- hero ------------------------------------------------------------- */
+  setText('project-title', project.title);
+  setText('project-crumb', project.title);
+  setText('project-location', project.location);
+  setText('project-category', project.category);
+
+  var completedWrap = document.getElementById('project-completed-wrap');
+  if (project.completed) {
+    setText('project-completed', project.completed);
+  } else if (completedWrap) {
+    completedWrap.hidden = true;
+  }
+
+  var exampleNotice = document.getElementById('project-example-notice');
+  if (exampleNotice && project.isExample) exampleNotice.hidden = false;
+
+  /* ---- main image ------------------------------------------------------- */
+  var leadImg = document.getElementById('project-lead-img');
+  if (leadImg) {
+    leadImg.src = BC.imageSrc(project.mainImage);
+    leadImg.alt = BC.imageAlt(project.mainImage, project.title + ' — Brock Contracts');
+  }
+
+  /* ---- description ------------------------------------------------------ */
+  var descEl = document.getElementById('project-description');
+  if (descEl) {
+    var paras = project.description && project.description.length
+      ? project.description
+      : [project.summary || ''];
+    descEl.innerHTML = paras
+      .filter(function (p) { return p; })
+      .map(function (p) { return '<p>' + esc(p) + '</p>'; })
+      .join('');
+  }
+
+  /* ---- details panel ---------------------------------------------------- */
+  var detailsEl = document.getElementById('project-details');
+  var detailsList = document.getElementById('project-details-list');
+  if (detailsEl && detailsList) {
+    /* Location, category and completion date are shown automatically. Any
+       custom rows are appended after them.
+
+       If a custom row repeats one of those labels (e.g. its own "Location"),
+       the custom value wins and is shown once, in the automatic row's
+       position — otherwise the panel would list the same label twice. */
+    var custom = (Array.isArray(project.details) ? project.details : [])
+      .filter(function (d) { return d && d.label && d.value; });
+
+    function takeCustom(label) {
+      for (var i = 0; i < custom.length; i++) {
+        if (custom[i].label.toLowerCase() === label.toLowerCase()) {
+          return custom.splice(i, 1)[0].value;
+        }
+      }
+      return null;
+    }
+
+    var rows = [];
+    function addAuto(label, value) {
+      var override = takeCustom(label);
+      var final = override !== null ? override : value;
+      if (final) rows.push({ label: label, value: final });
+    }
+
+    addAuto('Location', project.location);
+    addAuto('Category', project.category);
+    addAuto('Completed', project.completed);
+
+    /* Whatever custom rows are left are genuinely new labels. */
+    custom.forEach(function (d) { rows.push(d); });
+    detailsList.innerHTML = rows.map(function (r) {
+      return '<div><dt>' + esc(r.label) + '</dt><dd>' + esc(r.value) + '</dd></div>';
+    }).join('');
+  }
+
+  /* ---- gallery ---------------------------------------------------------- */
+  var gallerySection = document.getElementById('project-gallery-section');
+  var galleryGrid = document.getElementById('project-gallery');
+  var gallery = Array.isArray(project.gallery) ? project.gallery : [];
+
+  if (galleryGrid && gallery.length) {
+    if (gallerySection) gallerySection.hidden = false;
+    galleryGrid.innerHTML = gallery.map(function (photo, i) {
+      var src = BC.imageSrc(photo);
+      var alt = BC.imageAlt(photo, project.title + ' — photograph ' + (i + 1));
+      var caption = photo && photo.caption ? photo.caption : '';
+      return '' +
+        '<button class="gallery-item ratio ratio--4x3" type="button"' +
+          ' data-lightbox data-full="' + esc(src) + '"' +
+          ' data-alt="' + esc(alt) + '"' +
+          ' data-caption="' + esc(caption) + '"' +
+          ' aria-label="View larger: ' + esc(alt) + '">' +
+          '<img src="' + esc(src) + '" alt="' + esc(alt) + '" loading="lazy" decoding="async">' +
+          '<span class="gallery-item__zoom" aria-hidden="true">' +
+            '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">' +
+              '<circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5M11 8v6M8 11h6"/>' +
+            '</svg>' +
+          '</span>' +
+        '</button>';
+    }).join('');
+    BC.initLightbox();
+  } else if (gallerySection) {
+    /* No extra photos yet — hide the whole section rather than show an
+       empty heading. */
+    gallerySection.hidden = true;
+  }
+
+  /* ---- next / previous -------------------------------------------------- */
+  var all = BC.projects();
+  var idx = all.indexOf(project);
+  var prevLink = document.getElementById('project-prev');
+  var nextLink = document.getElementById('project-next');
+
+  function wire(link, target, label) {
+    if (!link) return;
+    if (!target) { link.hidden = true; return; }
+    link.href = 'project.html?p=' + encodeURIComponent(target.slug);
+    link.querySelector('[data-label]').textContent = label + target.title;
+  }
+
+  wire(prevLink, idx > 0 ? all[idx - 1] : null, '← ');
+  wire(nextLink, idx > -1 && idx < all.length - 1 ? all[idx + 1] : null, '');
+  if (nextLink && !nextLink.hidden) {
+    nextLink.querySelector('[data-label]').textContent = all[idx + 1].title + ' →';
+  }
+})();
