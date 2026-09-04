@@ -88,15 +88,24 @@ Everything else is optional. A project with no photos yet shows a
 
 ---
 
-## Removing the example projects
+## The projects currently on the site
 
-Four projects ship with the site. One is real (the Perthshire new build); three
-are examples marked `isExample: true`, which makes them show an **"Example"**
-badge on the card and a notice on the project page so no visitor mistakes them
-for completed work.
+Two, both genuine:
 
-Delete each example block from `projects-data.js` as you replace it with a real
-project.
+| Project | Category | Photos |
+|---|---|---|
+| Sierras | New Builds | 1 main + 8 gallery |
+| New Build Family Home | New Builds | 1 main |
+
+There is deliberately no filler. The Projects page hides its category filter
+until projects span at least two categories, so it never shows a filter with
+one option.
+
+### Optional `isExample: true`
+
+Setting this on a project marks it with an "Example" badge on its card and a
+notice on its page, so a draft entry can never be mistaken for completed work.
+No project uses it. Delete the flag when an entry holds a real project.
 
 ---
 
@@ -122,12 +131,36 @@ images/placeholder.svg  Shown wherever a photo hasn't been added yet
 
 ---
 
+## Swapping the homepage hero photograph
+
+The hero image is one `<img>` near the top of `index.html`:
+
+```html
+<div class="hero__media" aria-hidden="true">
+  <img src="brock-contracts-project-newbuild.jpg" alt="" fetchpriority="high" decoding="async">
+</div>
+```
+
+Drop a new file in and change that one `src`. It is decorative (the headline
+carries the meaning), so `alt` stays empty. A wide landscape photograph works
+best — the frame is full-bleed and crops to the viewport.
+
+## Adding an exterior photo to an existing project
+
+No different from any other photo. For a Sierras exterior:
+
+1. Save it as `images/projects/sierras/exterior-01.jpg`.
+2. Either add it to the `gallery` array, or make it the `mainImage` and move
+   the current kitchen shot into the gallery.
+
+The gallery lays itself out for any number of photos, so nothing else changes.
+
 ## Still to do
 
-- Replace the placeholder testimonial on the homepage with a real client review
-  (in `index.html`, look for `PLACEHOLDER`).
-- Add real project photographs and delete the example entries.
+- Add a genuine client review (see the TESTIMONIAL comment in `index.html`;
+  the styles are already written).
 - Add a `<link rel="canonical">` to each page once the final domain is settled.
+- Confirm whether Sierras and New Build Family Home are the same property.
 
 ---
 

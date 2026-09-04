@@ -574,9 +574,12 @@ section { padding: var(--section-y) 0; }
 
 /* 11  Project cards & grid
    ========================================================================== */
+/* auto-fit, not auto-fill: with two projects the row is filled by two large
+   photographs rather than leaving empty tracks. Behaves identically once
+   there are enough projects to fill a row. */
 .project-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
   gap: clamp(28px, 3.4vw, 52px) clamp(24px, 2.8vw, 40px);
 }
 /* The homepage preview caps at 3 across. auto-fit collapses unused tracks,
@@ -976,9 +979,40 @@ section { padding: var(--section-y) 0; }
 .lightbox__next  { right: clamp(10px, 2vw, 26px); top: 50%; transform: translateY(-50%); }
 
 
-/* 15  (Testimonial section removed — it held placeholder copy. Reinstate a
-       styled block here once a genuine client review is available.)
+/* 15  Testimonial
+   --------------------------------------------------------------------------
+   NOT CURRENTLY USED. There is no testimonial on the site because there is no
+   genuine client review yet — nothing here is invented.
+
+   To add one when you have a real review, uncomment the block marked
+   TESTIMONIAL in index.html and fill in the quote, the client's name, and
+   optionally the project or location. These styles are ready for it.
    ========================================================================== */
+.testimonial-section {
+  background: var(--paper-warm);
+  color: var(--ink);
+  text-align: center;
+  padding: var(--section-y) 0;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+.testimonial-section .eyebrow { justify-content: center; color: var(--navy); }
+.testimonial-quote {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-style: italic;
+  font-weight: 500;
+  font-size: clamp(1.3rem, 1rem + 1.4vw, 1.8rem);
+  max-width: 780px;
+  margin: 22px auto 24px;
+  color: var(--ink);
+  line-height: 1.5;
+}
+.testimonial-author {
+  color: var(--grey);
+  font-size: 0.78rem;
+  letter-spacing: 1.6px;
+  text-transform: uppercase;
+}
 
 /* 16  CTA band
    ========================================================================== */
