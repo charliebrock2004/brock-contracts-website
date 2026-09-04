@@ -506,8 +506,9 @@ section { padding: var(--section-y) 0; }
   grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
   gap: clamp(20px, 2.6vw, 30px);
 }
-/* The homepage preview is capped at 3 across so it never gets cramped. */
-.project-grid--featured { grid-template-columns: repeat(3, 1fr); }
+/* The homepage preview caps at 3 across. auto-fit collapses unused tracks,
+   so two featured projects fill the row instead of leaving a gap. */
+.project-grid--featured { grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); }
 
 .project-card {
   display: flex;
@@ -708,12 +709,35 @@ section { padding: var(--section-y) 0; }
 }
 .project-details dd { font-size: var(--fs-small); color: var(--ink-soft); }
 
-/* Gallery — a simple masonry-ish grid that stays tidy at every width. */
+/* Gallery — an editorial mosaic rather than a uniform grid. Two columns,
+   with a full-width photo every few rows to break the rhythm. Which photos
+   go wide is worked out in project-page.js so a row never ends with a lone
+   half-width orphan, whatever the photo count. */
 .gallery-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-  gap: clamp(12px, 1.6vw, 18px);
+  grid-template-columns: repeat(2, 1fr);
+  gap: clamp(14px, 1.8vw, 22px);
 }
+.gallery-item--wide { grid-column: 1 / -1; }
+
+/* Caption sits over the photo on hover. It is always available in the
+   lightbox, so nothing is lost on touch devices. */
+.gallery-item__caption {
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  z-index: 2;
+  padding: 30px 18px 14px;
+  background: linear-gradient(to top, rgba(20,20,18,0.82) 0%, rgba(20,20,18,0) 100%);
+  color: #f2f0e9;
+  font-size: 0.82rem;
+  letter-spacing: 0.3px;
+  text-align: left;
+  opacity: 0;
+  transform: translateY(6px);
+  transition: opacity var(--dur) var(--ease), transform var(--dur) var(--ease);
+}
+.gallery-item:hover .gallery-item__caption,
+.gallery-item:focus-visible .gallery-item__caption { opacity: 1; transform: translateY(0); }
 .gallery-item {
   position: relative;
   border-radius: var(--radius);
@@ -1066,7 +1090,9 @@ body.no-scroll { overflow: hidden; }
 @media (max-width: 680px) {
   .project-grid,
   .project-grid--featured { grid-template-columns: 1fr; }
-  .gallery-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+  /* Full-width photos read far better than small thumbnails on a phone. */
+  .gallery-grid { grid-template-columns: 1fr; gap: 12px; }
+  .gallery-item__caption { opacity: 1; transform: none; }
   .hero__ctas .btn { flex: 1 1 100%; }
   .cta-band__actions { width: 100%; }
   .cta-band__actions .btn { flex: 1 1 100%; }
@@ -1081,9 +1107,6 @@ body.no-scroll { overflow: hidden; }
   .logo-mark img { height: 38px; }
 }
 
-@media (max-width: 359px) {
-  .gallery-grid { grid-template-columns: 1fr; }
-}
 
 
 /* Example-entry badge — makes clear which cards are placeholders rather

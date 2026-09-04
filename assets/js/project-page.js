@@ -116,19 +116,43 @@
   var galleryGrid = document.getElementById('project-gallery');
   var gallery = Array.isArray(project.gallery) ? project.gallery : [];
 
+  /* Decides which photos run full width across the two-column mosaic.
+     Every 5th photo goes wide, which gives rows of: full, pair, pair,
+     full, pair... If that would leave the last photo sitting alone in a
+     half-width slot, it is widened too, so the grid never ends ragged.
+     Works for any number of photos. */
+  function galleryLayout(count) {
+    var wide = new Array(count);
+    var col = 0;                       // 0 = start of a row, 1 = half filled
+    for (var i = 0; i < count; i++) {
+      var isWide = (i % 5 === 0);
+      wide[i] = isWide;
+      col = isWide ? 0 : (col === 0 ? 1 : 0);
+    }
+    if (col === 1) wide[count - 1] = true;
+    return wide;
+  }
+
   if (galleryGrid && gallery.length) {
     if (gallerySection) gallerySection.hidden = false;
+    var wideFlags = galleryLayout(gallery.length);
+
     galleryGrid.innerHTML = gallery.map(function (photo, i) {
       var src = BC.imageSrc(photo);
       var alt = BC.imageAlt(photo, project.title + ' — photograph ' + (i + 1));
       var caption = photo && photo.caption ? photo.caption : '';
+      var wideClass = wideFlags[i] ? ' gallery-item--wide' : '';
+      var captionEl = caption
+        ? '<span class="gallery-item__caption">' + esc(caption) + '</span>'
+        : '';
       return '' +
-        '<button class="gallery-item ratio ratio--4x3" type="button"' +
+        '<button class="gallery-item ratio ratio--3x2' + wideClass + '" type="button"' +
           ' data-lightbox data-full="' + esc(src) + '"' +
           ' data-alt="' + esc(alt) + '"' +
           ' data-caption="' + esc(caption) + '"' +
           ' aria-label="View larger: ' + esc(alt) + '">' +
           '<img src="' + esc(src) + '" alt="' + esc(alt) + '" loading="lazy" decoding="async">' +
+          captionEl +
           '<span class="gallery-item__zoom" aria-hidden="true">' +
             '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">' +
               '<circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5M11 8v6M8 11h6"/>' +

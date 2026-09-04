@@ -68,6 +68,19 @@ its own page with a working photo gallery. **Nothing else needs editing.**
 
 Newest projects go at the **top** of the list.
 
+### The gallery lays itself out
+
+You don't choose which photos go large. The gallery is a two-column mosaic
+that promotes roughly every fifth photo to full width, and it widens the last
+photo if it would otherwise be left sitting alone in a half-width slot. That
+works for any number of photos, so just list them in the order you want them
+seen and the layout stays tidy.
+
+Photo frames use a 3:2 ratio and `object-fit: cover`, so photos are never
+stretched. Photos that are themselves 3:2 (most cameras) show with no cropping
+at all. Gallery photos are lazy-loaded, so a project page with 20 photos still
+loads quickly — only the main image loads up front.
+
 ### Only `slug`, `title`, `location`, `category` and `summary` are required
 
 Everything else is optional. A project with no photos yet shows a

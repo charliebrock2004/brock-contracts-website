@@ -72,6 +72,51 @@ const PLACEHOLDER_IMAGE = 'images/placeholder.svg';
 const PROJECTS = [
 
   /* ------------------------------------------------------------------
+     SIERRAS — new build, Perthshire.
+     Photographs live in images/projects/sierras/
+     ------------------------------------------------------------------ */
+  {
+    slug: 'sierras',
+    title: 'Sierras',
+    location: 'Perthshire',
+    category: 'New Builds',
+    featured: true,
+    summary: 'A new build family home in Perthshire, finished throughout with bespoke joinery, a handmade kitchen and fitted utility, boot room and bathrooms.',
+
+    /* The strongest single image — used for the project card and the large
+       image at the top of the project page. */
+    mainImage: {
+      src: 'images/projects/sierras/kitchen-01.jpg',
+      alt: 'Open plan kitchen at Sierras with a large island, breakfast bar seating and pendant lighting'
+    },
+
+    description: [
+      'Sierras is a new build family home in Perthshire, completed by Brock Contracts and finished throughout with fitted joinery.',
+      'The open plan kitchen is built around a large island with breakfast bar seating and quartz worktops, opening onto a living space with a media wall and inset fire. Crittall-style glazed doors run between the hall and living areas to keep light moving through the middle of the house.',
+      'The entrance hall carries bespoke painted joinery — full height storage, a fitted boot room bench and hanging — with a separate utility fitted to match the kitchen, and tiled bathrooms with wall hung vanity units.',
+      'Add any further detail here about the build: the timescale, the specification, and anything about the site that made the job particularly interesting.'
+    ],
+
+    details: [
+      { label: 'Scope', value: 'New build — joinery, kitchen, utility, bathrooms and internal finishing' }
+    ],
+
+    /* Ordered as a walk through the house: entrance, hall, living, kitchen,
+       utility, bathrooms. */
+    gallery: [
+      { src: 'images/projects/sierras/hallway-02.jpg', alt: 'Entrance hall at Sierras with a dark composite front door and fitted sage green storage', caption: 'Entrance hall with fitted storage' },
+      { src: 'images/projects/sierras/hallway-01.jpg', alt: 'Boot room at Sierras with a fitted bench, coat hooks and panelled joinery in sage green', caption: 'Bespoke boot room joinery' },
+      { src: 'images/projects/sierras/lounge-01.jpg', alt: 'Living room at Sierras with a media wall, inset fire and Crittall-style glazed doors', caption: 'Living room media wall and inset fire' },
+      { src: 'images/projects/sierras/lounge-02.jpg', alt: 'Second view of the living space at Sierras looking back towards the glazed internal doors', caption: 'Living space and internal glazing' },
+      { src: 'images/projects/sierras/kitchen-02.jpg', alt: 'Kitchen at Sierras seen from the sink run, showing the island and shaker wall units', caption: 'Kitchen island and shaker units' },
+      { src: 'images/projects/sierras/utility-01.jpg', alt: 'Utility room at Sierras with fitted units, Belfast sink and a ceiling airer', caption: 'Fitted utility room' },
+      { src: 'images/projects/sierras/bathroom-01.jpg', alt: 'Bathroom at Sierras with a wall hung green vanity, countertop basin and round mirror', caption: 'Bathroom with wall hung vanity' },
+      { src: 'images/projects/sierras/bathroom-02.jpg', alt: 'Shower room at Sierras with a walk in shower, navy vanity unit and heated towel rail', caption: 'Shower room' }
+    ]
+  },
+
+
+  /* ------------------------------------------------------------------
      REAL PROJECT — uses the photograph already on the site.
      ------------------------------------------------------------------ */
   {
@@ -115,7 +160,6 @@ const PROJECTS = [
     title: 'Single Storey Rear Extension',
     location: 'Crieff, Perthshire',
     category: 'Extensions',
-    featured: true,
     isExample: true,
     completed: '',
     summary: 'Example entry showing how an extension project will appear. Replace this with a real Brock Contracts project and photographs.',
@@ -134,7 +178,6 @@ const PROJECTS = [
     title: 'Traditional Cottage Renovation',
     location: 'Comrie, Perthshire',
     category: 'Renovations',
-    featured: true,
     isExample: true,
     summary: 'Example entry showing how a renovation project will appear, including a multi-photo gallery.',
     description: [
