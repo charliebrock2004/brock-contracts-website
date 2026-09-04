@@ -42,7 +42,7 @@
           '<p>Projects in this category will appear here soon.</p>' +
         '</div>';
     } else {
-      grid.innerHTML = list.map(BC.projectCard).join('');
+      grid.innerHTML = list.map(function (project, i) { return BC.projectCard(project, i); }).join('');
     }
 
     if (countEl) {
