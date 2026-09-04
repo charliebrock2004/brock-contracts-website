@@ -27,7 +27,8 @@
 <header class="site-header">
   <div class="container">
     <a href="index.html" class="logo-mark" aria-label="Brock Contracts — home">
-      <img src="brock-contracts-logo-cropped.png" alt="Brock Contracts" width="180" height="46">
+      <img class="logo-mark__light" src="brock-contracts-logo-white.png" alt="Brock Contracts">
+      <img class="logo-mark__dark" src="brock-contracts-logo-ink.png" alt="" aria-hidden="true">
     </a>
 
     <button class="nav-toggle" type="button" aria-label="Menu" aria-expanded="false" aria-controls="site-nav">
@@ -60,6 +61,11 @@
       <div class="hero__inner">
         <p class="eyebrow">Joiners &amp; Building Contractors &middot; Crieff</p>
         <h1>Quality craftsmanship, built to last.</h1>
+      </div>
+    </div>
+
+    <div class="hero__foot">
+      <div class="container">
         <p class="hero__quote">We work closely with clients across Crieff and Perthshire to deliver joinery and building projects done properly &mdash; on time, and on budget.</p>
         <div class="hero__ctas">
           <a href="tel:+447980136188" class="btn btn--light">Call 07980 136188</a>
@@ -98,10 +104,18 @@
   <!-- About — this section was missing entirely; the nav linked to a dead anchor -->
   <section id="about">
     <div class="container">
+      <div class="about-media">
+        <div class="ratio ratio--16x9">
+          <img src="images/projects/sierras/hallway-01.jpg" alt="Bespoke fitted boot room joinery by Brock Contracts at Sierras, Perthshire" loading="lazy" decoding="async">
+        </div>
+      </div>
+
       <div class="about-grid">
-        <div class="about-copy">
+        <div class="about-head">
           <p class="eyebrow">About Us</p>
           <h2>A family firm, three generations on.</h2>
+        </div>
+        <div class="about-copy">
           <p>Brock Contracts is a third-generation, family-run contracting business based in Crieff. We take on joinery and general building work across Strathearn and the wider Perthshire area.</p>
           <p>We work as principal contractor or sub-contractor depending on what a job needs, managing every trade on site so the work runs to programme and finishes properly.</p>
           <ul class="about-points">
@@ -109,11 +123,6 @@
             <li>Every trade coordinated under one contract</li>
             <li>Based in Crieff, working throughout Perthshire</li>
           </ul>
-        </div>
-        <div class="about-media">
-          <div class="ratio ratio--3x2">
-            <img src="images/projects/sierras/hallway-01.jpg" alt="Bespoke fitted boot room joinery by Brock Contracts at Sierras, Perthshire" loading="lazy" decoding="async">
-          </div>
         </div>
       </div>
     </div>
@@ -200,36 +209,26 @@
           <p class="eyebrow">Get In Touch</p>
           <h2>Have a project in mind?</h2>
           <p class="lede">Get in touch for a straightforward, no-obligation quote. We're happy to talk through your project, big or small.</p>
-          <div class="contact-details">
-            <div class="contact-detail">
-              <span class="icon" aria-hidden="true"><svg viewBox="0 0 24 24" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.362 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.338 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg></span>
-              <div>
-                <div class="label">Phone</div>
-                <a href="tel:+447980136188" class="value">07980 136188</a>
-              </div>
-            </div>
-            <div class="contact-detail">
-              <span class="icon" aria-hidden="true"><svg viewBox="0 0 24 24" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6h20v12H2z"/><path d="M22 6l-10 7L2 6"/></svg></span>
-              <div>
-                <div class="label">Email</div>
-                <a href="mailto:c.brock016@btinternet.com" class="value">c.brock016@btinternet.com</a>
-              </div>
-            </div>
-            <div class="contact-detail">
-              <span class="icon" aria-hidden="true"><svg viewBox="0 0 24 24" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></span>
-              <div>
-                <div class="label">Address</div>
-                <span class="value">3 Holly Place, Crieff, PH7 3EP</span>
-              </div>
-            </div>
+          <div class="contact-actions">
+            <a href="tel:+447980136188" class="btn btn--light">Call 07980 136188</a>
+            <a href="mailto:c.brock016@btinternet.com" class="btn btn--outline-light">Email Us</a>
           </div>
         </div>
-        <div class="contact-card">
-          <h3>Request a Quote</h3>
-          <p>Call, email, or drop us a message and we'll get back to you to discuss your project.</p>
-          <a href="tel:+447980136188" class="btn btn--dark btn--block">Call 07980 136188</a>
-          <a href="mailto:c.brock016@btinternet.com" class="btn btn--outline btn--block">Email Us</a>
-        </div>
+
+        <dl class="contact-details">
+          <div class="contact-detail">
+            <dt class="label">Phone</dt>
+            <dd><a href="tel:+447980136188" class="value">07980 136188</a></dd>
+          </div>
+          <div class="contact-detail">
+            <dt class="label">Email</dt>
+            <dd><a href="mailto:c.brock016@btinternet.com" class="value">c.brock016@btinternet.com</a></dd>
+          </div>
+          <div class="contact-detail">
+            <dt class="label">Address</dt>
+            <dd><span class="value">3 Holly Place, Crieff, PH7 3EP</span></dd>
+          </div>
+        </dl>
       </div>
     </div>
   </section>
@@ -251,7 +250,7 @@
 
     <div class="footer-grid">
       <div class="footer-brand">
-        <div class="footer-logo-box"><img src="brock-contracts-logo-cropped.png" alt="Brock Contracts" width="160" height="40" loading="lazy"></div>
+        <img class="footer-logo" src="brock-contracts-logo-white.png" alt="Brock Contracts" loading="lazy">
         <p>Joiners and building contractors based in Crieff, working across Strathearn and the wider Perthshire area.</p>
       </div>
       <div>
