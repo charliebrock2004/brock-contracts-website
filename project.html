@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Project | Brock Contracts</title>
+<meta name="description" content="A building or joinery project completed by Brock Contracts in Crieff and Perthshire.">
+<meta name="theme-color" content="#1c1d1f">
+
+<link rel="icon" href="brock-contracts-logo-cropped.png">
+<link rel="apple-touch-icon" href="brock-contracts-logo-cropped.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/site.css">
+</head>
+<body>
+
+<a class="skip-link" href="#main">Skip to content</a>
+
+<header class="site-header">
+  <div class="container">
+    <a href="index.html" class="logo-mark" aria-label="Brock Contracts — home">
+      <img src="brock-contracts-logo-cropped.png" alt="Brock Contracts" width="180" height="46">
+    </a>
+
+    <button class="nav-toggle" type="button" aria-label="Menu" aria-expanded="false" aria-controls="site-nav">
+      <span></span>
+    </button>
+
+    <div class="nav-cta" id="site-nav">
+      <nav aria-label="Main">
+        <ul class="nav-list">
+          <li><a href="index.html#about">About</a></li>
+          <li><a href="index.html#services">Services</a></li>
+          <li><a href="projects.html" aria-current="page">Our Work</a></li>
+          <li><a href="index.html#contact">Contact</a></li>
+        </ul>
+      </nav>
+      <a href="tel:+447980136188" class="call-pill">Call 07980 136188</a>
+    </div>
+  </div>
+</header>
+
+<main id="main">
+
+  <!-- Shown when ?p= is missing or does not match a project -->
+  <section id="project-not-found" hidden>
+    <div class="container">
+      <div class="empty-state">
+        <h3>Project not found</h3>
+        <p>Sorry, we couldn't find that project. It may have been moved or renamed.</p>
+        <p style="margin-top:22px;"><a href="projects.html" class="btn btn--outline">View All Projects</a></p>
+      </div>
+    </div>
+  </section>
+
+  <article id="project-article" hidden>
+
+    <section class="page-hero">
+      <div class="container">
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+          <a href="index.html">Home</a><span>/</span><a href="projects.html">Our Work</a><span>/</span><span id="project-crumb"></span>
+        </nav>
+
+        <h1 id="project-title"></h1>
+
+        <p id="project-example-notice" hidden style="color:#dbe2ec;background:rgba(255,255,255,0.09);border:1px solid rgba(255,255,255,0.18);padding:12px 16px;border-radius:2px;font-size:0.875rem;max-width:640px;">
+          This is an example entry used to demonstrate the layout — not a completed Brock Contracts project.
+        </p>
+
+        <div class="project-hero__meta">
+          <div>
+            <div class="label">Location</div>
+            <div class="value" id="project-location"></div>
+          </div>
+          <div>
+            <div class="label">Category</div>
+            <div class="value" id="project-category"></div>
+          </div>
+          <div id="project-completed-wrap">
+            <div class="label">Completed</div>
+            <div class="value" id="project-completed"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="container">
+      <!-- Main project image, overlapping the dark hero above -->
+      <div class="project-lead">
+        <div class="ratio ratio--3x2">
+          <img id="project-lead-img" src="" alt="" fetchpriority="high" decoding="async">
+        </div>
+      </div>
+    </div>
+
+    <section style="padding-top:0;">
+      <div class="container">
+        <div class="project-body">
+          <div class="project-description" id="project-description"></div>
+
+          <aside class="project-details" id="project-details">
+            <h3>Project Details</h3>
+            <dl id="project-details-list"></dl>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <section id="project-gallery-section" class="section--tint" hidden>
+      <div class="container">
+        <div class="section-head">
+          <p class="eyebrow">Gallery</p>
+          <h2>Project Photographs</h2>
+          <p>Select any photograph to view it larger.</p>
+        </div>
+        <div class="gallery-grid" id="project-gallery"></div>
+      </div>
+    </section>
+
+    <div class="container">
+      <nav class="project-nav" aria-label="Other projects">
+        <a href="#" id="project-prev" class="project-nav__link">
+          <span class="project-nav__eyebrow">&larr; Previous project</span>
+          <span class="project-nav__title" data-label></span>
+        </a>
+        <a href="#" id="project-next" class="project-nav__link">
+          <span class="project-nav__eyebrow">Next project &rarr;</span>
+          <span class="project-nav__title" data-label></span>
+        </a>
+      </nav>
+    </div>
+
+  </article>
+
+  <section class="cta-band">
+    <div class="container">
+      <div>
+        <h2>Planning a project?</h2>
+        <p>Talk to Brock Contracts about your next building project. No obligation &mdash; we're happy to talk it through.</p>
+      </div>
+      <div class="cta-band__actions">
+        <a href="tel:+447980136188" class="btn btn--light">Call 07980 136188</a>
+        <a href="index.html#contact" class="btn btn--outline-light">Get a Quote</a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-logo-box"><img src="brock-contracts-logo-cropped.png" alt="Brock Contracts" width="160" height="40" loading="lazy"></div>
+        <p>Joiners and building contractors based in Crieff, working across Perthshire.</p>
+      </div>
+      <div>
+        <h4>Main Pages</h4>
+        <ul>
+          <li><a href="index.html#about">About</a></li>
+          <li><a href="index.html#services">Services</a></li>
+          <li><a href="projects.html">Our Work</a></li>
+          <li><a href="index.html#contact">Contact</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Contact Us</h4>
+        <p>3 Holly Place, Crieff, PH7 3EP</p>
+        <p>Phone: <a href="tel:+447980136188">07980 136188</a></p>
+        <p>Email: <a href="mailto:c.brock016@btinternet.com">c.brock016@btinternet.com</a></p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      &copy; <span data-year>2026</span> Brock Contracts. Joiners &amp; building contractors, Crieff, Perthshire.
+    </div>
+  </div>
+</footer>
+
+<div class="sticky-call">
+  <a href="tel:+447980136188">Call Now: 07980 136188</a>
+</div>
+
+<script src="assets/js/projects-data.js"></script>
+<script src="assets/js/site.js"></script>
+<script src="assets/js/project-page.js"></script>
+</body>
+</html>
