@@ -49,24 +49,26 @@
   --white:      #ffffff;
 
   /* Fluid type scale — grows with the viewport, no breakpoint jumps. */
-  --fs-hero:  clamp(2.05rem, 1.15rem + 3.8vw, 3.55rem);
-  --fs-h2:    clamp(1.8rem,  1.25rem + 2.1vw, 2.6rem);
-  --fs-h3:    clamp(1.12rem, 1rem    + 0.5vw, 1.32rem);
-  --fs-lede:  clamp(1rem,    0.96rem + 0.3vw, 1.1rem);
+  --fs-hero:  clamp(2.3rem,  1.2rem  + 4.4vw, 4.15rem);
+  --fs-h2:    clamp(1.85rem, 1.25rem + 2.3vw, 2.85rem);
+  --fs-h3:    clamp(1.15rem, 1rem    + 0.55vw, 1.38rem);
+  --fs-lede:  clamp(1.02rem, 0.97rem + 0.34vw, 1.14rem);
   --fs-body:  0.975rem;
   --fs-small: 0.875rem;
-  --fs-eyebrow: 0.76rem;
+  --fs-eyebrow: 0.72rem;
 
   /* Spacing */
-  --gutter:        clamp(20px, 5vw, 32px);
-  --section-y:     clamp(64px, 8vw, 108px);
-  --section-y-sm:  clamp(48px, 6vw, 76px);
+  --gutter:        clamp(22px, 5vw, 40px);
+  /* Generous, and consistent everywhere — the spacing is doing most of the
+     work in making this feel like an established firm rather than a template. */
+  --section-y:     clamp(76px, 9.5vw, 140px);
+  --section-y-sm:  clamp(52px, 6vw, 84px);
 
-  --maxw: 1180px;
+  --maxw: 1240px;
 
   /* Sharp corners suit a building trade — just enough radius to avoid
      looking unfinished. */
-  --radius: 2px;
+  --radius: 0px;
 
   --shadow-sm: 0 1px 2px rgba(28,29,31,0.05);
   --shadow-md: 0 6px 22px -10px rgba(28,29,31,0.22);
@@ -111,7 +113,7 @@ h1, h2, h3, h4 {
 h3, h4 { letter-spacing: -0.004em; line-height: 1.3; }
 
 /* Prose stops at a comfortable measure. Scoped to running copy so it never
-   throws off centred blocks like the empty state or the testimonial. */
+   throws off centred blocks like the empty state. */
 .about-copy p,
 .section-head p,
 .project-description p,
@@ -144,6 +146,10 @@ button { font: inherit; color: inherit; background: none; border: none; cursor: 
 
 section { padding: var(--section-y) 0; }
 
+/* Sections on the same background shouldn't run together; a hairline reads
+   as intent where a hard colour change would read as a stack of boxes. */
+.section-rule { border-top: 1px solid var(--line); }
+
 .eyebrow {
   display: flex;
   align-items: center;
@@ -164,7 +170,6 @@ section { padding: var(--section-y) 0; }
   background: currentColor;
   opacity: 0.35;
 }
-.testimonial-section .eyebrow { justify-content: center; }
 
 /* Consistent, crop-safe image frames. Every project photo on the site sits
    in one of these so nothing stretches or letterboxes oddly. */
@@ -195,9 +200,9 @@ section { padding: var(--section-y) 0; }
   align-items: center;
   justify-content: center;
   gap: 10px;
-  padding: 15px 34px;
-  font-size: 0.78rem;
-  letter-spacing: 1.5px;
+  padding: 16px 34px;
+  font-size: 0.74rem;
+  letter-spacing: 1.7px;
   text-transform: uppercase;
   font-weight: 500;
   border: 1px solid transparent;
@@ -258,23 +263,25 @@ section { padding: var(--section-y) 0; }
   align-items: center;
   justify-content: space-between;
   gap: 20px;
-  min-height: 72px;
+  min-height: 84px;
 }
 
-.logo-mark img { height: 46px; width: auto; }
+.logo-mark img { height: 50px; width: auto; }
 
-.nav-cta { display: flex; align-items: center; gap: clamp(20px, 3vw, 34px); }
+/* Navigation sits away from the logo and close to the call action, so the
+   header reads as two considered groups rather than one even row. */
+.nav-cta { display: flex; align-items: center; gap: clamp(26px, 3.4vw, 46px); }
 
-.nav-list { list-style: none; display: flex; gap: clamp(18px, 2.6vw, 34px); }
+.nav-list { list-style: none; display: flex; gap: clamp(20px, 2.8vw, 40px); }
 
 .nav-list a {
   position: relative;
-  font-size: 0.82rem;
-  letter-spacing: 1.2px;
+  font-size: 0.78rem;
+  letter-spacing: 1.6px;
   text-transform: uppercase;
   color: var(--ink-soft);
   font-weight: 500;
-  padding: 6px 0;
+  padding: 8px 0;
   transition: color var(--dur) var(--ease);
 }
 /* Underline grows from the left rather than snapping in. */
@@ -284,10 +291,10 @@ section { padding: var(--section-y) 0; }
   left: 0; bottom: 0;
   height: 1px;
   width: 100%;
-  background: var(--navy);
+  background: currentColor;
   transform: scaleX(0);
   transform-origin: left;
-  transition: transform var(--dur) var(--ease);
+  transition: transform 0.3s var(--ease);
 }
 .nav-list a:hover { color: var(--navy); }
 .nav-list a:hover::after,
@@ -297,9 +304,9 @@ section { padding: var(--section-y) 0; }
 .call-pill {
   border: 1px solid var(--ink);
   border-radius: var(--radius);
-  padding: 10px 20px;
-  font-size: 0.8rem;
-  letter-spacing: 1px;
+  padding: 12px 24px;
+  font-size: 0.74rem;
+  letter-spacing: 1.6px;
   text-transform: uppercase;
   font-weight: 500;
   white-space: nowrap;
@@ -351,7 +358,10 @@ section { padding: var(--section-y) 0; }
   overflow: hidden;
   color: var(--white);
   background: linear-gradient(160deg, #1c1d1f 0%, #2b2f36 55%, #333a45 100%);
-  padding: clamp(96px, 13vw, 172px) 0 clamp(88px, 12vw, 152px);
+  display: flex;
+  align-items: flex-end;
+  min-height: min(88vh, 860px);
+  padding: clamp(120px, 16vw, 210px) 0 clamp(72px, 9vw, 116px);
 }
 
 /* Real project photography behind the hero, dimmed enough to keep the
@@ -380,41 +390,59 @@ section { padding: var(--section-y) 0; }
 }
 
 .hero .container { position: relative; z-index: 2; }
-.hero__inner { max-width: 760px; }
+.hero__inner { max-width: 820px; }
 
-.hero .eyebrow { color: var(--navy-pale); }
+.hero .eyebrow { color: #c3ccd9; margin-bottom: 26px; }
 
 .hero h1 {
   font-size: var(--fs-hero);
-  margin-bottom: 24px;
+  line-height: 1.06;
+  letter-spacing: -0.02em;
+  margin-bottom: 30px;
   font-weight: 600;
+  /* Keeps the headline to two lines at desktop sizes. */
+  max-width: 22ch;
 }
 
 .hero__quote {
-  font-family: 'Playfair Display', Georgia, serif;
-  font-style: italic;
-  font-weight: 500;
-  font-size: clamp(1.05rem, 0.95rem + 0.6vw, 1.3rem);
-  color: #dde2e9;
-  max-width: 580px;
-  margin-bottom: 36px;
-  line-height: 1.6;
+  font-family: 'Jost', sans-serif;
+  font-weight: 300;
+  font-size: clamp(1.02rem, 0.95rem + 0.5vw, 1.2rem);
+  color: #ccd3dc;
+  max-width: 52ch;
+  margin-bottom: 40px;
+  line-height: 1.75;
 }
 
-.hero__ctas { display: flex; gap: 14px; flex-wrap: wrap; }
+/* A hairline above the actions closes the composition. */
+.hero__ctas {
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+  padding-top: 34px;
+  border-top: 1px solid rgba(255,255,255,0.16);
+  max-width: 52ch;
+}
 
 .page-hero {
   position: relative;
-  background: linear-gradient(160deg, #1c1d1f 0%, #2b2f36 60%, #333a45 100%);
+  background: var(--ink);
   color: var(--white);
-  padding: clamp(66px, 9vw, 104px) 0 clamp(58px, 8vw, 92px);
+  padding: clamp(76px, 10vw, 128px) 0 clamp(64px, 8.5vw, 104px);
 }
-.page-hero .eyebrow { color: var(--navy-pale); }
-.page-hero h1 { font-size: clamp(1.9rem, 1.3rem + 2.6vw, 3rem); margin-bottom: 18px; }
+.page-hero .eyebrow { color: #c3ccd9; }
+.page-hero h1 {
+  font-size: clamp(2rem, 1.3rem + 3vw, 3.4rem);
+  line-height: 1.08;
+  letter-spacing: -0.018em;
+  margin-bottom: 22px;
+  max-width: 20ch;
+}
 .page-hero p {
   color: #c9ced6;
   font-size: var(--fs-lede);
-  max-width: 620px;
+  line-height: 1.75;
+  max-width: 56ch;
 }
 
 
@@ -452,9 +480,9 @@ section { padding: var(--section-y) 0; }
 
 /* 08  Section headings
    ========================================================================== */
-.section-head { max-width: 660px; margin-bottom: clamp(36px, 5vw, 58px); }
-.section-head h2 { font-size: var(--fs-h2); color: var(--ink); margin-bottom: 14px; }
-.section-head p { color: var(--grey); font-size: var(--fs-lede); }
+.section-head { max-width: 680px; margin-bottom: clamp(44px, 5.5vw, 72px); }
+.section-head h2 { font-size: var(--fs-h2); color: var(--ink); margin-bottom: 18px; }
+.section-head p { color: var(--grey); font-size: var(--fs-lede); line-height: 1.75; }
 
 /* Heading on the left, action on the right — used above project grids. */
 .section-head--row {
@@ -470,155 +498,165 @@ section { padding: var(--section-y) 0; }
 
 /* 09  About
    ========================================================================== */
+/* Copy column is deliberately narrower than the photograph — the work
+   should carry more weight on the page than the words about it. */
 .about-grid {
   display: grid;
-  grid-template-columns: 1.05fr 0.95fr;
-  gap: clamp(36px, 5vw, 68px);
+  grid-template-columns: 0.86fr 1.14fr;
+  gap: clamp(36px, 6vw, 88px);
   align-items: center;
 }
-.about-copy h2 { font-size: var(--fs-h2); margin-bottom: 18px; }
-.about-copy p { color: var(--ink-mid); margin-bottom: 16px; }
+.about-copy h2 { font-size: var(--fs-h2); margin-bottom: 24px; }
+.about-copy p { color: var(--ink-mid); margin-bottom: 18px; line-height: 1.8; }
 .about-copy p:last-of-type { margin-bottom: 0; }
 
-.about-points { list-style: none; margin-top: 28px; display: grid; gap: 12px; }
+/* Ruled rows read as a schedule; the tick icons were decoration. */
+.about-points {
+  list-style: none;
+  margin-top: 36px;
+  border-top: 1px solid var(--line);
+}
 .about-points li {
-  display: flex;
-  gap: 12px;
-  align-items: flex-start;
+  padding: 13px 0;
+  border-bottom: 1px solid var(--line);
   font-size: var(--fs-small);
   color: var(--ink-soft);
 }
-.about-points svg { width: 17px; height: 17px; flex-shrink: 0; margin-top: 5px; stroke: var(--navy); }
 
 .about-media { position: relative; }
-.about-media .ratio { box-shadow: var(--shadow-md); }
-/* Thin rule offset behind the photo — a quiet architectural detail. */
-.about-media::after {
-  content: '';
-  position: absolute;
-  inset: 18px -18px -18px 18px;
-  border: 1px solid var(--line);
-  z-index: -1;
-}
 
 
 /* 10  Services
    ========================================================================== */
+/* A ruled schedule of works rather than four boxes. The existing markup
+   (number, heading, paragraph) maps straight onto three columns. */
 .services-grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 1px;
-  background: var(--line);
-  border: 1px solid var(--line);
+  grid-template-columns: 1fr;
+  gap: 0;
+  background: none;
+  border: none;
+  border-top: 1px solid var(--line);
 }
 .service-card {
-  background: var(--paper);
-  padding: clamp(34px, 4.2vw, 52px) clamp(28px, 3.6vw, 46px);
-  transition: background var(--dur) var(--ease);
+  display: grid;
+  grid-template-columns: 78px minmax(190px, 0.85fr) 1.5fr;
+  align-items: baseline;
+  gap: 0 clamp(20px, 3vw, 48px);
+  background: none;
+  padding: clamp(26px, 3vw, 38px) 0;
+  border-bottom: 1px solid var(--line);
 }
-.service-card:hover { background: var(--white); }
-/* Small ruled numerals rather than large pale digits — closer to a spec
-   sheet than a marketing template. */
 .service-card__num {
-  display: inline-block;
   font-family: 'Jost', sans-serif;
   font-size: 0.72rem;
   letter-spacing: 2px;
-  color: var(--navy);
+  color: var(--navy-light);
   font-weight: 500;
-  line-height: 1;
-  padding-bottom: 14px;
-  margin-bottom: 20px;
-  border-bottom: 1px solid var(--line);
-  min-width: 46px;
-  transition: border-color var(--dur) var(--ease);
+  transition: color var(--dur) var(--ease);
 }
-.service-card:hover .service-card__num { border-bottom-color: var(--navy-light); }
-.service-card:hover .service-card__num { color: var(--navy-light); }
-.service-card h3 { font-size: var(--fs-h3); color: var(--ink); margin-bottom: 10px; }
-.service-card p { color: var(--grey); font-size: var(--fs-small); max-width: 380px; }
+.service-card:hover .service-card__num { color: var(--navy); }
+.service-card h3 {
+  font-size: var(--fs-h3);
+  color: var(--ink);
+  margin: 0;
+  transition: color var(--dur) var(--ease);
+}
+.service-card:hover h3 { color: var(--navy); }
+.service-card p {
+  color: var(--grey);
+  font-size: var(--fs-small);
+  line-height: 1.75;
+  max-width: 58ch;
+  margin: 0;
+}
 
 
 /* 11  Project cards & grid
    ========================================================================== */
 .project-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-  gap: clamp(20px, 2.6vw, 30px);
+  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  gap: clamp(28px, 3.4vw, 52px) clamp(24px, 2.8vw, 40px);
 }
 /* The homepage preview caps at 3 across. auto-fit collapses unused tracks,
    so two featured projects fill the row instead of leaving a gap. */
 .project-grid--featured { grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); }
 
+/* The card is the photograph plus a caption — no panel, no border, no
+   shadow. Removing the frame is what makes it read as a portfolio. */
 .project-card {
   display: flex;
   flex-direction: column;
-  background: var(--white);
-  border: 1px solid var(--line);
-  border-radius: var(--radius);
-  overflow: hidden;
-  transition: transform var(--dur) var(--ease),
-              box-shadow var(--dur) var(--ease),
-              border-color var(--dur) var(--ease);
-}
-/* No lift on hover — a settled border and shadow reads more considered
-   than a card that jumps. */
-.project-card:hover {
-  box-shadow: var(--shadow-md);
-  border-color: #cdc6b6;
+  background: none;
+  border: none;
+  border-radius: 0;
+  overflow: visible;
 }
 
-.project-card__media { position: relative; }
-.project-card__media img { transition: transform 0.7s var(--ease); }
-.project-card:hover .project-card__media img { transform: scale(1.018); }
-
-.project-card__tag {
+.project-card__media { position: relative; overflow: hidden; background: var(--paper-dark); }
+.project-card__media img { transition: transform 0.9s var(--ease); }
+.project-card:hover .project-card__media img { transform: scale(1.035); }
+/* A whisper of shade on hover, so the caption is what changes most. */
+.project-card__media::after {
+  content: '';
   position: absolute;
-  left: 16px;
-  top: 16px;
-  z-index: 2;
-  background: rgba(250,249,247,0.94);
-  color: var(--ink);
+  inset: 0;
+  z-index: 1;
+  background: rgba(20,21,23,0);
+  transition: background 0.45s var(--ease);
+}
+.project-card:hover .project-card__media::after { background: rgba(20,21,23,0.07); }
+
+/* Category reads under the photograph with the rest of the caption rather
+   than as a badge floated over the work. */
+.project-card__tag {
+  position: static;
+  display: inline-block;
+  color: var(--navy);
   font-size: 0.68rem;
-  letter-spacing: 1.4px;
+  letter-spacing: 2px;
   text-transform: uppercase;
   font-weight: 500;
-  padding: 6px 12px;
-  border-radius: var(--radius);
+  padding: 0;
+  background: none;
 }
 
 .project-card__body {
-  padding: clamp(20px, 2.4vw, 26px);
+  padding: 22px 0 0;
   display: flex;
   flex-direction: column;
   flex: 1;
 }
-.project-card__title { font-size: var(--fs-h3); margin-bottom: 6px; }
+.project-card__title {
+  font-size: var(--fs-h3);
+  margin: 10px 0 0;
+  transition: color var(--dur) var(--ease);
+}
+.project-card:hover .project-card__title { color: var(--navy); }
 .project-card__location {
   display: flex;
   align-items: center;
-  gap: 6px;
-  font-size: 0.8rem;
-  letter-spacing: 0.6px;
-  color: var(--navy);
-  margin-bottom: 14px;
+  font-size: var(--fs-small);
+  color: var(--grey);
+  margin-top: 7px;
 }
-.project-card__location svg { width: 14px; height: 14px; flex-shrink: 0; }
+.project-card__location svg { display: none; }
 .project-card__summary {
   color: var(--grey);
   font-size: var(--fs-small);
-  margin-bottom: 22px;
+  line-height: 1.75;
+  margin: 14px 0 22px;
   flex: 1;
+  max-width: 48ch;
 }
 .project-card__foot {
-  border-top: 1px solid var(--line-soft);
-  padding-top: 16px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 12px;
 }
-.project-card__date { font-size: 0.76rem; color: var(--grey); letter-spacing: 0.5px; }
+.project-card__date { font-size: 0.72rem; color: var(--grey); letter-spacing: 1.2px; text-transform: uppercase; }
 .project-card:hover .link-arrow { color: var(--navy); }
 .project-card:hover .link-arrow svg { transform: translateX(4px); }
 
@@ -725,22 +763,36 @@ section { padding: var(--section-y) 0; }
   background: var(--navy-light);
 }
 
-/* Main project photo, pulled up so it overlaps the dark hero. */
+/* Main photograph pulled up so it overlaps the dark hero — the join between
+   title block and work is what makes the page read as a case study. */
 .project-lead {
-  margin-top: calc(clamp(40px, 6vw, 76px) * -1);
-  margin-bottom: clamp(40px, 5vw, 64px);
+  margin-top: calc(clamp(44px, 6.5vw, 84px) * -1);
+  margin-bottom: clamp(52px, 6.5vw, 88px);
   position: relative;
   z-index: 3;
 }
-.project-lead .ratio { box-shadow: var(--shadow-lg); border-radius: var(--radius); }
+.project-lead .ratio { border-radius: 0; }
 
 .project-body {
   display: grid;
-  grid-template-columns: 1.35fr 0.65fr;
-  gap: clamp(36px, 5vw, 64px);
+  grid-template-columns: minmax(0, 1.5fr) minmax(240px, 0.5fr);
+  gap: clamp(40px, 6vw, 96px);
   align-items: start;
 }
-.project-description p { color: var(--ink-mid); margin-bottom: 18px; font-size: var(--fs-lede); }
+/* First paragraph sets up the project, so it carries more weight. */
+.project-description p {
+  color: var(--ink-mid);
+  margin-bottom: 22px;
+  font-size: var(--fs-lede);
+  line-height: 1.85;
+  max-width: 62ch;
+}
+.project-description p:first-child {
+  font-size: clamp(1.12rem, 1rem + 0.6vw, 1.34rem);
+  line-height: 1.65;
+  color: var(--ink);
+  margin-bottom: 28px;
+}
 .project-description p:last-child { margin-bottom: 0; }
 
 .project-details {
@@ -751,24 +803,24 @@ section { padding: var(--section-y) 0; }
   padding: 22px 0 0;
 }
 .project-details h3 {
-  font-size: 0.8rem;
-  letter-spacing: 1.6px;
+  font-size: 0.72rem;
+  letter-spacing: 2px;
   text-transform: uppercase;
   font-family: 'Jost', sans-serif;
   font-weight: 500;
   color: var(--ink);
-  margin-bottom: 18px;
+  margin-bottom: 6px;
 }
 .project-details dl { display: grid; gap: 0; }
 .project-details dl > div { padding: 13px 0; border-bottom: 1px solid var(--line); }
 .project-details dt {
-  font-size: 0.72rem;
-  letter-spacing: 1.2px;
+  font-size: 0.68rem;
+  letter-spacing: 1.6px;
   text-transform: uppercase;
   color: var(--grey);
-  margin-bottom: 2px;
+  margin-bottom: 5px;
 }
-.project-details dd { font-size: var(--fs-small); color: var(--ink-soft); }
+.project-details dd { font-size: var(--fs-small); color: var(--ink-soft); line-height: 1.6; }
 
 /* Gallery — an editorial mosaic rather than a uniform grid. Two columns,
    with a full-width photo every few rows to break the rhythm. Which photos
@@ -801,30 +853,30 @@ section { padding: var(--section-y) 0; }
 .gallery-item:focus-visible .gallery-item__caption { opacity: 1; transform: translateY(0); }
 .gallery-item {
   position: relative;
-  border-radius: var(--radius);
+  border-radius: 0;
   overflow: hidden;
   cursor: zoom-in;
   background: var(--paper-dark);
 }
-.gallery-item img { transition: transform 0.5s var(--ease); }
-.gallery-item:hover img { transform: scale(1.04); }
+.gallery-item img { transition: transform 0.9s var(--ease); }
+.gallery-item:hover img { transform: scale(1.03); }
 .gallery-item__zoom {
   position: absolute;
-  right: 12px;
-  bottom: 12px;
-  width: 34px;
-  height: 34px;
+  right: 14px;
+  top: 14px;
+  width: 38px;
+  height: 38px;
   display: grid;
   place-items: center;
-  background: rgba(250,249,247,0.92);
-  border-radius: 50%;
+  background: rgba(250,249,247,0.94);
+  border-radius: 0;
   opacity: 0;
-  transform: translateY(6px);
-  transition: opacity var(--dur) var(--ease), transform var(--dur) var(--ease);
+  transform: scale(0.9);
+  transition: opacity 0.3s var(--ease), transform 0.3s var(--ease);
 }
 .gallery-item__zoom svg { width: 15px; height: 15px; stroke: var(--ink); }
 .gallery-item:hover .gallery-item__zoom,
-.gallery-item:focus-visible .gallery-item__zoom { opacity: 1; transform: translateY(0); }
+.gallery-item:focus-visible .gallery-item__zoom { opacity: 1; transform: scale(1); }
 
 .project-nav {
   display: flex;
@@ -861,7 +913,7 @@ section { padding: var(--section-y) 0; }
   position: fixed;
   inset: 0;
   z-index: 200;
-  background: rgba(16,17,18,0.95);
+  background: rgba(14,15,16,0.97);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -886,8 +938,12 @@ section { padding: var(--section-y) 0; }
   width: auto;
   height: auto;
   object-fit: contain;
-  border-radius: var(--radius);
+  border-radius: 0;
+  opacity: 0;
+  transform: scale(0.985);
+  transition: opacity 0.32s var(--ease), transform 0.32s var(--ease);
 }
+.lightbox.is-open .lightbox__img { opacity: 1; transform: scale(1); }
 .lightbox__caption {
   color: #d6d8da;
   font-size: var(--fs-small);
@@ -902,16 +958,17 @@ section { padding: var(--section-y) 0; }
 
 .lightbox__btn {
   position: absolute;
-  width: 48px;
-  height: 48px;
+  width: 52px;
+  height: 52px;
   display: grid;
   place-items: center;
-  background: rgba(255,255,255,0.1);
-  border: 1px solid rgba(255,255,255,0.18);
-  border-radius: 50%;
+  background: rgba(255,255,255,0.07);
+  border: 1px solid rgba(255,255,255,0.2);
+  border-radius: 0;
   color: var(--white);
-  transition: background var(--dur) var(--ease);
+  transition: background var(--dur) var(--ease), border-color var(--dur) var(--ease);
 }
+.lightbox__btn:hover { border-color: rgba(255,255,255,0.5); }
 .lightbox__btn:hover { background: rgba(255,255,255,0.22); }
 .lightbox__btn svg { width: 20px; height: 20px; stroke: currentColor; }
 .lightbox__close { top: clamp(12px, 2vw, 26px); right: clamp(12px, 2vw, 26px); }
@@ -919,36 +976,9 @@ section { padding: var(--section-y) 0; }
 .lightbox__next  { right: clamp(10px, 2vw, 26px); top: 50%; transform: translateY(-50%); }
 
 
-/* 15  Testimonial
+/* 15  (Testimonial section removed — it held placeholder copy. Reinstate a
+       styled block here once a genuine client review is available.)
    ========================================================================== */
-/* Set on cream rather than ink. Three dark bands in a row at the foot of
-   the homepage read as one mass; this gives the page somewhere to breathe. */
-.testimonial-section {
-  background: var(--paper-warm);
-  color: var(--ink);
-  text-align: center;
-  padding: var(--section-y) 0;
-  border-top: 1px solid var(--line);
-  border-bottom: 1px solid var(--line);
-}
-.testimonial-section .eyebrow { color: var(--navy); }
-.testimonial-quote {
-  font-family: 'Playfair Display', Georgia, serif;
-  font-style: italic;
-  font-weight: 500;
-  font-size: clamp(1.3rem, 1rem + 1.4vw, 1.8rem);
-  max-width: 780px;
-  margin: 22px auto 24px;
-  color: var(--ink);
-  line-height: 1.5;
-}
-.testimonial-author {
-  color: var(--grey);
-  font-size: 0.78rem;
-  letter-spacing: 1.6px;
-  text-transform: uppercase;
-}
-
 
 /* 16  CTA band
    ========================================================================== */
@@ -961,11 +991,15 @@ section { padding: var(--section-y) 0; }
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: clamp(24px, 4vw, 56px);
+  gap: clamp(28px, 4vw, 64px);
   flex-wrap: wrap;
 }
-.cta-band h2 { font-size: clamp(1.5rem, 1.15rem + 1.5vw, 2.1rem); margin-bottom: 10px; }
-.cta-band p { color: #dbe2ec; max-width: 520px; font-size: var(--fs-lede); }
+.cta-band h2 {
+  font-size: clamp(1.6rem, 1.15rem + 1.7vw, 2.3rem);
+  margin-bottom: 12px;
+  letter-spacing: -0.014em;
+}
+.cta-band p { color: #d3dbe6; max-width: 48ch; font-size: var(--fs-lede); line-height: 1.75; }
 .cta-band__actions { display: flex; gap: 12px; flex-wrap: wrap; }
 
 
@@ -1016,39 +1050,63 @@ section { padding: var(--section-y) 0; }
 /* 18  Footer
    ========================================================================== */
 .site-footer { background: #17181a; color: #a6a8a4; padding: clamp(56px, 7vw, 84px) 0 28px; }
+/* A closing section: an invitation, then the details. */
+.footer-lead {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: clamp(28px, 4vw, 64px);
+  flex-wrap: wrap;
+  padding-bottom: clamp(40px, 5vw, 64px);
+  margin-bottom: clamp(40px, 5vw, 64px);
+  border-bottom: 1px solid rgba(255,255,255,0.12);
+}
+.footer-lead .eyebrow { color: var(--navy-pale); }
+.footer-lead h2 {
+  color: var(--white);
+  font-size: clamp(1.7rem, 1.2rem + 2vw, 2.6rem);
+  letter-spacing: -0.016em;
+  max-width: 16ch;
+}
+.footer-lead__actions { display: flex; gap: 12px; flex-wrap: wrap; }
+
 .footer-grid {
   display: grid;
-  grid-template-columns: 1.4fr 1fr 1fr;
-  gap: clamp(30px, 4vw, 50px);
-  margin-bottom: clamp(34px, 4vw, 46px);
+  grid-template-columns: 1.7fr 1fr 1.2fr 1fr;
+  gap: clamp(30px, 4vw, 56px);
+  margin-bottom: clamp(40px, 5vw, 60px);
 }
+.footer-brand p { max-width: 34ch; }
 .footer-logo-box {
   background: var(--white);
   display: inline-block;
   padding: 14px 20px;
-  border-radius: var(--radius);
-  margin-bottom: 16px;
+  margin-bottom: 20px;
 }
 .footer-logo-box img { height: 40px; }
 .site-footer p, .site-footer li { font-size: var(--fs-small); color: #9b9d98; margin-bottom: 9px; list-style: none; }
 .site-footer h4 {
   color: var(--white);
-  font-size: 0.78rem;
-  letter-spacing: 1.5px;
+  font-size: 0.7rem;
+  letter-spacing: 2px;
   text-transform: uppercase;
-  margin-bottom: 16px;
+  margin-bottom: 18px;
   font-family: 'Jost', sans-serif;
   font-weight: 500;
 }
+.site-footer li { line-height: 1.7; }
 .site-footer a { transition: color var(--dur) var(--ease); }
 .site-footer a:hover { color: var(--white); }
 .footer-bottom {
   border-top: 1px solid rgba(255,255,255,0.09);
-  padding-top: 24px;
-  letter-spacing: 0.3px;
-  text-align: center;
-  font-size: 0.78rem;
+  padding-top: 26px;
+  letter-spacing: 0.4px;
+  font-size: 0.76rem;
   color: #6c6e69;
+  display: flex;
+  justify-content: space-between;
+  gap: 14px;
+  flex-wrap: wrap;
 }
 
 
@@ -1094,8 +1152,22 @@ section { padding: var(--section-y) 0; }
 
 body.no-scroll { overflow: hidden; }
 
+/* Section reveal on scroll. Only armed once the script confirms support, so
+   with JS off (or reduced motion on) everything is simply visible. */
+.js-reveal [data-reveal] {
+  opacity: 0;
+  transform: translateY(14px);
+  transition: opacity 0.7s var(--ease), transform 0.7s var(--ease);
+  will-change: opacity, transform;
+}
+.js-reveal [data-reveal].is-revealed {
+  opacity: 1;
+  transform: none;
+}
+
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
+  .js-reveal [data-reveal] { opacity: 1 !important; transform: none !important; }
   *, *::before, *::after {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
@@ -1110,51 +1182,81 @@ body.no-scroll { overflow: hidden; }
 @media (max-width: 1024px) {
   .project-grid--featured { grid-template-columns: repeat(2, 1fr); }
   .project-body { grid-template-columns: 1fr; }
+  .footer-grid { grid-template-columns: 1fr 1fr; row-gap: 40px; }
+  .service-card { grid-template-columns: 60px 1fr; }
+  .service-card p { grid-column: 2; margin-top: 10px; }
 }
 
 @media (max-width: 900px) {
   .nav-toggle { display: flex; }
 
-  /* Nav collapses into a full-width panel below the header bar. */
+  /* Full-height panel rather than a dropdown: links sit in the lower half of
+     the screen where a thumb reaches, with the call action last. */
+  /* Absolute, not fixed: the header's backdrop-filter makes it a containing
+     block, so a fixed panel would resolve against the header rather than the
+     viewport and collapse to nothing. */
   .nav-cta {
     position: absolute;
     left: 0;
     right: 0;
     top: 100%;
+    height: calc(100vh - 84px);
+    height: calc(100dvh - 84px);
     flex-direction: column;
     align-items: stretch;
+    justify-content: flex-end;
     gap: 0;
     background: var(--paper);
-    border-bottom: 1px solid var(--line);
-    box-shadow: var(--shadow-md);
-    padding: 8px var(--gutter) 20px;
-    max-height: 0;
-    overflow: hidden;
+    border-top: 1px solid var(--line);
+    /* Clear the fixed call bar that sits along the bottom of the screen. */
+    padding: 24px var(--gutter) calc(80px + env(safe-area-inset-bottom, 0px));
+    overflow-y: auto;
+    opacity: 0;
     visibility: hidden;
-    transition: max-height 0.28s var(--ease), padding 0.28s var(--ease), visibility 0.28s;
+    transform: translateY(-8px);
+    transition: opacity 0.26s var(--ease), transform 0.26s var(--ease), visibility 0.26s;
   }
   .site-header.nav-open .nav-cta {
-    max-height: 420px;
+    opacity: 1;
     visibility: visible;
+    transform: none;
   }
   .nav-list { flex-direction: column; gap: 0; }
   .nav-list a {
     display: block;
-    padding: 15px 0;
-    font-size: 0.9rem;
-    border-bottom: 1px solid var(--line-soft);
+    padding: 20px 0;
+    font-size: 1.4rem;
+    font-family: 'Playfair Display', Georgia, serif;
+    text-transform: none;
+    letter-spacing: -0.01em;
+    color: var(--ink);
+    border-bottom: 1px solid var(--line);
   }
   .nav-list a::after { display: none; }
-  .call-pill { margin-top: 18px; text-align: center; padding: 14px 20px; }
+  .nav-list li:first-child a { border-top: 1px solid var(--line); }
+  .call-pill {
+    margin-top: 26px;
+    text-align: center;
+    padding: 18px 20px;
+    background: var(--ink);
+    color: var(--white);
+    font-size: 0.78rem;
+  }
 
-  .trust-strip .container { grid-template-columns: 1fr; gap: 22px; }
+  .trust-strip .container { grid-template-columns: 1fr; gap: 26px; }
   .services-grid { grid-template-columns: 1fr; }
-  .about-grid { grid-template-columns: 1fr; }
+  .service-card { grid-template-columns: 1fr; gap: 0; padding: 26px 0; }
+  .service-card__num { margin-bottom: 10px; display: block; }
+  .service-card p { grid-column: 1; margin-top: 10px; }
+  .about-grid { grid-template-columns: 1fr; gap: 34px; }
   .about-media { order: -1; }
-  .about-media::after { display: none; }
   .contact-grid { grid-template-columns: 1fr; gap: 38px; }
-  .footer-grid { grid-template-columns: 1fr; }
+  .footer-grid { grid-template-columns: 1fr 1fr; row-gap: 36px; }
+  .footer-lead { flex-direction: column; align-items: flex-start; }
+  .footer-lead__actions { width: 100%; }
+  .footer-lead__actions .btn { flex: 1 1 auto; }
   .cta-band .container { flex-direction: column; align-items: flex-start; }
+  .hero { min-height: 0; }
 
   /* Fixed call bar on phones — the single most useful action for a trade site. */
   .sticky-call {
@@ -1179,31 +1281,44 @@ body.no-scroll { overflow: hidden; }
 @media (max-width: 680px) {
   .project-grid,
   .project-grid--featured { grid-template-columns: 1fr; }
+  .project-grid { gap: 44px; }
   /* Full-width photos read far better than small thumbnails on a phone. */
   .gallery-grid { grid-template-columns: 1fr; gap: 12px; }
   .gallery-item__caption { opacity: 1; transform: none; }
   .hero__ctas .btn { flex: 1 1 100%; }
   .cta-band__actions { width: 100%; }
   .cta-band__actions .btn { flex: 1 1 100%; }
+  .footer-grid { grid-template-columns: 1fr; row-gap: 32px; }
+  .footer-bottom { flex-direction: column; gap: 8px; }
   .project-lead { margin-top: -28px; }
+  .project-nav__link { max-width: 100%; }
   .lightbox__img { max-height: calc(100vh - 190px); }
   .lightbox__prev, .lightbox__next { top: auto; bottom: 16px; transform: none; }
-  .lightbox__prev { left: calc(50% - 60px); }
-  .lightbox__next { right: calc(50% - 60px); }
+  .lightbox__prev { left: calc(50% - 62px); }
+  .lightbox__next { right: calc(50% - 62px); }
 }
 
 @media (max-width: 400px) {
-  .logo-mark img { height: 38px; }
+  .logo-mark img { height: 40px; }
+  .nav-list a { font-size: 1.25rem; padding: 17px 0; }
 }
 
 
 
 /* Example-entry badge — makes clear which cards are placeholders rather
    than completed Brock Contracts jobs. Remove the isExample flag in
-   projects-data.js and this never renders. */
-.project-card__tag--example {
-  left: auto;
-  right: 14px;
-  background: rgba(63,77,99,0.94);
+   projects-data.js and this never renders. Unlike the category label this
+   does sit over the photograph, because it is a warning, not a caption. */
+.project-card__example {
+  position: absolute;
+  right: 0;
+  top: 0;
+  z-index: 2;
+  background: var(--ink);
   color: var(--white);
+  font-size: 0.64rem;
+  letter-spacing: 1.8px;
+  text-transform: uppercase;
+  font-weight: 500;
+  padding: 7px 13px;
 }

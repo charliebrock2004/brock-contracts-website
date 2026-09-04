@@ -76,7 +76,7 @@
     var alt = imageAlt(project.mainImage, project.title + ' — Brock Contracts');
 
     var exampleBadge = project.isExample
-      ? '<span class="project-card__tag project-card__tag--example">Example</span>'
+      ? '<span class="project-card__example">Example</span>'
       : '';
 
     var date = project.completed
@@ -87,10 +87,10 @@
       '<article class="project-card" data-category="' + esc(project.category) + '">' +
         '<div class="project-card__media ratio ratio--3x2">' +
           '<img src="' + esc(src) + '" alt="' + esc(alt) + '" loading="lazy" decoding="async">' +
-          '<span class="project-card__tag">' + esc(project.category) + '</span>' +
           exampleBadge +
         '</div>' +
         '<div class="project-card__body">' +
+          '<span class="project-card__tag">' + esc(project.category) + '</span>' +
           '<h3 class="project-card__title">' + esc(project.title) + '</h3>' +
           '<p class="project-card__location">' + ICON_PIN + esc(project.location) + '</p>' +
           '<p class="project-card__summary">' + esc(project.summary) + '</p>' +
@@ -116,11 +116,14 @@
     function close() {
       header.classList.remove('nav-open');
       toggle.setAttribute('aria-expanded', 'false');
+      document.body.classList.remove('no-scroll');
     }
 
     toggle.addEventListener('click', function () {
       var open = header.classList.toggle('nav-open');
       toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+      /* The panel is full height, so stop the page scrolling behind it. */
+      document.body.classList.toggle('no-scroll', open);
     });
 
     /* Close after tapping a link, otherwise the panel covers the target. */
@@ -284,12 +287,54 @@
   };
 
 
+  /* ---- section reveal ---------------------------------------------------- */
+
+  /* A short fade-and-rise as each block first comes into view. Applied from
+     script so that with JS off, or reduced motion on, nothing is ever hidden.
+     Blocks are selected rather than tagged in the markup, so project pages
+     added later pick this up with no extra work. */
+  var REVEAL_SELECTOR = [
+    '.section-head',
+    '.about-grid',
+    '.services-grid',
+    '.project-grid',
+    '.gallery-grid',
+    '.project-body',
+    '.footer-lead'
+  ].join(', ');
+
+  function initReveal() {
+    if (!('IntersectionObserver' in window)) return;
+    if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+    var els = document.querySelectorAll(REVEAL_SELECTOR);
+    if (!els.length) return;
+
+    document.documentElement.classList.add('js-reveal');
+
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (!entry.isIntersecting) return;
+        entry.target.classList.add('is-revealed');
+        io.unobserve(entry.target);
+      });
+    }, { rootMargin: '0px 0px -6% 0px', threshold: 0.04 });
+
+    Array.prototype.forEach.call(els, function (el) {
+      el.setAttribute('data-reveal', '');
+      io.observe(el);
+    });
+  }
+  BC.initReveal = initReveal;
+
+
   /* ---- boot -------------------------------------------------------------- */
 
   function init() {
     initNav();
     initHeaderScroll();
     initYear();
+    initReveal();
   }
 
   if (document.readyState === 'loading') {
