@@ -173,16 +173,14 @@
   var prevLink = document.getElementById('project-prev');
   var nextLink = document.getElementById('project-next');
 
-  function wire(link, target, label) {
+  function wire(link, target) {
     if (!link) return;
     if (!target) { link.hidden = true; return; }
+    link.hidden = false;
     link.href = 'project.html?p=' + encodeURIComponent(target.slug);
-    link.querySelector('[data-label]').textContent = label + target.title;
+    link.querySelector('[data-label]').textContent = target.title;
   }
 
-  wire(prevLink, idx > 0 ? all[idx - 1] : null, '← ');
-  wire(nextLink, idx > -1 && idx < all.length - 1 ? all[idx + 1] : null, '');
-  if (nextLink && !nextLink.hidden) {
-    nextLink.querySelector('[data-label]').textContent = all[idx + 1].title + ' →';
-  }
+  wire(prevLink, idx > 0 ? all[idx - 1] : null);
+  wire(nextLink, idx > -1 && idx < all.length - 1 ? all[idx + 1] : null);
 })();

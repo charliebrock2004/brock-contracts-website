@@ -85,7 +85,7 @@
 
     return '' +
       '<article class="project-card" data-category="' + esc(project.category) + '">' +
-        '<div class="project-card__media ratio ratio--4x3">' +
+        '<div class="project-card__media ratio ratio--3x2">' +
           '<img src="' + esc(src) + '" alt="' + esc(alt) + '" loading="lazy" decoding="async">' +
           '<span class="project-card__tag">' + esc(project.category) + '</span>' +
           exampleBadge +

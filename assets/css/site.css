@@ -37,11 +37,12 @@
   --ink:        #1c1d1f;
   --ink-soft:   #34363a;
   --ink-mid:    #55575c;
-  --navy:       #3f4d63;
-  --navy-light: #6c7d97;
+  --navy:       #3a4757;
+  --navy-light: #66768e;
   --navy-pale:  #b9c3d1;
   --paper:      #faf9f7;
-  --paper-dark: #f0ede7;
+  --paper-dark: #f0ece5;
+  --paper-warm: #f5f1ea;
   --line:       #e2ddd0;
   --line-soft:  #ebe6db;
   --grey:       #6f7069;
@@ -49,7 +50,7 @@
 
   /* Fluid type scale — grows with the viewport, no breakpoint jumps. */
   --fs-hero:  clamp(2.05rem, 1.15rem + 3.8vw, 3.55rem);
-  --fs-h2:    clamp(1.7rem,  1.2rem  + 1.9vw, 2.4rem);
+  --fs-h2:    clamp(1.8rem,  1.25rem + 2.1vw, 2.6rem);
   --fs-h3:    clamp(1.12rem, 1rem    + 0.5vw, 1.32rem);
   --fs-lede:  clamp(1rem,    0.96rem + 0.3vw, 1.1rem);
   --fs-body:  0.975rem;
@@ -101,12 +102,27 @@ body {
 h1, h2, h3, h4 {
   font-family: 'Playfair Display', Georgia, 'Times New Roman', serif;
   font-weight: 600;
-  letter-spacing: 0.2px;
-  line-height: 1.22;
+  /* Playfair sets loose at display sizes; pulling the tracking in slightly
+     is what makes it read as set rather than typed. */
+  letter-spacing: -0.012em;
+  line-height: 1.18;
   text-wrap: balance;
 }
+h3, h4 { letter-spacing: -0.004em; line-height: 1.3; }
+
+/* Prose stops at a comfortable measure. Scoped to running copy so it never
+   throws off centred blocks like the empty state or the testimonial. */
+.about-copy p,
+.section-head p,
+.project-description p,
+.contact-copy .lede { max-width: 62ch; }
 
 a { text-decoration: none; color: inherit; }
+
+/* Several components set display via a class (.project-nav__link is block,
+   .lightbox__btn is grid), and a class selector outranks the browser's
+   [hidden] rule. Without this, elements the scripts hide would still show. */
+[hidden] { display: none !important; }
 
 img { max-width: 100%; display: block; }
 
@@ -129,13 +145,26 @@ button { font: inherit; color: inherit; background: none; border: none; cursor: 
 section { padding: var(--section-y) 0; }
 
 .eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
   font-size: var(--fs-eyebrow);
-  letter-spacing: 2.6px;
+  letter-spacing: 2.8px;
   text-transform: uppercase;
   font-weight: 500;
   color: var(--navy);
-  margin-bottom: 18px;
+  margin-bottom: 20px;
 }
+/* A short rule beside the label — a quiet mark of an established firm
+   rather than another coloured pill. */
+.eyebrow::after {
+  content: '';
+  flex: 0 0 34px;
+  height: 1px;
+  background: currentColor;
+  opacity: 0.35;
+}
+.testimonial-section .eyebrow { justify-content: center; }
 
 /* Consistent, crop-safe image frames. Every project photo on the site sits
    in one of these so nothing stretches or letterboxes oddly. */
@@ -166,9 +195,9 @@ section { padding: var(--section-y) 0; }
   align-items: center;
   justify-content: center;
   gap: 10px;
-  padding: 14px 30px;
-  font-size: 0.8rem;
-  letter-spacing: 1.3px;
+  padding: 15px 34px;
+  font-size: 0.78rem;
+  letter-spacing: 1.5px;
   text-transform: uppercase;
   font-weight: 500;
   border: 1px solid transparent;
@@ -181,6 +210,7 @@ section { padding: var(--section-y) 0; }
               transform var(--dur) var(--ease);
 }
 .btn:active { transform: translateY(1px); }
+.btn--dark, .btn--outline, .btn--light, .btn--outline-light { border-radius: 0; }
 
 .btn--dark          { background: var(--ink); color: var(--white); border-color: var(--ink); }
 .btn--dark:hover    { background: var(--navy); border-color: var(--navy); }
@@ -321,7 +351,7 @@ section { padding: var(--section-y) 0; }
   overflow: hidden;
   color: var(--white);
   background: linear-gradient(160deg, #1c1d1f 0%, #2b2f36 55%, #333a45 100%);
-  padding: clamp(84px, 12vw, 148px) 0 clamp(76px, 11vw, 132px);
+  padding: clamp(96px, 13vw, 172px) 0 clamp(88px, 12vw, 152px);
 }
 
 /* Real project photography behind the hero, dimmed enough to keep the
@@ -336,15 +366,17 @@ section { padding: var(--section-y) 0; }
   height: 100%;
   object-fit: cover;
   object-position: center 58%;
-  opacity: 0.42;
+  opacity: 0.62;
 }
 .hero__scrim {
   position: absolute;
   inset: 0;
   z-index: 1;
+  /* Weighted to the left so the headline stays legible while the building
+     itself is still clearly readable on the right. */
   background:
-    linear-gradient(100deg, rgba(20,21,23,0.92) 0%, rgba(20,21,23,0.72) 46%, rgba(20,21,23,0.42) 100%),
-    linear-gradient(to top, rgba(20,21,23,0.75) 0%, rgba(20,21,23,0) 45%);
+    linear-gradient(100deg, rgba(18,19,21,0.90) 0%, rgba(18,19,21,0.66) 42%, rgba(18,19,21,0.20) 100%),
+    linear-gradient(to top, rgba(18,19,21,0.62) 0%, rgba(18,19,21,0) 42%);
 }
 
 .hero .container { position: relative; z-index: 2; }
@@ -481,19 +513,27 @@ section { padding: var(--section-y) 0; }
 }
 .service-card {
   background: var(--paper);
-  padding: clamp(32px, 4vw, 46px) clamp(26px, 3.4vw, 42px);
+  padding: clamp(34px, 4.2vw, 52px) clamp(28px, 3.6vw, 46px);
   transition: background var(--dur) var(--ease);
 }
 .service-card:hover { background: var(--white); }
+/* Small ruled numerals rather than large pale digits — closer to a spec
+   sheet than a marketing template. */
 .service-card__num {
-  font-family: 'Playfair Display', Georgia, serif;
-  font-size: 2.6rem;
-  color: #d9d3c4;
-  font-weight: 600;
+  display: inline-block;
+  font-family: 'Jost', sans-serif;
+  font-size: 0.72rem;
+  letter-spacing: 2px;
+  color: var(--navy);
+  font-weight: 500;
   line-height: 1;
-  margin-bottom: 16px;
-  transition: color var(--dur) var(--ease);
+  padding-bottom: 14px;
+  margin-bottom: 20px;
+  border-bottom: 1px solid var(--line);
+  min-width: 46px;
+  transition: border-color var(--dur) var(--ease);
 }
+.service-card:hover .service-card__num { border-bottom-color: var(--navy-light); }
 .service-card:hover .service-card__num { color: var(--navy-light); }
 .service-card h3 { font-size: var(--fs-h3); color: var(--ink); margin-bottom: 10px; }
 .service-card p { color: var(--grey); font-size: var(--fs-small); max-width: 380px; }
@@ -521,20 +561,21 @@ section { padding: var(--section-y) 0; }
               box-shadow var(--dur) var(--ease),
               border-color var(--dur) var(--ease);
 }
+/* No lift on hover — a settled border and shadow reads more considered
+   than a card that jumps. */
 .project-card:hover {
-  transform: translateY(-3px);
-  box-shadow: var(--shadow-lg);
-  border-color: #d5cfc0;
+  box-shadow: var(--shadow-md);
+  border-color: #cdc6b6;
 }
 
 .project-card__media { position: relative; }
-.project-card__media img { transition: transform 0.5s var(--ease); }
-.project-card:hover .project-card__media img { transform: scale(1.035); }
+.project-card__media img { transition: transform 0.7s var(--ease); }
+.project-card:hover .project-card__media img { transform: scale(1.018); }
 
 .project-card__tag {
   position: absolute;
-  left: 14px;
-  top: 14px;
+  left: 16px;
+  top: 16px;
   z-index: 2;
   background: rgba(250,249,247,0.94);
   color: var(--ink);
@@ -591,7 +632,11 @@ section { padding: var(--section-y) 0; }
 }
 .project-card { position: relative; }
 
-.section--tint { background: var(--paper-dark); }
+.section--tint {
+  background: var(--paper-dark);
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
 
 
 /* 12  Projects listing page
@@ -624,7 +669,7 @@ section { padding: var(--section-y) 0; }
   border-color: var(--ink);
   color: var(--white);
 }
-.filter-count { opacity: 0.55; margin-left: 6px; font-size: 0.72rem; }
+.filter-count { opacity: 0.4; margin-left: 7px; font-size: 0.68rem; }
 
 .empty-state {
   text-align: center;
@@ -651,20 +696,34 @@ section { padding: var(--section-y) 0; }
 .project-hero__meta {
   display: flex;
   flex-wrap: wrap;
-  gap: 10px 28px;
-  margin-top: 24px;
-  padding-top: 22px;
-  border-top: 1px solid rgba(255,255,255,0.16);
+  /* centre, not baseline: the separator dot is the first flex item in each
+     pair, so a baseline alignment would key off the dot and sit crooked. */
+  align-items: center;
+  gap: 0 14px;
+  margin-top: 20px;
+  padding-top: 20px;
+  border-top: 1px solid rgba(255,255,255,0.14);
 }
-.project-hero__meta div { min-width: 120px; }
-.project-hero__meta .label {
-  font-size: 0.7rem;
+/* The structured spec lives in the details panel; up here it only needs to
+   read as one line. Labels stay in the markup for screen readers. */
+.project-hero__meta .label { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+.project-hero__meta .value {
+  color: #d7dce3;
+  font-size: 0.9rem;
   letter-spacing: 1.4px;
   text-transform: uppercase;
-  color: #8b93a0;
-  margin-bottom: 2px;
 }
-.project-hero__meta .value { color: var(--white); font-size: 0.95rem; }
+/* Each pair is its own flex line so the separator dot sits beside the value
+   rather than forming a line box of its own above it. */
+.project-hero__meta > div { display: flex; align-items: center; }
+.project-hero__meta > div + div::before {
+  content: '';
+  flex: 0 0 3px;
+  width: 3px; height: 3px;
+  margin-right: 14px;
+  border-radius: 50%;
+  background: var(--navy-light);
+}
 
 /* Main project photo, pulled up so it overlaps the dark hero. */
 .project-lead {
@@ -685,10 +744,11 @@ section { padding: var(--section-y) 0; }
 .project-description p:last-child { margin-bottom: 0; }
 
 .project-details {
-  background: var(--paper-dark);
-  border: 1px solid var(--line);
-  border-radius: var(--radius);
-  padding: clamp(24px, 3vw, 32px);
+  background: transparent;
+  border: none;
+  border-top: 2px solid var(--ink);
+  border-radius: 0;
+  padding: 22px 0 0;
 }
 .project-details h3 {
   font-size: 0.8rem;
@@ -699,7 +759,8 @@ section { padding: var(--section-y) 0; }
   color: var(--ink);
   margin-bottom: 18px;
 }
-.project-details dl { display: grid; gap: 14px; }
+.project-details dl { display: grid; gap: 0; }
+.project-details dl > div { padding: 13px 0; border-bottom: 1px solid var(--line); }
 .project-details dt {
   font-size: 0.72rem;
   letter-spacing: 1.2px;
@@ -716,7 +777,7 @@ section { padding: var(--section-y) 0; }
 .gallery-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: clamp(14px, 1.8vw, 22px);
+  gap: clamp(14px, 1.6vw, 20px);
 }
 .gallery-item--wide { grid-column: 1 / -1; }
 
@@ -768,12 +829,30 @@ section { padding: var(--section-y) 0; }
 .project-nav {
   display: flex;
   justify-content: space-between;
-  gap: 20px;
+  gap: 24px;
   flex-wrap: wrap;
   border-top: 1px solid var(--line);
-  padding-top: 30px;
+  padding-top: 32px;
   margin-top: clamp(40px, 5vw, 64px);
 }
+.project-nav__link { display: block; max-width: 46%; }
+.project-nav__link:last-child { text-align: right; margin-left: auto; }
+.project-nav__eyebrow {
+  display: block;
+  font-size: 0.68rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--grey);
+  margin-bottom: 7px;
+}
+.project-nav__title {
+  display: block;
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 1.12rem;
+  color: var(--ink);
+  transition: color var(--dur) var(--ease);
+}
+.project-nav__link:hover .project-nav__title { color: var(--navy); }
 
 
 /* 14  Lightbox
@@ -842,24 +921,33 @@ section { padding: var(--section-y) 0; }
 
 /* 15  Testimonial
    ========================================================================== */
+/* Set on cream rather than ink. Three dark bands in a row at the foot of
+   the homepage read as one mass; this gives the page somewhere to breathe. */
 .testimonial-section {
-  background: var(--ink);
-  color: var(--white);
+  background: var(--paper-warm);
+  color: var(--ink);
   text-align: center;
   padding: var(--section-y) 0;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
 }
-.testimonial-section .eyebrow { color: var(--navy-pale); }
+.testimonial-section .eyebrow { color: var(--navy); }
 .testimonial-quote {
   font-family: 'Playfair Display', Georgia, serif;
   font-style: italic;
   font-weight: 500;
-  font-size: clamp(1.25rem, 1rem + 1.3vw, 1.7rem);
-  max-width: 760px;
-  margin: 20px auto 22px;
-  color: #e9e8e4;
-  line-height: 1.55;
+  font-size: clamp(1.3rem, 1rem + 1.4vw, 1.8rem);
+  max-width: 780px;
+  margin: 22px auto 24px;
+  color: var(--ink);
+  line-height: 1.5;
 }
-.testimonial-author { color: #9a9c98; font-size: var(--fs-small); letter-spacing: 0.5px; }
+.testimonial-author {
+  color: var(--grey);
+  font-size: 0.78rem;
+  letter-spacing: 1.6px;
+  text-transform: uppercase;
+}
 
 
 /* 16  CTA band
@@ -927,7 +1015,7 @@ section { padding: var(--section-y) 0; }
 
 /* 18  Footer
    ========================================================================== */
-.site-footer { background: #17181a; color: #a6a8a4; padding: clamp(48px, 6vw, 68px) 0 26px; }
+.site-footer { background: #17181a; color: #a6a8a4; padding: clamp(56px, 7vw, 84px) 0 28px; }
 .footer-grid {
   display: grid;
   grid-template-columns: 1.4fr 1fr 1fr;
@@ -955,8 +1043,9 @@ section { padding: var(--section-y) 0; }
 .site-footer a { transition: color var(--dur) var(--ease); }
 .site-footer a:hover { color: var(--white); }
 .footer-bottom {
-  border-top: 1px solid rgba(255,255,255,0.08);
-  padding-top: 20px;
+  border-top: 1px solid rgba(255,255,255,0.09);
+  padding-top: 24px;
+  letter-spacing: 0.3px;
   text-align: center;
   font-size: 0.78rem;
   color: #6c6e69;
