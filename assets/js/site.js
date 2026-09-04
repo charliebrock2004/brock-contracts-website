@@ -13,22 +13,16 @@
 
   var BC = window.BC = window.BC || {};
 
-
-  /* ---- helpers --------------------------------------------------------- */
-
-  /* Text from the data file is inserted as HTML, so escape it. Keeps
-     ampersands and quotes in project titles from breaking the markup. */
   function esc(value) {
     return String(value == null ? '' : value)
-      .replace(/&/g, '&amp;')
-      .replace(/</g, '&lt;')
-      .replace(/>/g, '&gt;')
-      .replace(/"/g, '&quot;')
+      .replace(/&/g, '&')
+      .replace(/</g, '<')
+      .replace(/>/g, '>')
+      .replace(/"/g, '"')
       .replace(/'/g, '&#39;');
   }
   BC.esc = esc;
 
-  /* Falls back to the placeholder graphic when a photo has not been added. */
   function imageSrc(image) {
     var fallback = (typeof PLACEHOLDER_IMAGE !== 'undefined')
       ? PLACEHOLDER_IMAGE
@@ -65,15 +59,11 @@
   BC.ICON_PIN = ICON_PIN;
   BC.ICON_ARROW = ICON_ARROW;
 
-
-  /* ---- project card ---------------------------------------------------- */
-
-  /* One card, used on both the homepage preview and the Projects page, so the
-     two can never drift apart. */
-  BC.projectCard = function (project) {
+  BC.projectCard = function (project, index) {
     var href = 'project.html?p=' + encodeURIComponent(project.slug);
     var src = imageSrc(project.mainImage);
     var alt = imageAlt(project.mainImage, project.title + ' — Brock Contracts');
+    var num = String((index == null ? 0 : index) + 1).padStart(2, '0');
 
     var exampleBadge = project.isExample
       ? '<span class="project-card__example">Example</span>'
@@ -90,7 +80,10 @@
           exampleBadge +
         '</div>' +
         '<div class="project-card__body">' +
-          '<span class="project-card__tag">' + esc(project.category) + '</span>' +
+          '<div class="project-card__meta">' +
+            '<span class="project-card__index">' + num + '</span>' +
+            '<span class="project-card__tag">' + esc(project.category) + '</span>' +
+          '</div>' +
           '<h3 class="project-card__title">' + esc(project.title) + '</h3>' +
           '<p class="project-card__location">' + ICON_PIN + esc(project.location) + '</p>' +
           '<p class="project-card__summary">' + esc(project.summary) + '</p>' +
@@ -104,9 +97,6 @@
         '</div>' +
       '</article>';
   };
-
-
-  /* ---- mobile navigation ----------------------------------------------- */
 
   function initNav() {
     var header = document.querySelector('.site-header');
@@ -122,11 +112,9 @@
     toggle.addEventListener('click', function () {
       var open = header.classList.toggle('nav-open');
       toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
-      /* The panel is full height, so stop the page scrolling behind it. */
       document.body.classList.toggle('no-scroll', open);
     });
 
-    /* Close after tapping a link, otherwise the panel covers the target. */
     header.addEventListener('click', function (e) {
       if (e.target.closest('.nav-list a, .call-pill')) close();
     });
@@ -139,14 +127,10 @@
       if (e.key === 'Escape') close();
     });
 
-    /* Reset when resizing back up to the desktop layout. */
     window.addEventListener('resize', function () {
       if (window.innerWidth > 900) close();
     });
   }
-
-
-  /* ---- sticky header shadow -------------------------------------------- */
 
   function initHeaderScroll() {
     var header = document.querySelector('.site-header');
@@ -163,19 +147,11 @@
     update();
   }
 
-
-  /* ---- footer year ------------------------------------------------------ */
-
   function initYear() {
     var el = document.querySelector('[data-year]');
     if (el) el.textContent = new Date().getFullYear();
   }
 
-
-  /* ---- lightbox --------------------------------------------------------- */
-
-  /* Call BC.initLightbox() after gallery items are in the DOM. Each item must
-     carry data-full (image URL) and may carry data-caption. */
   BC.initLightbox = function () {
     var items = Array.prototype.slice.call(document.querySelectorAll('[data-lightbox]'));
     if (!items.length) return;
@@ -212,7 +188,6 @@
     var prevBtn   = box.querySelector('.lightbox__prev');
     var nextBtn   = box.querySelector('.lightbox__next');
 
-    /* Arrows are pointless with a single photo. */
     var multiple = items.length > 1;
     prevBtn.hidden = !multiple;
     nextBtn.hidden = !multiple;
@@ -253,7 +228,6 @@
     prevBtn.addEventListener('click', function () { show(index - 1); });
     nextBtn.addEventListener('click', function () { show(index + 1); });
 
-    /* Click the backdrop (not the photo or a button) to dismiss. */
     box.addEventListener('click', function (e) {
       if (e.target === box || e.target.classList.contains('lightbox__figure')) close();
     });
@@ -264,7 +238,6 @@
       else if (multiple && e.key === 'ArrowLeft') show(index - 1);
       else if (multiple && e.key === 'ArrowRight') show(index + 1);
       else if (e.key === 'Tab') {
-        /* Keep focus inside the dialog while it is open. */
         var focusables = Array.prototype.slice
           .call(box.querySelectorAll('button'))
           .filter(function (b) { return !b.hidden; });
@@ -275,7 +248,6 @@
       }
     });
 
-    /* Swipe between photos on touch devices. */
     var startX = null;
     box.addEventListener('touchstart', function (e) { startX = e.changedTouches[0].clientX; }, { passive: true });
     box.addEventListener('touchend', function (e) {
@@ -286,21 +258,18 @@
     }, { passive: true });
   };
 
-
-  /* ---- section reveal ---------------------------------------------------- */
-
-  /* A short fade-and-rise as each block first comes into view. Applied from
-     script so that with JS off, or reduced motion on, nothing is ever hidden.
-     Blocks are selected rather than tagged in the markup, so project pages
-     added later pick this up with no extra work. */
   var REVEAL_SELECTOR = [
     '.section-head',
+    '.about-media',
     '.about-grid',
     '.services-grid',
+    '.trust-strip .container',
     '.project-grid',
     '.gallery-grid',
     '.project-body',
-    '.footer-lead'
+    '.project-lead',
+    '.contact-grid',
+    '.footer-grid'
   ].join(', ');
 
   function initReveal() {
@@ -326,9 +295,6 @@
     });
   }
   BC.initReveal = initReveal;
-
-
-  /* ---- boot -------------------------------------------------------------- */
 
   function init() {
     initNav();

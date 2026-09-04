@@ -27,5 +27,10 @@
     return;
   }
 
-  grid.innerHTML = list.map(BC.projectCard).join('');
+  grid.innerHTML = list.map(function (project, i) {
+    return BC.projectCard(project, i);
+  }).join('');
+
+  var first = grid.querySelector('.project-card');
+  if (first) first.classList.add('project-card--lead');
 })();
