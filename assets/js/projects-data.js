@@ -93,8 +93,7 @@ const PROJECTS = [
     description: [
       'Sierras is a new build family home in Perthshire, completed by Brock Contracts and finished throughout with fitted joinery.',
       'The open plan kitchen is built around a large island with breakfast bar seating and quartz worktops, opening onto a living space with a media wall and inset fire. Crittall-style glazed doors run between the hall and living areas to keep light moving through the middle of the house.',
-      'The entrance hall carries bespoke painted joinery — full height storage, a fitted boot room bench and hanging — with a separate utility fitted to match the kitchen, and tiled bathrooms with wall hung vanity units.',
-      'Add any further detail here about the build: the timescale, the specification, and anything about the site that made the job particularly interesting.'
+      'The entrance hall carries bespoke painted joinery — full height storage, a fitted boot room bench and hanging — with a separate utility fitted to match the kitchen, and tiled bathrooms with wall hung vanity units.'
     ],
 
     details: [
@@ -132,9 +131,10 @@ const PROJECTS = [
       alt: 'Completed new build house by Brock Contracts in Perthshire'
     },
 
+    /* Only one paragraph so far. Add more as real detail becomes available —
+       scope, materials, timescale, anything notable about the site. */
     description: [
-      'A full new build family home in Perthshire, taken from foundations through to finished joinery.',
-      'Add more detail here about the scope of the work, the materials used, and anything that made the job particularly interesting — the challenges of the site, a bespoke staircase, the timber specification. A few honest sentences about how the job was run reads far better than marketing language.'
+      'A full new build family home in Perthshire, taken from foundations through to finished joinery.'
     ],
 
     /* Location, Category and Completed are shown automatically — you only
@@ -144,68 +144,6 @@ const PROJECTS = [
     ],
 
     /* Extra photos of this project go here as you scan or take them. */
-    gallery: []
-  },
-
-
-  /* ------------------------------------------------------------------
-     EXAMPLE ENTRIES — these show the system working and are clearly
-     labelled "Example" on the site so no visitor mistakes them for
-     completed jobs.
-
-     Delete each one as you replace it with a real project.
-     ------------------------------------------------------------------ */
-  {
-    slug: 'example-rear-extension',
-    title: 'Single Storey Rear Extension',
-    location: 'Crieff, Perthshire',
-    category: 'Extensions',
-    isExample: true,
-    completed: '',
-    summary: 'Example entry showing how an extension project will appear. Replace this with a real Brock Contracts project and photographs.',
-    description: [
-      'This is an example project entry. It exists so you can see how the Projects section looks and behaves before your own photographs are added.',
-      'To replace it, open assets/js/projects-data.js, find this block, and swap in the real title, location, description and photos. Delete the isExample line once it holds real work.'
-    ],
-    details: [
-      { label: 'Scope', value: 'Example — replace with real project scope' }
-    ],
-    gallery: []
-  },
-
-  {
-    slug: 'example-cottage-renovation',
-    title: 'Traditional Cottage Renovation',
-    location: 'Comrie, Perthshire',
-    category: 'Renovations',
-    isExample: true,
-    summary: 'Example entry showing how a renovation project will appear, including a multi-photo gallery.',
-    description: [
-      'This is an example project entry, included to demonstrate the gallery layout with several photographs.',
-      'Replace the text and images with a real renovation once you have the photographs together.'
-    ],
-    details: [
-      { label: 'Scope', value: 'Example — replace with real project scope' }
-    ],
-    /* Empty entries here render as placeholder tiles, so you can see how a
-       multi-photo gallery lays out before the real photos exist. */
-    gallery: [
-      { src: '', alt: 'Placeholder — add a project photograph here' },
-      { src: '', alt: 'Placeholder — add a project photograph here' },
-      { src: '', alt: 'Placeholder — add a project photograph here' }
-    ]
-  },
-
-  {
-    slug: 'example-bespoke-joinery',
-    title: 'Bespoke Fitted Joinery',
-    location: 'Strathearn, Perthshire',
-    category: 'Joinery',
-    isExample: true,
-    summary: 'Example entry showing how a joinery project will appear on the site.',
-    description: [
-      'This is an example project entry. Replace it with a real joinery job — a staircase, fitted units, or bespoke doors.'
-    ],
     gallery: []
   }
 

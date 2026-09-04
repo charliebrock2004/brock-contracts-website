@@ -54,7 +54,16 @@
 
   function buildFilters() {
     if (!filterBar) return;
-    var cats = [ALL].concat(usedCategories());
+    var used = usedCategories();
+
+    /* A filter offering one category is not a filter. It reappears on its own
+       as soon as a project in a second category is added. */
+    if (used.length < 2) {
+      filterBar.hidden = true;
+      return;
+    }
+
+    var cats = [ALL].concat(used);
 
     filterBar.innerHTML = cats.map(function (cat) {
       var isActive = cat === active;
