@@ -72,6 +72,44 @@ const PLACEHOLDER_IMAGE = 'images/placeholder.svg';
 const PROJECTS = [
 
   /* ------------------------------------------------------------------
+     GARAGE — new build, Perthshire. Currently on site.
+     Photographs in images/projects/garage/. Add further ones to the
+     gallery array below as the build progresses.
+     ------------------------------------------------------------------ */
+  {
+    slug: 'garage',
+    title: 'Garage',
+    location: 'Perthshire',
+    category: 'New Builds',
+    featured: true,
+    summary: 'A new garage under construction in Perthshire, currently at the timber frame and roofing stage.',
+
+    mainImage: {
+      src: 'images/projects/garage/garage-02.jpg',
+      alt: 'Interior of the new garage at Perthshire, showing the trussed roof over the sheathed timber frame'
+    },
+
+    description: [
+      'A new garage under construction in Perthshire, currently progressing through the timber structural stage.',
+      'The photographs show the work as it stands: the trussed roof erected over the timber frame, the walls sheathed and closed in, and insulation being fitted to the walls and roof with plasterboard on site for lining out. Further photographs will be added here as the build progresses.'
+    ],
+
+    details: [
+      { label: 'Status', value: 'In progress' },
+      { label: 'Stage',  value: 'Timber frame, roof structure and insulation' }
+    ],
+
+    /* Portrait photographs declare their ratio so they are framed upright and
+       uncropped, rather than squeezed into a landscape tile. These two are
+       3:4, straight off a phone. */
+    gallery: [
+      { src: 'images/projects/garage/garage-01.jpg', ratio: '3x4', alt: 'Roof trusses erected over the timber frame of the new garage, with the walls sheathed', caption: 'Roof trusses erected over the timber frame' },
+      { src: 'images/projects/garage/garage-03.jpg', ratio: '3x4', alt: 'Insulation fitted between the studs and roof timbers of the garage, with plasterboard stacked on the floor', caption: 'Insulation to the walls and roof, ahead of lining out' }
+    ]
+  },
+
+
+  /* ------------------------------------------------------------------
      SIERRAS — new build, Perthshire.
      Photographs live in images/projects/sierras/
      ------------------------------------------------------------------ */

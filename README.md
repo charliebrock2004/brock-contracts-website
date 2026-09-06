@@ -68,6 +68,24 @@ its own page with a working photo gallery. **Nothing else needs editing.**
 
 Newest projects go at the **top** of the list.
 
+### Portrait photographs
+
+Phone photos are often portrait. Add `ratio` to a gallery entry so the frame
+matches the photograph and nothing is cropped:
+
+```js
+gallery: [
+  { src: 'images/projects/garage/garage-01.jpg', ratio: '3x4', alt: '...' }
+]
+```
+
+`3x4` is a standard phone portrait; `2x3` and `4x5` also work. Leave `ratio`
+out for normal landscape photos. Portrait photos are never run full width in
+the mosaic — at that size they would tower over everything else.
+
+If a photo arrives sideways, it is carrying an EXIF rotation tag. Rotate it
+before adding it so the file itself is the right way up.
+
 ### The gallery lays itself out
 
 You don't choose which photos go large. The gallery is a two-column mosaic
@@ -94,6 +112,7 @@ Two, both genuine:
 
 | Project | Category | Photos |
 |---|---|---|
+| Garage (in progress) | New Builds | 1 main + 2 gallery |
 | Sierras | New Builds | 1 main + 8 gallery |
 | New Build Family Home | New Builds | 1 main |
 
