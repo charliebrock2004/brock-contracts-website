@@ -81,7 +81,9 @@ const PROJECTS = [
     title: 'Garage',
     location: 'Perthshire',
     category: 'New Builds',
-    featured: true,
+    /* Stays first in the list as the newest project, but off the homepage
+       preview while it is unfinished. */
+    featured: false,
     summary: 'A new garage under construction in Perthshire, currently at the timber frame and roofing stage.',
 
     mainImage: {
