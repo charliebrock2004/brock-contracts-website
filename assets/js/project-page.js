@@ -121,21 +121,36 @@
      full, pair... If that would leave the last photo sitting alone in a
      half-width slot, it is widened too, so the grid never ends ragged.
      Works for any number of photos. */
-  function galleryLayout(count) {
+  /* A photo may declare an upright ratio, e.g. ratio: '3x4' (a standard
+     phone portrait) or '2x3'. Anything else uses the landscape 3:2 frame the
+     rest of the site is built on. Matching the frame to the photograph is
+     what keeps it uncropped. */
+  var PORTRAIT_RATIOS = ['2x3', '3x4', '4x5'];
+  function isPortrait(photo) {
+    return !!(photo && PORTRAIT_RATIOS.indexOf(photo.ratio) !== -1);
+  }
+  function frameClass(photo) {
+    return 'ratio--' + ((photo && photo.ratio) || '3x2');
+  }
+
+  function galleryLayout(photos) {
+    var count = photos.length;
     var wide = new Array(count);
     var col = 0;                       // 0 = start of a row, 1 = half filled
     for (var i = 0; i < count; i++) {
-      var isWide = (i % 5 === 0);
+      // A portrait photograph is never run full width — at that scale it
+      // would tower over everything around it.
+      var isWide = (i % 5 === 0) && !isPortrait(photos[i]);
       wide[i] = isWide;
       col = isWide ? 0 : (col === 0 ? 1 : 0);
     }
-    if (col === 1) wide[count - 1] = true;
+    if (col === 1 && !isPortrait(photos[count - 1])) wide[count - 1] = true;
     return wide;
   }
 
   if (galleryGrid && gallery.length) {
     if (gallerySection) gallerySection.hidden = false;
-    var wideFlags = galleryLayout(gallery.length);
+    var wideFlags = galleryLayout(gallery);
 
     galleryGrid.innerHTML = gallery.map(function (photo, i) {
       var src = BC.imageSrc(photo);
@@ -146,7 +161,7 @@
         ? '<span class="gallery-item__caption">' + esc(caption) + '</span>'
         : '';
       return '' +
-        '<button class="gallery-item ratio ratio--3x2' + wideClass + '" type="button"' +
+        '<button class="gallery-item ratio ' + frameClass(photo) + wideClass + '" type="button"' +
           ' data-lightbox data-full="' + esc(src) + '"' +
           ' data-alt="' + esc(alt) + '"' +
           ' data-caption="' + esc(caption) + '"' +
