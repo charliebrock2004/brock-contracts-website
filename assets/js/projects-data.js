@@ -78,13 +78,13 @@ const PROJECTS = [
      ------------------------------------------------------------------ */
   {
     slug: 'garage',
-    title: 'Garage',
+    title: 'Garage Auchterarder',
     location: 'Perthshire',
     category: 'New Builds',
     /* Stays first in the list as the newest project, but off the homepage
        preview while it is unfinished. */
     featured: false,
-    summary: 'A new garage under construction in Perthshire, currently at the timber frame and roofing stage.',
+    summary: 'A new garage under construction in Perthshire, now wrapped externally and lined out internally.',
 
     mainImage: {
       src: 'images/projects/garage/garage-02.jpg',
@@ -92,13 +92,13 @@ const PROJECTS = [
     },
 
     description: [
-      'A new garage under construction in Perthshire, currently progressing through the timber structural stage.',
-      'The photographs show the work as it stands: the trussed roof erected over the timber frame, the walls sheathed and closed in, and insulation being fitted to the walls and roof with plasterboard on site for lining out. Further photographs will be added here as the build progresses.'
+      'A new garage under construction in Perthshire, progressing from the timber structural stage through to internal lining.',
+      'The photographs show the work as it stands: the trussed roof erected over the timber frame, the walls sheathed and wrapped externally, insulation fitted to the walls and roof, and the interior now lined out in plasterboard. Further photographs will be added here as the build progresses.'
     ],
 
     details: [
       { label: 'Status', value: 'In progress' },
-      { label: 'Stage',  value: 'Timber frame, roof structure and insulation' }
+      { label: 'Stage',  value: 'Timber frame, roof structure, insulation and plasterboard lining' }
     ],
 
     /* Portrait photographs declare their ratio so they are framed upright and
@@ -106,7 +106,9 @@ const PROJECTS = [
        3:4, straight off a phone. */
     gallery: [
       { src: 'images/projects/garage/garage-01.jpg', ratio: '3x4', alt: 'Roof trusses erected over the timber frame of the new garage, with the walls sheathed', caption: 'Roof trusses erected over the timber frame' },
-      { src: 'images/projects/garage/garage-03.jpg', ratio: '3x4', alt: 'Insulation fitted between the studs and roof timbers of the garage, with plasterboard stacked on the floor', caption: 'Insulation to the walls and roof, ahead of lining out' }
+      { src: 'images/projects/garage/garage-03.jpg', ratio: '3x4', alt: 'Insulation fitted between the studs and roof timbers of the garage, with plasterboard stacked on the floor', caption: 'Insulation to the walls and roof, ahead of lining out' },
+      { src: 'images/projects/garage/garage-04.jpg', ratio: '4x3', alt: 'Interior of the garage at Auchterarder with the walls and ceiling lined out in plasterboard over the concrete floor', caption: 'Walls and ceiling lined out in plasterboard' },
+      { src: 'images/projects/garage/garage-05.jpg', ratio: '4x3', alt: 'The garage at Auchterarder from outside, wrapped in breather membrane with the roof formed and the door opening framed', caption: 'Wrapped externally, with the roof formed' }
     ]
   },
 
@@ -117,21 +119,21 @@ const PROJECTS = [
      ------------------------------------------------------------------ */
   {
     slug: 'sierras',
-    title: 'Sierras',
+    title: 'Renovation Auchterarder',
     location: 'Perthshire',
     category: 'New Builds',
     featured: true,
-    summary: 'A new build family home in Perthshire, finished throughout with bespoke joinery, a handmade kitchen and fitted utility, boot room and bathrooms.',
+    summary: 'A family home in Auchterarder, finished throughout with bespoke joinery, a handmade kitchen and fitted utility, boot room and bathrooms.',
 
     /* The strongest single image — used for the project card and the large
        image at the top of the project page. */
     mainImage: {
       src: 'images/projects/sierras/kitchen-01.jpg',
-      alt: 'Open plan kitchen at Sierras with a large island, breakfast bar seating and pendant lighting'
+      alt: 'Open plan kitchen at Auchterarder with a large island, breakfast bar seating and pendant lighting'
     },
 
     description: [
-      'Sierras is a new build family home in Perthshire, completed by Brock Contracts and finished throughout with fitted joinery.',
+      'A family home in Auchterarder, Perthshire, completed by Brock Contracts and finished throughout with fitted joinery.',
       'The open plan kitchen is built around a large island with breakfast bar seating and quartz worktops, opening onto a living space with a media wall and inset fire. Crittall-style glazed doors run between the hall and living areas to keep light moving through the middle of the house.',
       'The entrance hall carries bespoke painted joinery — full height storage, a fitted boot room bench and hanging — with a separate utility fitted to match the kitchen, and tiled bathrooms with wall hung vanity units.'
     ],
@@ -143,14 +145,14 @@ const PROJECTS = [
     /* Ordered as a walk through the house: entrance, hall, living, kitchen,
        utility, bathrooms. */
     gallery: [
-      { src: 'images/projects/sierras/hallway-02.jpg', alt: 'Entrance hall at Sierras with a dark composite front door and fitted sage green storage', caption: 'Entrance hall with fitted storage' },
-      { src: 'images/projects/sierras/hallway-01.jpg', alt: 'Boot room at Sierras with a fitted bench, coat hooks and panelled joinery in sage green', caption: 'Bespoke boot room joinery' },
-      { src: 'images/projects/sierras/lounge-01.jpg', alt: 'Living room at Sierras with a media wall, inset fire and Crittall-style glazed doors', caption: 'Living room media wall and inset fire' },
-      { src: 'images/projects/sierras/lounge-02.jpg', alt: 'Second view of the living space at Sierras looking back towards the glazed internal doors', caption: 'Living space and internal glazing' },
-      { src: 'images/projects/sierras/kitchen-02.jpg', alt: 'Kitchen at Sierras seen from the sink run, showing the island and shaker wall units', caption: 'Kitchen island and shaker units' },
-      { src: 'images/projects/sierras/utility-01.jpg', alt: 'Utility room at Sierras with fitted units, Belfast sink and a ceiling airer', caption: 'Fitted utility room' },
-      { src: 'images/projects/sierras/bathroom-01.jpg', alt: 'Bathroom at Sierras with a wall hung green vanity, countertop basin and round mirror', caption: 'Bathroom with wall hung vanity' },
-      { src: 'images/projects/sierras/bathroom-02.jpg', alt: 'Shower room at Sierras with a walk in shower, navy vanity unit and heated towel rail', caption: 'Shower room' }
+      { src: 'images/projects/sierras/hallway-02.jpg', alt: 'Entrance hall at Auchterarder with a dark composite front door and fitted sage green storage', caption: 'Entrance hall with fitted storage' },
+      { src: 'images/projects/sierras/hallway-01.jpg', alt: 'Boot room at Auchterarder with a fitted bench, coat hooks and panelled joinery in sage green', caption: 'Bespoke boot room joinery' },
+      { src: 'images/projects/sierras/lounge-01.jpg', alt: 'Living room at Auchterarder with a media wall, inset fire and Crittall-style glazed doors', caption: 'Living room media wall and inset fire' },
+      { src: 'images/projects/sierras/lounge-02.jpg', alt: 'Second view of the living space at Auchterarder looking back towards the glazed internal doors', caption: 'Living space and internal glazing' },
+      { src: 'images/projects/sierras/kitchen-02.jpg', alt: 'Kitchen at Auchterarder seen from the sink run, showing the island and shaker wall units', caption: 'Kitchen island and shaker units' },
+      { src: 'images/projects/sierras/utility-01.jpg', alt: 'Utility room at Auchterarder with fitted units, Belfast sink and a ceiling airer', caption: 'Fitted utility room' },
+      { src: 'images/projects/sierras/bathroom-01.jpg', alt: 'Bathroom at Auchterarder with a wall hung green vanity, countertop basin and round mirror', caption: 'Bathroom with wall hung vanity' },
+      { src: 'images/projects/sierras/bathroom-02.jpg', alt: 'Shower room at Auchterarder with a walk in shower, navy vanity unit and heated towel rail', caption: 'Shower room' }
     ]
   },
 
@@ -160,7 +162,7 @@ const PROJECTS = [
      ------------------------------------------------------------------ */
   {
     slug: 'new-build-perthshire',
-    title: 'New Build Family Home',
+    title: 'New Build Dunkeld',
     location: 'Perthshire',
     category: 'New Builds',
     featured: true,

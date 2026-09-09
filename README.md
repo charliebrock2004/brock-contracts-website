@@ -112,9 +112,9 @@ Two, both genuine:
 
 | Project | Category | Photos |
 |---|---|---|
-| Garage (in progress) | New Builds | 1 main + 2 gallery |
-| Sierras | New Builds | 1 main + 8 gallery |
-| New Build Family Home | New Builds | 1 main |
+| Garage Auchterarder (in progress) | New Builds | 1 main + 4 gallery |
+| Renovation Auchterarder | New Builds | 1 main + 8 gallery |
+| New Build Dunkeld | New Builds | 1 main |
 
 There is deliberately no filler. The Projects page hides its category filter
 until projects span at least two categories, so it never shows a filter with
@@ -166,7 +166,7 @@ best — the frame is full-bleed and crops to the viewport.
 
 ## Adding an exterior photo to an existing project
 
-No different from any other photo. For a Sierras exterior:
+No different from any other photo. For an exterior of the Auchterarder renovation:
 
 1. Save it as `images/projects/sierras/exterior-01.jpg`.
 2. Either add it to the `gallery` array, or make it the `mainImage` and move
@@ -179,7 +179,7 @@ The gallery lays itself out for any number of photos, so nothing else changes.
 - Add a genuine client review (see the TESTIMONIAL comment in `index.html`;
   the styles are already written).
 - Add a `<link rel="canonical">` to each page once the final domain is settled.
-- Confirm whether Sierras and New Build Family Home are the same property.
+- Confirm whether Renovation Auchterarder and New Build Dunkeld are the same property.
 
 ---
 
