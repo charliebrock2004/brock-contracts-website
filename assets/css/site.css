@@ -193,6 +193,7 @@ section { padding: var(--section-y) 0; }
 .ratio--3x4  { aspect-ratio: 3 / 4; }
 .ratio--3x2  { aspect-ratio: 3 / 2; }
 .ratio--16x9 { aspect-ratio: 16 / 9; }
+.ratio--9x16 { aspect-ratio: 9 / 16; }
 .ratio--21x9 { aspect-ratio: 21 / 9; }
 .ratio--1x1  { aspect-ratio: 1 / 1; }
 
@@ -970,6 +971,26 @@ section { padding: var(--section-y) 0; }
 .gallery-item:hover .gallery-item__zoom,
 .gallery-item:focus-visible .gallery-item__zoom { opacity: 1; transform: scale(1); }
 
+/* Project video — the browser's own player, given a sensible maximum width
+   so an upright phone clip does not run the full page height. The video keeps
+   its own proportions: width is set, height is left to follow. */
+.project-video { display: flex; flex-direction: column; align-items: center; }
+.project-video__player {
+  display: block;
+  width: 100%;
+  max-width: 760px;
+  height: auto;
+  background: var(--paper-dark);
+}
+.project-video--upright .project-video__player { max-width: 400px; }
+.project-video__caption {
+  margin: 16px 0 0;
+  font-size: 0.82rem;
+  letter-spacing: 0.3px;
+  color: var(--grey);
+  text-align: center;
+}
+
 .project-nav {
   display: flex;
   justify-content: space-between;
@@ -1050,6 +1071,10 @@ section { padding: var(--section-y) 0; }
 
 .lightbox__btn {
   position: absolute;
+  /* The photograph is transformed (it scales in), which lifts it into the
+     same paint layer as these buttons. Without this it would cover the close
+     button on a phone, where a tall photo fills the screen corner to corner. */
+  z-index: 2;
   width: 52px;
   height: 52px;
   display: grid;
