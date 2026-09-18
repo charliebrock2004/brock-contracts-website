@@ -125,7 +125,7 @@
      phone portrait) or '2x3'. Anything else uses the landscape 3:2 frame the
      rest of the site is built on. Matching the frame to the photograph is
      what keeps it uncropped. */
-  var PORTRAIT_RATIOS = ['2x3', '3x4', '4x5'];
+  var PORTRAIT_RATIOS = ['2x3', '3x4', '4x5', '9x16'];
   function isPortrait(photo) {
     return !!(photo && PORTRAIT_RATIOS.indexOf(photo.ratio) !== -1);
   }
@@ -181,6 +181,67 @@
        empty heading. */
     gallerySection.hidden = true;
   }
+
+  /* ---- video ------------------------------------------------------------
+     Optional. A project may carry one short clip:
+
+       video: { src, poster, ratio, label, caption }
+
+     It is played with the browser's own controls — no custom player, no
+     library, nothing to load. The section is built here rather than sitting
+     empty in the HTML, so a project without a video costs nothing.
+
+     src     the .mp4. H.264 + AAC in an .mp4 is the one combination every
+             desktop and mobile browser plays without a plugin.
+     poster  a still shown before playback starts. Optional but worth it —
+             without one the player is a black rectangle.
+     ratio   as in the gallery, e.g. '9x16' for a phone clip held upright.
+             Only used to decide how wide the player may run.
+     label   heading for the section.
+     caption a line underneath. Optional.
+     ------------------------------------------------------------------------ */
+  var video = project.video;
+  if (video && video.src && article) {
+    var videoSection = document.createElement('section');
+    videoSection.id = 'project-video-section';
+
+    var label = video.label || (project.title + ' \u2014 video');
+    var poster = video.poster
+      ? ' poster="' + esc(video.poster) + '"'
+      : '';
+    var captionEl = video.caption
+      ? '<p class="project-video__caption">' + esc(video.caption) + '</p>'
+      : '';
+
+    videoSection.innerHTML = '' +
+      '<div class="container">' +
+        '<div class="section-head">' +
+          '<p class="eyebrow">Video</p>' +
+          '<h2>' + esc(label) + '</h2>' +
+        '</div>' +
+        '<div class="project-video' + (isPortrait(video) ? ' project-video--upright' : '') + '">' +
+          '<video class="project-video__player" controls playsinline preload="metadata"' +
+            poster + ' aria-label="' + esc(label) + '">' +
+            '<source src="' + esc(video.src) + '" type="video/mp4">' +
+            '<p>Your browser cannot play this video. ' +
+              '<a href="' + esc(video.src) + '">Download it instead</a>.</p>' +
+          '</video>' +
+          captionEl +
+        '</div>' +
+      '</div>';
+
+    /* Sits under the gallery where there is one, otherwise where the
+       gallery would have been. */
+    var after = gallerySection && !gallerySection.hidden ? gallerySection : null;
+    if (after && after.parentNode) {
+      after.parentNode.insertBefore(videoSection, after.nextSibling);
+    } else if (gallerySection && gallerySection.parentNode) {
+      gallerySection.parentNode.insertBefore(videoSection, gallerySection);
+    } else {
+      article.appendChild(videoSection);
+    }
+  }
+
 
   /* ---- next / previous -------------------------------------------------- */
   var all = BC.projects();

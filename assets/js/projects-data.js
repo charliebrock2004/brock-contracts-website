@@ -45,6 +45,11 @@
                   the card image. If omitted, a placeholder graphic is used.
      gallery      Array of { src, alt, caption } — additional photos.
                   Add as many as you like; the grid handles any number.
+     video        { src, poster, ratio, label, caption } — one short clip,
+                  shown under the gallery with the browser's own controls.
+                  src must be an .mp4 (H.264 video, AAC audio) so it plays
+                  everywhere. poster is the still shown before it starts.
+                  ratio: '9x16' for a phone clip held upright.
 
    ALT TEXT: describe the photo in a few words. It is read aloud by screen
    readers and shown if an image ever fails to load. Worth doing properly.
@@ -61,6 +66,7 @@ const CATEGORIES = [
   'Commercial',
   'Joinery',
   'Roofing',
+  'Flooring',
   'General Building'
 ];
 
@@ -110,6 +116,55 @@ const PROJECTS = [
       { src: 'images/projects/garage/garage-04.jpg', ratio: '4x3', alt: 'Interior of the garage at Auchterarder with the walls and ceiling lined out in plasterboard over the concrete floor', caption: 'Walls and ceiling lined out in plasterboard' },
       { src: 'images/projects/garage/garage-05.jpg', ratio: '4x3', alt: 'The garage at Auchterarder from outside, wrapped in breather membrane with the roof formed and the door opening framed', caption: 'Wrapped externally, with the roof formed' }
     ]
+  },
+
+
+  /* ------------------------------------------------------------------
+     FLOORING, BRIDGE OF ALLAN — completed.
+     Photographs and the video are in
+     images/projects/flooring-bridge-of-allan/.
+     ------------------------------------------------------------------ */
+  {
+    slug: 'flooring-bridge-of-allan',
+    title: 'Flooring \u2013 Bridge of Allan',
+    location: 'Bridge of Allan',
+    category: 'Flooring',
+    featured: true,
+    summary: 'Engineered hardwood flooring fitted through the hallway, a bay windowed room and the kitchen of a house in Bridge of Allan.',
+
+    mainImage: {
+      src: 'images/projects/flooring-bridge-of-allan/flooring-04.jpg',
+      alt: 'Engineered hardwood flooring laid in a bay windowed room in Bridge of Allan'
+    },
+
+    description: [
+      'Engineered hardwood flooring fitted through the hallway, a bay windowed room and the kitchen of a house in Bridge of Allan.',
+      'The photographs run in order: the rooms boarded out with the flooring stacked ready to go down, then the same spaces once the boards were laid. The short video runs across the finished floor.'
+    ],
+
+    details: [
+      { label: 'Scope',  value: 'Engineered hardwood flooring' },
+      { label: 'Status', value: 'Completed' }
+    ],
+
+    /* All five photographs are 3:4 straight off a phone, so they declare
+       that ratio and are framed upright rather than cropped to landscape. */
+    gallery: [
+      { src: 'images/projects/flooring-bridge-of-allan/flooring-01.jpg', ratio: '3x4', alt: 'Bay windowed room in Bridge of Allan with the floor boarded out and boxes of engineered hardwood flooring stacked against the wall', caption: 'Boarded out, with the flooring stacked ready' },
+      { src: 'images/projects/flooring-bridge-of-allan/flooring-02.jpg', ratio: '3x4', alt: 'Hallway in Bridge of Allan boarded out ready for flooring, looking through towards the stairs', caption: 'The hallway before the boards went down' },
+      { src: 'images/projects/flooring-bridge-of-allan/flooring-03.jpg', ratio: '3x4', alt: 'The same hallway with the engineered hardwood boards laid, running through to the room beyond', caption: 'The hallway with the boards laid' },
+      { src: 'images/projects/flooring-bridge-of-allan/flooring-05.jpg', ratio: '3x4', alt: 'Kitchen in Bridge of Allan with engineered hardwood flooring laid up to the white units and the glazed doors', caption: 'Through to the kitchen' }
+    ],
+
+    /* Optional. A single short clip, shown under the gallery with the
+       browser's own controls. Portrait, so it declares a 9:16 ratio. */
+    video: {
+      src: 'images/projects/flooring-bridge-of-allan/flooring-video.mp4',
+      poster: 'images/projects/flooring-bridge-of-allan/flooring-video-poster.jpg',
+      ratio: '9x16',
+      label: 'Flooring project\u00a0\u2013 Bridge of Allan',
+      caption: 'A short clip across the finished floor.'
+    }
   },
 
 
