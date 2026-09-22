@@ -1,9 +1,12 @@
 /* ==========================================================================
    Brock Contracts — shared site behaviour
-     • mobile navigation
-     • sticky header state
-     • project card rendering (used by the homepage and Projects page)
+     • project item markup (homepage and Projects page share one template)
+     • header: solid on scroll, tucked away while reading down
+     • full-screen menu for phones and tablets
+     • services: the photograph follows the service you are on
+     • mobile call / enquire bar
      • image lightbox
+     • reveal-on-scroll motion
 
    You should not need to edit this file to add projects — use
    assets/js/projects-data.js for that.
@@ -12,6 +15,8 @@
   'use strict';
 
   var BC = window.BC = window.BC || {};
+  var root = document.documentElement;
+  var reduceMotion = !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
 
 
   /* ---- helpers --------------------------------------------------------- */
@@ -60,102 +65,209 @@
     return null;
   };
 
-  var ICON_PIN = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>';
-  var ICON_ARROW = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="M13 6l6 6-6 6"/></svg>';
-  BC.ICON_PIN = ICON_PIN;
+  /* A project's own "Status" row, if it has one — used to mark work that is
+     still on site, so an unfinished job is never presented as complete. */
+  function statusOf(project) {
+    var rows = Array.isArray(project.details) ? project.details : [];
+    for (var i = 0; i < rows.length; i++) {
+      if (rows[i] && /^status$/i.test(rows[i].label || '')) return rows[i].value || '';
+    }
+    return '';
+  }
+
+  var ICON_ARROW = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12h15"/><path d="M13 6l6 6-6 6"/></svg>';
   BC.ICON_ARROW = ICON_ARROW;
 
 
-  /* ---- project card ---------------------------------------------------- */
+  /* ---- project item ---------------------------------------------------- */
 
-  /* One card, used on both the homepage preview and the Projects page, so the
-     two can never drift apart. */
-  BC.projectCard = function (project) {
+  /* One template for the homepage and the Projects page, so the two can never
+     drift apart. The whole item is a single link: one tab stop, one target. */
+  BC.projectCard = function (project, index) {
     var href = 'project.html?p=' + encodeURIComponent(project.slug);
     var src = imageSrc(project.mainImage);
     var alt = imageAlt(project.mainImage, project.title + ' — Brock Contracts');
+    var num = (typeof index === 'number') ? index + 1 : 1;
+    var status = statusOf(project);
+    var inProgress = status && !/complete/i.test(status);
 
-    var exampleBadge = project.isExample
-      ? '<span class="project-card__example">Example</span>'
-      : '';
-
-    var date = project.completed
-      ? '<span class="project-card__date">Completed ' + esc(project.completed) + '</span>'
-      : '<span class="project-card__date"></span>';
+    var meta = [project.category, project.location]
+      .concat(project.completed ? ['Completed ' + project.completed] : [])
+      .filter(Boolean)
+      .map(function (m) { return '<span>' + esc(m) + '</span>'; })
+      .join('');
 
     return '' +
-      '<article class="project-card" data-category="' + esc(project.category) + '">' +
-        '<div class="project-card__media ratio ratio--3x2">' +
-          '<img src="' + esc(src) + '" alt="' + esc(alt) + '" loading="lazy" decoding="async">' +
-          exampleBadge +
-        '</div>' +
-        '<div class="project-card__body">' +
-          '<span class="project-card__tag">' + esc(project.category) + '</span>' +
-          '<h3 class="project-card__title">' + esc(project.title) + '</h3>' +
-          '<p class="project-card__location">' + ICON_PIN + esc(project.location) + '</p>' +
-          '<p class="project-card__summary">' + esc(project.summary) + '</p>' +
-          '<div class="project-card__foot">' +
-            '<a class="link-arrow project-card__link" href="' + esc(href) + '">' +
-              'View Project<span class="visually-hidden">: ' + esc(project.title) + '</span>' +
-              ICON_ARROW +
-            '</a>' +
-            date +
+      '<article class="work-item" data-category="' + esc(project.category) + '">' +
+        '<a class="work-item__link" href="' + esc(href) + '">' +
+          '<div class="work-item__media" data-reveal="image">' +
+            '<img src="' + esc(src) + '" alt="' + esc(alt) + '" loading="lazy" decoding="async">' +
+            (inProgress ? '<span class="work-item__status">' + esc(status) + '</span>' : '') +
+            (project.isExample ? '<span class="work-item__status">Example</span>' : '') +
           '</div>' +
-        '</div>' +
+          '<div class="work-item__body">' +
+            '<span class="work-item__index">' + (num < 10 ? '0' + num : num) + '</span>' +
+            '<h3 class="work-item__title">' + esc(project.title) + '</h3>' +
+            '<span class="work-item__arrow">' + ICON_ARROW + '<span class="visually-hidden">View project</span></span>' +
+            '<p class="work-item__meta">' + meta + '</p>' +
+            (project.summary ? '<p class="work-item__summary">' + esc(project.summary) + '</p>' : '') +
+          '</div>' +
+        '</a>' +
       '</article>';
   };
 
 
-  /* ---- mobile navigation ----------------------------------------------- */
+  /* ---- header ---------------------------------------------------------- */
 
-  function initNav() {
-    var header = document.querySelector('.site-header');
-    var toggle = document.querySelector('.nav-toggle');
-    if (!header || !toggle) return;
-
-    function close() {
-      header.classList.remove('nav-open');
-      toggle.setAttribute('aria-expanded', 'false');
-      document.body.classList.remove('no-scroll');
-    }
-
-    toggle.addEventListener('click', function () {
-      var open = header.classList.toggle('nav-open');
-      toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
-      /* The panel is full height, so stop the page scrolling behind it. */
-      document.body.classList.toggle('no-scroll', open);
-    });
-
-    /* Close after tapping a link, otherwise the panel covers the target. */
-    header.addEventListener('click', function (e) {
-      if (e.target.closest('.nav-list a, .call-pill')) close();
-    });
-
-    document.addEventListener('click', function (e) {
-      if (!header.contains(e.target)) close();
-    });
-
-    document.addEventListener('keydown', function (e) {
-      if (e.key === 'Escape') close();
-    });
-
-    /* Reset when resizing back up to the desktop layout. */
-    window.addEventListener('resize', function () {
-      if (window.innerWidth > 900) close();
-    });
-  }
-
-
-  /* ---- sticky header shadow -------------------------------------------- */
-
-  function initHeaderScroll() {
-    var header = document.querySelector('.site-header');
+  function initHeader() {
+    var header = document.querySelector('[data-header]');
     if (!header) return;
+    var lastY = window.scrollY;
     var ticking = false;
 
     function update() {
-      header.classList.toggle('is-scrolled', window.scrollY > 8);
+      var y = window.scrollY;
+      header.classList.toggle('is-solid', y > 24);
+      /* Tuck away while reading down the page, back on any scroll up. Never
+         while the menu is open, and never near the top. */
+      if (!root.classList.contains('menu-open')) {
+        var goingDown = y > lastY + 4;
+        var goingUp = y < lastY - 4;
+        if (goingDown && y > 480) header.classList.add('is-hidden');
+        else if (goingUp || y <= 480) header.classList.remove('is-hidden');
+      }
+      lastY = y;
       ticking = false;
+    }
+    window.addEventListener('scroll', function () {
+      if (!ticking) { ticking = true; window.requestAnimationFrame(update); }
+    }, { passive: true });
+    /* Keyboard users tabbing into a hidden header should see it. */
+    header.addEventListener('focusin', function () { header.classList.remove('is-hidden'); });
+    update();
+  }
+
+
+  /* ---- menu -------------------------------------------------------------- */
+
+  function initMenu() {
+    var toggle = document.querySelector('.menu-toggle');
+    var menu = document.getElementById('site-menu');
+    if (!toggle || !menu) return;
+    var outside = Array.prototype.slice.call(document.querySelectorAll('main, footer, .action-bar, .skip-link'));
+    var desktop = window.matchMedia('(min-width: 1024px)');
+
+    function setOpen(open) {
+      root.classList.toggle('menu-open', open);
+      toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+      toggle.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+      document.body.style.overflow = open ? 'hidden' : '';
+      /* Everything behind the menu is taken out of reach while it is open. */
+      outside.forEach(function (el) {
+        if (open) el.setAttribute('inert', ''); else el.removeAttribute('inert');
+      });
+      if (open) {
+        var first = menu.querySelector('a');
+        /* Wait for the curtain to start, so focus doesn't jump the page. */
+        window.setTimeout(function () { if (first) first.focus({ preventScroll: true }); }, reduceMotion ? 0 : 320);
+      }
+    }
+    function close(returnFocus) {
+      if (!root.classList.contains('menu-open')) return;
+      setOpen(false);
+      if (returnFocus) toggle.focus();
+    }
+
+    toggle.setAttribute('aria-label', 'Open menu');
+    toggle.addEventListener('click', function () {
+      setOpen(!root.classList.contains('menu-open'));
+    });
+    menu.addEventListener('click', function (e) {
+      if (e.target.closest('a')) close(false);
+    });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') close(true);
+      /* Keep Tab between the menu and its close button. */
+      if (e.key === 'Tab' && root.classList.contains('menu-open')) {
+        var items = [toggle].concat(Array.prototype.slice.call(menu.querySelectorAll('a')));
+        var i = items.indexOf(document.activeElement);
+        if (e.shiftKey && i <= 0) { e.preventDefault(); items[items.length - 1].focus(); }
+        else if (!e.shiftKey && i === items.length - 1) { e.preventDefault(); items[0].focus(); }
+      }
+    });
+    var onChange = function () { if (desktop.matches) close(false); };
+    if (desktop.addEventListener) desktop.addEventListener('change', onChange);
+    else if (desktop.addListener) desktop.addListener(onChange);
+  }
+
+
+  /* ---- services ---------------------------------------------------------- */
+
+  /* On a wide screen the photograph beside the list follows the service you
+     point at — or, if you are just scrolling, the one in the middle of the
+     screen. The photograph is decoration; every word is in the list. */
+  function initServices() {
+    var list = document.querySelector('[data-services-list]');
+    var visual = document.querySelector('[data-services-visual]');
+    if (!list || !visual) return;
+    var rows = Array.prototype.slice.call(list.querySelectorAll('.service'));
+    var imgs = Array.prototype.slice.call(visual.querySelectorAll('img[data-service]'));
+    var caption = visual.querySelector('[data-services-caption]');
+    var count = visual.querySelector('[data-services-count]');
+    var wide = window.matchMedia('(min-width: 1024px)');
+    var hovering = false;
+    var current = -1;
+
+    function pad(n) { return n < 10 ? '0' + n : '' + n; }
+
+    function activate(i) {
+      if (i === current || !rows[i]) return;
+      current = i;
+      var key = rows[i].getAttribute('data-service');
+      rows.forEach(function (r, j) { r.classList.toggle('is-active', j === i); });
+      imgs.forEach(function (img) { img.classList.toggle('is-active', img.getAttribute('data-service') === key); });
+      if (caption) caption.textContent = rows[i].getAttribute('data-caption') || '';
+      if (count) count.textContent = pad(i + 1) + ' / ' + pad(rows.length);
+    }
+
+    rows.forEach(function (row, i) {
+      row.addEventListener('mouseenter', function () { if (wide.matches) { hovering = true; activate(i); } });
+      row.addEventListener('focusin', function () { activate(i); });
+    });
+    list.addEventListener('mouseleave', function () { hovering = false; });
+
+    if ('IntersectionObserver' in window) {
+      var io = new IntersectionObserver(function (entries) {
+        if (hovering || !wide.matches) return;
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) activate(rows.indexOf(entry.target));
+        });
+      }, { rootMargin: '-45% 0px -45% 0px' });
+      rows.forEach(function (r) { io.observe(r); });
+    }
+    activate(0);
+  }
+
+
+  /* ---- mobile action bar -------------------------------------------------- */
+
+  function initActionBar() {
+    var bar = document.querySelector('[data-action-bar]');
+    if (!bar) return;
+    var footer = document.querySelector('.site-footer');
+    var footerVisible = false;
+    var ticking = false;
+
+    function update() {
+      var past = window.scrollY > window.innerHeight * 0.6;
+      bar.classList.toggle('is-visible', past && !footerVisible);
+      ticking = false;
+    }
+    if (footer && 'IntersectionObserver' in window) {
+      new IntersectionObserver(function (entries) {
+        footerVisible = entries[0].isIntersecting;
+        update();
+      }).observe(footer);
     }
     window.addEventListener('scroll', function () {
       if (!ticking) { ticking = true; window.requestAnimationFrame(update); }
@@ -167,8 +279,8 @@
   /* ---- footer year ------------------------------------------------------ */
 
   function initYear() {
-    var el = document.querySelector('[data-year]');
-    if (el) el.textContent = new Date().getFullYear();
+    var els = document.querySelectorAll('[data-year]');
+    Array.prototype.forEach.call(els, function (el) { el.textContent = new Date().getFullYear(); });
   }
 
 
@@ -287,54 +399,73 @@
   };
 
 
-  /* ---- section reveal ---------------------------------------------------- */
 
-  /* A short fade-and-rise as each block first comes into view. Applied from
-     script so that with JS off, or reduced motion on, nothing is ever hidden.
-     Blocks are selected rather than tagged in the markup, so project pages
-     added later pick this up with no extra work. */
-  var REVEAL_SELECTOR = [
-    '.section-head',
-    '.about-grid',
-    '.services-grid',
-    '.project-grid',
-    '.gallery-grid',
-    '.project-body',
-    '.footer-lead'
-  ].join(', ');
+  /* ---- reveal on scroll -------------------------------------------------- */
 
-  function initReveal() {
-    if (!('IntersectionObserver' in window)) return;
-    if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  /* Blocks rise into place, photographs are uncovered. Opt-in and fail-safe:
+       • nothing is hidden unless this script runs and motion is allowed;
+       • anything already on screen is shown at once;
+       • if the observer never fires, a timer shows everything anyway.
+     Markup can opt in with data-reveal; project items opt in from their
+     template, so new projects get it with no extra work. */
+  var REVEAL_SELECTOR = '[data-reveal]';
 
-    var els = document.querySelectorAll(REVEAL_SELECTOR);
+  BC.initReveal = function (scope, animateVisible) {
+    var els = Array.prototype.slice.call((scope || document).querySelectorAll(REVEAL_SELECTOR))
+      .filter(function (el) { return !el.classList.contains('is-in'); });
     if (!els.length) return;
 
-    document.documentElement.classList.add('js-reveal');
+    if (reduceMotion || !('IntersectionObserver' in window)) {
+      els.forEach(function (el) { el.classList.add('is-in'); });
+      return;
+    }
 
     var io = new IntersectionObserver(function (entries) {
       entries.forEach(function (entry) {
         if (!entry.isIntersecting) return;
-        entry.target.classList.add('is-revealed');
+        entry.target.classList.add('is-in');
         io.unobserve(entry.target);
       });
-    }, { rootMargin: '0px 0px -6% 0px', threshold: 0.04 });
+    }, { rootMargin: '0px 0px -8% 0px', threshold: 0 });
 
-    Array.prototype.forEach.call(els, function (el) {
-      el.setAttribute('data-reveal', '');
-      io.observe(el);
+    var vh = window.innerHeight;
+    var shown = 0;
+    els.forEach(function (el) {
+      if (el.getBoundingClientRect().top < vh) {
+        if (animateVisible) {
+          /* Newly rendered content (a filter change) settles in, staggered. */
+          el.style.setProperty('--reveal-delay', Math.min(shown++, 5) * 90 + 'ms');
+          window.requestAnimationFrame(function () {
+            window.requestAnimationFrame(function () { el.classList.add('is-in'); });
+          });
+        } else {
+          /* On load, whatever is already on screen is simply there. */
+          el.classList.add('is-in');
+        }
+      } else {
+        io.observe(el);
+      }
     });
-  }
-  BC.initReveal = initReveal;
+    root.classList.add('js-reveal');
+
+    /* Belt and braces: whatever happens, nothing on screen stays hidden. */
+    window.setTimeout(function () {
+      els.forEach(function (el) {
+        if (el.getBoundingClientRect().top < window.innerHeight) el.classList.add('is-in');
+      });
+    }, 2500);
+  };
 
 
   /* ---- boot -------------------------------------------------------------- */
 
   function init() {
-    initNav();
-    initHeaderScroll();
+    initHeader();
+    initMenu();
+    initServices();
+    initActionBar();
     initYear();
-    initReveal();
+    BC.initReveal();
   }
 
   if (document.readyState === 'loading') {

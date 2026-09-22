@@ -14,7 +14,7 @@
     url: SITE_URL.replace(/\/$/, ''),
     name: 'Brock Contracts',
     legalName: 'Brock Contracts',
-    tagline: 'Quality craftsmanship, built to last.',
+    tagline: 'Joinery & building work, done right.',
     phoneDisplay: '07980 136188',
     phoneTel: '+447980136188',
     email: 'c.brock016@btinternet.com',
