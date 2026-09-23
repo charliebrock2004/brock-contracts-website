@@ -16,7 +16,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/assets/css/site.css">
 </head>
-<body>
+<body class="no-footer-lead">
 <a class="skip-link" href="#main">Skip to content</a>
 <header class="site-header">
   <div class="container">
@@ -24,12 +24,16 @@
       <img class="logo-mark__light" src="/brock-contracts-logo-white.png" alt="Brock Contracts">
       <img class="logo-mark__dark" src="/brock-contracts-logo-ink.png" alt="" aria-hidden="true">
     </a>
-    <button class="nav-toggle" type="button" aria-label="Menu" aria-expanded="false" aria-controls="site-nav"><span></span></button>
+
+    <button class="nav-toggle" type="button" aria-label="Menu" aria-expanded="false" aria-controls="site-nav">
+      <span></span>
+    </button>
+
     <div class="nav-cta" id="site-nav">
       <nav aria-label="Main">
         <ul class="nav-list">
           <li><a href="/about">About</a></li>
-          <li><a href="/joiner-crieff">Services</a></li>
+          <li><a href="/#services">Services</a></li>
           <li><a href="/projects">Our Work</a></li>
           <li><a href="/contact" aria-current="page">Contact</a></li>
         </ul>
@@ -48,11 +52,12 @@
     </div>
   </section>
   <section>
-    <div class="container">
-      <dl class="contact-details">
+    <div class="container contact-page">
+      <h2 class="visually-hidden">Contact details</h2>
+      <dl class="contact-details contact-details--light">
         <div class="contact-detail"><dt class="label">Phone</dt><dd><a href="tel:+447980136188" class="value">07980 136188</a></dd></div>
         <div class="contact-detail"><dt class="label">Email</dt><dd><a href="mailto:c.brock016@btinternet.com" class="value">c.brock016@btinternet.com</a></dd></div>
-        <div class="contact-detail"><dt class="label">Address</dt><dd><span class="value">3 Holly Place, Crieff, PH7 3EP</span></dd></div>
+        <div class="contact-detail"><dt class="label">Address</dt><dd><span class="value">3 Holly Place, Crieff, PH7 3EP</span> <a class="contact-detail__map" href="https://www.google.com/maps/search/?api=1&amp;query=3+Holly+Place+Crieff+PH7+3EP" target="_blank" rel="noopener">View on map<span class="visually-hidden"> (opens in a new tab)</span></a></dd></div>
       </dl>
       <div class="contact-actions" style="margin-top:28px;">
         <a href="tel:+447980136188" class="btn btn--dark">Call 07980 136188</a>
@@ -63,20 +68,59 @@
 </main>
 <footer class="site-footer">
   <div class="container">
+
     <div class="footer-lead">
-      <div><h2>Talk to us about your project.</h2></div>
+      <div>
+        <h2>Talk to us about your project.</h2>
+      </div>
       <div class="footer-lead__actions">
         <a href="tel:+447980136188" class="btn btn--light">Call 07980 136188</a>
         <a href="mailto:c.brock016@btinternet.com" class="btn btn--outline-light">Email Us</a>
       </div>
     </div>
+
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <img class="footer-logo" src="/brock-contracts-logo-white.png" alt="Brock Contracts" loading="lazy">
+        <p>Joiners and building contractors based in Crieff, working across Strathearn and the wider Perthshire area.</p>
+      </div>
+      <div>
+        <h3>Pages</h3>
+        <ul>
+          <li><a href="/about">About</a></li>
+          <li><a href="/#services">Services</a></li>
+          <li><a href="/projects">Our Work</a></li>
+          <li><a href="/joiner-crieff">Joiners in Crieff</a></li>
+          <li><a href="/contact">Contact</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3>Contact</h3>
+        <ul>
+          <li><a href="tel:+447980136188">07980 136188</a></li>
+          <li><a href="mailto:c.brock016@btinternet.com">c.brock016@btinternet.com</a></li>
+          <li><a href="https://www.facebook.com/p/brock-contracts-100039208331893/" target="_blank" rel="noopener">Facebook<span class="visually-hidden"> (opens in a new tab)</span></a></li>
+        </ul>
+      </div>
+      <div>
+        <h3>Address</h3>
+        <ul>
+          <li>3 Holly Place</li>
+          <li>Crieff</li>
+          <li>PH7 3EP</li>
+        </ul>
+      </div>
+    </div>
+
     <div class="footer-bottom">
       <span>&copy; <span data-year>2026</span> Brock Contracts</span>
       <span>Joiners &amp; Building Contractors, Crieff, Perthshire</span>
     </div>
   </div>
 </footer>
-<div class="sticky-call"><a href="tel:+447980136188">Call Now: 07980 136188</a></div>
+<div class="sticky-call">
+  <a href="tel:+447980136188">Call Now: 07980 136188</a>
+</div>
 <script src="/assets/js/site-config.js"></script>
 <script src="/assets/js/site.js"></script>
 </body>

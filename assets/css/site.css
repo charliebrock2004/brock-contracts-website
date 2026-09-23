@@ -96,7 +96,9 @@ body {
   color: var(--ink);
   background: var(--paper);
   line-height: 1.7;
-  font-weight: 300;
+  /* Regular rather than Light: Jost Light is too thin to read comfortably
+     at body sizes on the pale background. */
+  font-weight: 400;
   font-size: var(--fs-body);
   -webkit-font-smoothing: antialiased;
   overflow-x: hidden;
@@ -525,7 +527,7 @@ section { padding: var(--section-y) 0; }
   font-family: 'Jost', sans-serif;
   font-size: 0.66rem;
   letter-spacing: 2.4px;
-  color: var(--navy-light);
+  color: #56667d;
   font-style: normal;
   font-weight: 500;
   margin-bottom: 16px;
@@ -600,6 +602,23 @@ section { padding: var(--section-y) 0; }
 .about-media { position: relative; }
 
 
+/* Long-form pages (About, Joiners in Crieff) */
+/* Width is limited on the children, not the container, so the text keeps
+   the same left edge as the page title above it. */
+.page-prose > * { max-width: 760px; }
+.page-prose > * + * { margin-top: 18px; }
+.page-prose h2 {
+  font-size: clamp(1.45rem, 1.2rem + 0.9vw, 1.9rem);
+  margin-top: clamp(44px, 5vw, 60px);
+}
+.page-prose h2 + * { margin-top: 14px; }
+.page-prose p { color: var(--ink-soft); max-width: 68ch; }
+.page-prose a:not(.btn) { color: var(--navy); text-decoration: underline; text-underline-offset: 3px; }
+.page-prose .about-media { margin-bottom: clamp(40px, 5vw, 60px); }
+.page-prose .about-media + h2 { margin-top: 0; }
+.page-prose .about-points { margin-top: 22px; }
+
+
 /* 10  Services
    ========================================================================== */
 /* A ruled schedule of works rather than four boxes. The existing markup
@@ -631,7 +650,7 @@ section { padding: var(--section-y) 0; }
   font-family: 'Jost', sans-serif;
   font-size: 0.68rem;
   letter-spacing: 2.4px;
-  color: var(--navy-light);
+  color: #56667d;
   font-weight: 500;
   transition: color var(--dur) var(--ease);
 }
@@ -646,7 +665,7 @@ section { padding: var(--section-y) 0; }
 .service-card:hover h3 { color: var(--navy); }
 .service-card p {
   color: var(--grey);
-  font-size: var(--fs-small);
+  font-size: 0.9375rem;
   line-height: 1.75;
   max-width: 58ch;
   margin: 0;
@@ -737,7 +756,7 @@ section { padding: var(--section-y) 0; }
 .project-card__location svg { display: none; }
 .project-card__summary {
   color: var(--ink-mid);
-  font-size: var(--fs-small);
+  font-size: 0.9375rem;
   line-height: 1.85;
   margin: 22px 0 28px;
   max-width: 46ch;
@@ -822,6 +841,8 @@ section { padding: var(--section-y) 0; }
 }
 .breadcrumb a:hover { color: var(--white); text-decoration: underline; }
 .breadcrumb span { opacity: 0.5; margin: 0 8px; }
+/* The current page stays readable; only the separators are faded. */
+.breadcrumb span:last-child { opacity: 1; color: #8e9092; }
 
 .project-hero__meta {
   display: flex;
@@ -895,6 +916,7 @@ section { padding: var(--section-y) 0; }
   position: sticky;
   top: calc(var(--header-h) + 32px);
 }
+.project-details h2,
 .project-details h3 {
   font-size: 0.72rem;
   letter-spacing: 2px;
@@ -999,6 +1021,8 @@ section { padding: var(--section-y) 0; }
   border-top: 1px solid var(--line);
   padding-top: 32px;
   margin-top: clamp(40px, 5vw, 64px);
+  /* Room before the footer, which otherwise butts straight up against it. */
+  margin-bottom: clamp(56px, 7vw, 96px);
 }
 .project-nav__link { display: block; max-width: 46%; }
 .project-nav__link:last-child { text-align: right; margin-left: auto; }
@@ -1191,6 +1215,26 @@ section { padding: var(--section-y) 0; }
 .contact-detail a.value { transition: color var(--dur) var(--ease); }
 .contact-detail a.value:hover { color: var(--navy-pale); }
 
+/* The same rows on a light page (Contact). */
+.contact-page > * { max-width: 760px; }
+.contact-details--light { border-top-color: var(--line); }
+.contact-details--light .contact-detail { border-bottom-color: var(--line); grid-template-columns: 120px 1fr; padding: 24px 0; }
+.contact-details--light .contact-detail .label { color: var(--grey); }
+.contact-details--light .contact-detail .value { color: var(--ink); font-weight: 400; font-size: clamp(1.1rem, 1rem + 0.4vw, 1.3rem); }
+.contact-details--light .contact-detail a.value:hover { color: var(--navy); }
+@media (max-width: 480px) {
+  .contact-details--light .contact-detail { grid-template-columns: 1fr; gap: 6px; }
+  .contact-details--light .contact-detail .value { overflow-wrap: anywhere; }
+}
+.contact-detail__map {
+  display: inline-block;
+  margin-left: 12px;
+  font-size: var(--fs-small);
+  color: var(--navy);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
 /* (The white "Request a Quote" panel was removed — it read as a template
    component beside otherwise type-led sections.) */
 
@@ -1217,6 +1261,8 @@ section { padding: var(--section-y) 0; }
   max-width: 16ch;
 }
 .footer-lead__actions { display: flex; gap: 12px; flex-wrap: wrap; }
+/* Pages that already end on a contact section don't repeat it in the footer. */
+.no-footer-lead .footer-lead { display: none; }
 
 .footer-grid {
   display: grid;
@@ -1228,6 +1274,7 @@ section { padding: var(--section-y) 0; }
 /* The mark is a white knockout now, so it needs no white plate behind it. */
 .footer-logo { height: 62px; width: auto; margin-bottom: 24px; }
 .site-footer p, .site-footer li { font-size: var(--fs-small); color: #9b9d98; margin-bottom: 9px; list-style: none; }
+.site-footer h3,
 .site-footer h4 {
   color: var(--white);
   font-size: 0.7rem;
@@ -1245,7 +1292,7 @@ section { padding: var(--section-y) 0; }
   padding-top: 26px;
   letter-spacing: 0.4px;
   font-size: 0.76rem;
-  color: #6c6e69;
+  color: #8a8c86;
   display: flex;
   justify-content: space-between;
   gap: 14px;

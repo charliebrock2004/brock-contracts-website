@@ -108,11 +108,12 @@ Everything else is optional. A project with no photos yet shows a
 
 ## The projects currently on the site
 
-Two, both genuine:
+Four, all genuine:
 
 | Project | Category | Photos |
 |---|---|---|
 | Garage Auchterarder (in progress) | New Builds | 1 main + 4 gallery |
+| Flooring – Bridge of Allan | Flooring | 1 main + 4 gallery + video |
 | Renovation Auchterarder | New Builds | 1 main + 8 gallery |
 | New Build Dunkeld | New Builds | 1 main |
 
@@ -186,9 +187,11 @@ The gallery lays itself out for any number of photos, so nothing else changes.
 ## Testing locally
 
 ```bash
-python3 -m http.server 8000
+npx serve .
 ```
 
-Then open <http://localhost:8000>. Opening the HTML files directly with
+and open the address it prints. The navigation uses clean addresses
+(`/about`, `/projects`) the way Vercel serves them, which a plain
+`python3 -m http.server` can't do. Opening the HTML files directly with
 `file://` will not work — the pages load their data with a script, which
 browsers block on `file://`.
