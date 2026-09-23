@@ -29,6 +29,27 @@
    ========================================================================== */
 
 
+/* 00  Fonts
+   The original pairing, self-hosted instead of loaded from Google Fonts:
+   Playfair Display for headings, Jost for everything else. Both are variable
+   files (SIL Open Font License, see assets/fonts/).
+   ========================================================================== */
+@font-face {
+  font-family: 'Playfair Display';
+  src: url('/assets/fonts/playfair-display-variable.woff2') format('woff2');
+  font-weight: 400 900;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Jost';
+  src: url('/assets/fonts/jost-variable.woff2') format('woff2');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+
 /* 01  Design tokens
    ========================================================================== */
 :root {
@@ -45,27 +66,29 @@
   --paper-warm: #f5f1ea;
   --line:       #dcd6c7;
   --line-soft:  #e7e1d5;
-  --grey:       #64655e;
+  --grey:       #5b5c57;
   --white:      #ffffff;
 
   /* Fluid type scale — grows with the viewport, no breakpoint jumps. */
-  --fs-hero:  clamp(2.3rem,  1.2rem  + 4.4vw, 4.15rem);
-  --fs-h2:    clamp(1.85rem, 1.25rem + 2.3vw, 2.85rem);
-  --fs-h3:    clamp(1.15rem, 1rem    + 0.55vw, 1.38rem);
-  --fs-lede:  clamp(1.02rem, 0.97rem + 0.34vw, 1.14rem);
-  --fs-body:  1rem;
-  --fs-small: 0.875rem;
-  --fs-eyebrow: 0.72rem;
+  /* Headings a step smaller than before so the photography leads; body
+     text a step larger and a weight heavier so it reads comfortably. */
+  --fs-hero:  clamp(2.2rem,  1.45rem + 3vw, 3.6rem);
+  --fs-h2:    clamp(1.75rem, 1.3rem + 1.7vw, 2.5rem);
+  --fs-h3:    clamp(1.15rem, 1.02rem + 0.5vw, 1.35rem);
+  --fs-lede:  clamp(1.06rem, 1rem + 0.3vw, 1.2rem);
+  --fs-body:  1.0625rem;
+  --fs-small: 0.9375rem;
+  --fs-eyebrow: 0.75rem;
 
   /* Spacing */
   --gutter:        clamp(22px, 5vw, 40px);
   /* Generous, and consistent everywhere — the spacing is doing most of the
      work in making this feel like an established firm rather than a template. */
-  --section-y:     clamp(76px, 9.5vw, 140px);
-  --section-y-sm:  clamp(52px, 6vw, 84px);
+  --section-y:     clamp(64px, 8vw, 116px);
+  --section-y-sm:  clamp(48px, 5.5vw, 76px);
 
   --maxw: 1280px;
-  --header-h: 92px;
+  --header-h: 88px;
 
   /* Sharp corners suit a building trade — just enough radius to avoid
      looking unfinished. */
@@ -96,7 +119,7 @@ body {
   color: var(--ink);
   background: var(--paper);
   line-height: 1.7;
-  font-weight: 300;
+  font-weight: 400;
   font-size: var(--fs-body);
   -webkit-font-smoothing: antialiased;
   overflow-x: hidden;
@@ -110,6 +133,9 @@ h1, h2, h3, h4 {
   letter-spacing: -0.012em;
   line-height: 1.18;
   text-wrap: balance;
+  /* Playfair defaults to old-style figures, which make "15" look small
+     beside capitals. */
+  font-variant-numeric: lining-nums;
 }
 h3, h4 { letter-spacing: -0.004em; line-height: 1.3; }
 
@@ -156,11 +182,11 @@ section { padding: var(--section-y) 0; }
   align-items: center;
   gap: 12px;
   font-size: var(--fs-eyebrow);
-  letter-spacing: 2.8px;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
   font-weight: 500;
   color: var(--navy);
-  margin-bottom: 20px;
+  margin-bottom: 18px;
 }
 /* A short rule beside the label — a quiet mark of an established firm
    rather than another coloured pill. */
@@ -205,9 +231,10 @@ section { padding: var(--section-y) 0; }
   align-items: center;
   justify-content: center;
   gap: 10px;
-  padding: 16px 34px;
-  font-size: 0.74rem;
-  letter-spacing: 1.7px;
+  min-height: 50px;
+  padding: 14px 28px;
+  font-size: 0.8rem;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
   font-weight: 500;
   border: 1px solid transparent;
@@ -241,8 +268,8 @@ section { padding: var(--section-y) 0; }
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  font-size: 0.8rem;
-  letter-spacing: 1.2px;
+  font-size: 0.82rem;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
   font-weight: 500;
   color: var(--ink);
@@ -263,8 +290,9 @@ section { padding: var(--section-y) 0; }
   border-bottom: 1px solid rgba(255,255,255,0.14);
   transition: background 0.35s var(--ease), border-color 0.35s var(--ease);
 }
-.site-header.is-scrolled {
-  background: rgba(250,249,247,0.97);
+.site-header.is-scrolled,
+.site-header.nav-open {
+  background: rgba(250,249,247,0.98);
   backdrop-filter: saturate(160%) blur(10px);
   border-bottom-color: var(--line);
 }
@@ -279,7 +307,7 @@ section { padding: var(--section-y) 0; }
 
 /* Two marks stacked: white over the photograph, the original once the
    header turns cream. */
-.logo-mark { position: relative; display: block; width: 116px; height: 64px; flex: none; }
+.logo-mark { position: relative; display: block; width: 158px; height: 50px; flex: none; }
 .logo-mark img {
   position: absolute;
   inset: 0;
@@ -289,8 +317,8 @@ section { padding: var(--section-y) 0; }
   transition: opacity 0.35s var(--ease);
 }
 .logo-mark__dark { opacity: 0; }
-.site-header.is-scrolled .logo-mark__light { opacity: 0; }
-.site-header.is-scrolled .logo-mark__dark { opacity: 1; }
+:is(.site-header.is-scrolled, .site-header.nav-open) .logo-mark__light { opacity: 0; }
+:is(.site-header.is-scrolled, .site-header.nav-open) .logo-mark__dark { opacity: 1; }
 
 /* Navigation sits away from the logo and close to the call action, so the
    header reads as two considered groups rather than one even row. */
@@ -300,15 +328,15 @@ section { padding: var(--section-y) 0; }
 
 .nav-list a {
   position: relative;
-  font-size: 0.76rem;
-  letter-spacing: 1.9px;
+  font-size: 0.8rem;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: rgba(255,255,255,0.82);
-  font-weight: 400;
+  color: rgba(255,255,255,0.9);
+  font-weight: 500;
   padding: 8px 0;
   transition: color var(--dur) var(--ease);
 }
-.site-header.is-scrolled .nav-list a { color: var(--ink-soft); font-weight: 500; }
+.site-header.is-scrolled .nav-list a { color: var(--ink-soft); }
 /* Underline grows from the left rather than snapping in. */
 .nav-list a::after {
   content: '';
@@ -332,9 +360,9 @@ section { padding: var(--section-y) 0; }
   border: 1px solid rgba(255,255,255,0.42);
   color: var(--white);
   border-radius: 0;
-  padding: 13px 26px;
-  font-size: 0.72rem;
-  letter-spacing: 1.9px;
+  padding: 13px 24px;
+  font-size: 0.8rem;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
   font-weight: 500;
   white-space: nowrap;
@@ -358,8 +386,25 @@ section { padding: var(--section-y) 0; }
   margin-left: auto;
   transition: border-color var(--dur) var(--ease), color var(--dur) var(--ease);
 }
-.site-header.is-scrolled .nav-toggle { border-color: var(--line); color: var(--ink); }
-.site-header.is-scrolled .nav-toggle span { background: var(--ink); }
+:is(.site-header.is-scrolled, .site-header.nav-open) .nav-toggle { border-color: var(--line); color: var(--ink); }
+:is(.site-header.is-scrolled, .site-header.nav-open) .nav-toggle span { background: var(--ink); }
+.site-header.nav-open .nav-toggle span { background: transparent; }
+
+/* Call button beside the menu toggle on phones and tablets, in place of the
+   bar that used to be fixed along the bottom of the screen. */
+.header-call {
+  display: none;
+  width: 46px;
+  height: 46px;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(255,255,255,0.4);
+  color: var(--white);
+  margin-left: auto;
+  transition: border-color var(--dur) var(--ease), color var(--dur) var(--ease);
+}
+.header-call svg { width: 19px; height: 19px; }
+:is(.site-header.is-scrolled, .site-header.nav-open) .header-call { border-color: var(--line); color: var(--ink); }
 .nav-toggle span { background: currentColor; }
 .nav-toggle span {
   display: block;
@@ -398,8 +443,8 @@ section { padding: var(--section-y) 0; }
   flex-direction: column;
   justify-content: flex-end;
   /* Full viewport: the photograph is the opening statement. */
-  min-height: 100svh;
-  min-height: 100vh;
+  min-height: min(100vh, 900px);
+  min-height: min(100svh, 900px);
   padding: calc(var(--header-h) + clamp(60px, 9vw, 120px)) 0 0;
 }
 
@@ -435,28 +480,28 @@ section { padding: var(--section-y) 0; }
 .hero .container { width: 100%; }
 .hero__inner { max-width: 900px; padding-bottom: clamp(40px, 5vw, 66px); }
 
-.hero .eyebrow { color: rgba(255,255,255,0.72); margin-bottom: 28px; }
+.hero .eyebrow { color: rgba(255,255,255,0.85); margin-bottom: 22px; }
 .hero .eyebrow::after { background: rgba(255,255,255,0.5); opacity: 1; }
 
 .hero h1 {
   font-size: var(--fs-hero);
-  line-height: 1.02;
-  letter-spacing: -0.025em;
-  margin-bottom: 32px;
+  line-height: 1.06;
+  letter-spacing: -0.015em;
+  margin-bottom: 0;
   font-weight: 600;
-  /* Keeps the headline to two lines at desktop sizes. */
-  max-width: 22ch;
+  /* Two lines at every size from a small phone up. */
+  max-width: 17ch;
   text-wrap: balance;
 }
 
 .hero__quote {
   font-family: 'Jost', sans-serif;
-  font-weight: 300;
-  font-size: clamp(1.02rem, 0.95rem + 0.45vw, 1.16rem);
-  color: #cfd5dd;
+  font-weight: 400;
+  font-size: clamp(1.04rem, 0.98rem + 0.35vw, 1.15rem);
+  color: #e3e6ea;
   max-width: 46ch;
   margin-bottom: 0;
-  line-height: 1.8;
+  line-height: 1.65;
 }
 
 .hero__ctas { display: flex; gap: 14px; flex-wrap: wrap; }
@@ -510,7 +555,7 @@ section { padding: var(--section-y) 0; }
 }
 .trust-strip .container {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(4, 1fr);
   gap: 0;
 }
 .trust-item {
@@ -523,12 +568,12 @@ section { padding: var(--section-y) 0; }
 .trust-item__num {
   display: block;
   font-family: 'Jost', sans-serif;
-  font-size: 0.66rem;
-  letter-spacing: 2.4px;
-  color: var(--navy-light);
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  color: var(--navy);
   font-style: normal;
   font-weight: 500;
-  margin-bottom: 16px;
+  margin-bottom: 12px;
 }
 .trust-item strong {
   display: block;
@@ -539,14 +584,14 @@ section { padding: var(--section-y) 0; }
   font-weight: 600;
   letter-spacing: -0.01em;
 }
-.trust-item p { font-size: var(--fs-small); color: var(--grey); line-height: 1.75; }
+.trust-item p { font-size: var(--fs-small); color: var(--grey); line-height: 1.6; }
 
 
 /* 08  Section headings
    ========================================================================== */
 .section-head { max-width: 680px; margin-bottom: clamp(44px, 5.5vw, 72px); }
 .section-head h2 { font-size: var(--fs-h2); color: var(--ink); margin-bottom: 18px; }
-.section-head p { color: var(--grey); font-size: var(--fs-lede); line-height: 1.75; }
+.section-head p { color: var(--grey); font-size: var(--fs-lede); line-height: 1.65; }
 
 /* Heading on the left, action on the right — used above project grids. */
 .section-head--row {
@@ -567,7 +612,10 @@ section { padding: var(--section-y) 0; }
    ========================================================================== */
 /* The photograph runs as a wide band, with the heading and copy set beneath
    it in two columns — an editorial opening rather than text beside a picture. */
-.about-media { margin-bottom: clamp(44px, 5.5vw, 80px); }
+.about-media { margin-bottom: clamp(36px, 4.5vw, 64px); }
+/* A wide band rather than a near-full-screen image, so the heading and copy
+   arrive sooner. */
+.about-media .ratio--16x9 { aspect-ratio: 21 / 9; }
 
 .about-grid {
   display: grid;
@@ -580,7 +628,7 @@ section { padding: var(--section-y) 0; }
   margin: 0;
   max-width: 13ch;
 }
-.about-copy p { color: var(--ink-mid); margin-bottom: 20px; line-height: 1.85; font-size: var(--fs-lede); }
+.about-copy p { color: var(--ink-mid); margin-bottom: 18px; line-height: 1.7; font-size: var(--fs-lede); }
 .about-copy p:last-of-type { margin-bottom: 0; }
 
 /* Ruled rows read as a schedule; the tick icons were decoration. */
@@ -590,11 +638,10 @@ section { padding: var(--section-y) 0; }
   border-top: 1px solid var(--line);
 }
 .about-points li {
-  padding: 15px 0;
+  padding: 14px 0;
   border-bottom: 1px solid var(--line);
   font-size: var(--fs-small);
   color: var(--ink-soft);
-  letter-spacing: 0.2px;
 }
 
 .about-media { position: relative; }
@@ -614,11 +661,11 @@ section { padding: var(--section-y) 0; }
 }
 .service-card {
   display: grid;
-  grid-template-columns: 64px minmax(200px, 0.8fr) 1.4fr;
-  align-items: baseline;
-  gap: 0 clamp(20px, 3vw, 56px);
+  grid-template-columns: 56px minmax(200px, 0.85fr) 1.2fr 176px;
+  align-items: center;
+  gap: 0 clamp(20px, 3vw, 48px);
   background: none;
-  padding: clamp(30px, 3.4vw, 46px) 0;
+  padding: clamp(20px, 2.2vw, 28px) 0;
   border-bottom: 1px solid var(--line);
   transition: padding-left 0.4s var(--ease);
 }
@@ -629,9 +676,9 @@ section { padding: var(--section-y) 0; }
 }
 .service-card__num {
   font-family: 'Jost', sans-serif;
-  font-size: 0.68rem;
-  letter-spacing: 2.4px;
-  color: var(--navy-light);
+  font-size: 0.8rem;
+  letter-spacing: 0.08em;
+  color: var(--navy);
   font-weight: 500;
   transition: color var(--dur) var(--ease);
 }
@@ -645,12 +692,21 @@ section { padding: var(--section-y) 0; }
 }
 .service-card:hover h3 { color: var(--navy); }
 .service-card p {
-  color: var(--grey);
+  color: var(--ink-mid);
   font-size: var(--fs-small);
-  line-height: 1.75;
-  max-width: 58ch;
+  line-height: 1.65;
+  max-width: 52ch;
   margin: 0;
 }
+/* A real photograph of that kind of work, kept small so the list still
+   reads as a schedule. */
+.service-card__media {
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  background: var(--paper);
+}
+.service-card__media img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.7s var(--ease); }
+.service-card:hover .service-card__media img { transform: scale(1.04); }
 
 
 /* 11  Project cards & grid
@@ -662,7 +718,7 @@ section { padding: var(--section-y) 0; }
 .project-grid {
   display: grid;
   grid-template-columns: 1fr;
-  gap: clamp(64px, 8vw, 128px);
+  gap: clamp(56px, 7vw, 104px);
 }
 .project-grid--featured { grid-template-columns: 1fr; }
 
@@ -705,8 +761,8 @@ section { padding: var(--section-y) 0; }
   position: static;
   display: inline-block;
   color: var(--navy);
-  font-size: 0.68rem;
-  letter-spacing: 2.4px;
+  font-size: 0.75rem;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
   font-weight: 500;
   padding: 0;
@@ -738,8 +794,8 @@ section { padding: var(--section-y) 0; }
 .project-card__summary {
   color: var(--ink-mid);
   font-size: var(--fs-small);
-  line-height: 1.85;
-  margin: 22px 0 28px;
+  line-height: 1.7;
+  margin: 20px 0 26px;
   max-width: 46ch;
 }
 .project-card__foot {
@@ -814,14 +870,18 @@ section { padding: var(--section-y) 0; }
 /* 13  Project detail page
    ========================================================================== */
 .breadcrumb {
-  font-size: 0.7rem;
-  letter-spacing: 2.2px;
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: rgba(255,255,255,0.55);
+  color: rgba(255,255,255,0.75);
   margin-bottom: 26px;
 }
 .breadcrumb a:hover { color: var(--white); text-decoration: underline; }
 .breadcrumb span { opacity: 0.5; margin: 0 8px; }
+/* The current page is the last item; it must stay readable, not faded like
+   the separators. */
+.breadcrumb span:last-child,
+.breadcrumb #project-crumb { opacity: 1; margin: 0; color: var(--white); }
 
 .project-hero__meta {
   display: flex;
@@ -1162,14 +1222,14 @@ section { padding: var(--section-y) 0; }
 }
 .contact-copy .eyebrow { color: var(--navy-pale); }
 .contact-copy h2 { font-size: var(--fs-h2); margin-bottom: 20px; color: var(--white); }
-.contact-copy .lede { color: #c3c6c9; margin-bottom: 38px; font-size: var(--fs-lede); line-height: 1.8; }
+.contact-copy .lede { color: #d2d5d8; margin-bottom: 34px; font-size: var(--fs-lede); line-height: 1.7; }
 .contact-actions { display: flex; gap: 12px; flex-wrap: wrap; }
 
 /* Ruled rows, set as a definition list. The circular icon badges and the
    white panel they sat beside were the most generic elements on the page. */
 .contact-details {
   display: block;
-  border-top: 1px solid rgba(255,255,255,0.16);
+  border-top: 1px solid var(--line);
 }
 .contact-detail {
   display: grid;
@@ -1177,19 +1237,26 @@ section { padding: var(--section-y) 0; }
   align-items: baseline;
   gap: 20px;
   padding: 20px 0;
-  border-bottom: 1px solid rgba(255,255,255,0.16);
+  border-bottom: 1px solid var(--line);
 }
 .contact-detail dd { margin: 0; }
 .contact-detail .label {
-  font-size: 0.66rem;
-  letter-spacing: 2.2px;
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: #8b93a0;
+  color: var(--grey);
   margin: 0;
 }
-.contact-detail .value { font-size: 1.05rem; color: var(--white); font-weight: 300; }
+.contact-detail .value { font-size: 1.1rem; color: var(--ink); font-weight: 400; }
 .contact-detail a.value { transition: color var(--dur) var(--ease); }
-.contact-detail a.value:hover { color: var(--navy-pale); }
+.contact-detail a.value:hover { color: var(--navy); }
+/* On the dark contact section (homepage) the same rows reverse out. The
+   contact page sets them on paper, where white text would disappear. */
+.contact-section .contact-details,
+.contact-section .contact-detail { border-color: rgba(255,255,255,0.16); }
+.contact-section .contact-detail .label { color: #a3aab5; }
+.contact-section .contact-detail .value { color: var(--white); }
+.contact-section .contact-detail a.value:hover { color: var(--navy-pale); }
 
 /* (The white "Request a Quote" panel was removed — it read as a template
    component beside otherwise type-led sections.) */
@@ -1226,12 +1293,12 @@ section { padding: var(--section-y) 0; }
 }
 .footer-brand p { max-width: 34ch; }
 /* The mark is a white knockout now, so it needs no white plate behind it. */
-.footer-logo { height: 62px; width: auto; margin-bottom: 24px; }
-.site-footer p, .site-footer li { font-size: var(--fs-small); color: #9b9d98; margin-bottom: 9px; list-style: none; }
+.footer-logo { height: 52px; width: auto; margin-bottom: 22px; }
+.site-footer p, .site-footer li { font-size: var(--fs-small); color: #b4b6b1; margin-bottom: 9px; list-style: none; }
 .site-footer h4 {
   color: var(--white);
-  font-size: 0.7rem;
-  letter-spacing: 2px;
+  font-size: 0.75rem;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
   margin-bottom: 18px;
   font-family: 'Jost', sans-serif;
@@ -1243,9 +1310,8 @@ section { padding: var(--section-y) 0; }
 .footer-bottom {
   border-top: 1px solid rgba(255,255,255,0.09);
   padding-top: 26px;
-  letter-spacing: 0.4px;
-  font-size: 0.76rem;
-  color: #6c6e69;
+  font-size: 0.8rem;
+  color: #8f918c;
   display: flex;
   justify-content: space-between;
   gap: 14px;
@@ -1327,35 +1393,39 @@ body.no-scroll { overflow: hidden; }
   .project-card { grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr); gap: 32px; }
   .project-grid > .project-card:nth-child(even) { grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr); }
   .footer-grid { grid-template-columns: 1fr 1fr; row-gap: 40px; }
-  .service-card { grid-template-columns: 60px 1fr; }
-  .service-card p { grid-column: 2; margin-top: 10px; }
+  .service-card { grid-template-columns: 52px 1fr 150px; align-items: center; }
+  .service-card h3 { grid-column: 2; grid-row: 1; align-self: end; }
+  .service-card p { grid-column: 2; grid-row: 2; margin-top: 8px; align-self: start; }
+  .service-card__num { grid-row: 1 / span 2; }
+  .service-card__media { grid-column: 3; grid-row: 1 / span 2; }
 }
 
 @media (max-width: 900px) {
-  :root { --header-h: 76px; }
-  .logo-mark { width: 100px; height: 55px; }
-  .nav-toggle { display: flex; }
+  :root { --header-h: 72px; }
+  .logo-mark { width: 136px; height: 44px; }
+  .nav-toggle { display: flex; margin-left: 8px; }
+  .header-call { display: flex; }
 
-  /* Full-height panel rather than a dropdown: links sit in the lower half of
-     the screen where a thumb reaches, with the call action last. */
-  /* Absolute, not fixed: the header's backdrop-filter makes it a containing
-     block, so a fixed panel would resolve against the header rather than the
-     viewport and collapse to nothing. */
+  /* A panel that drops down under the header bar, sized to its links, rather
+     than a full-screen takeover. The page stays visible, dimmed, below it.
+     Absolute, not fixed: the header's backdrop-filter makes it a containing
+     block, so a fixed panel would resolve against the header. */
   .nav-cta {
     position: absolute;
     left: 0;
     right: 0;
     top: 100%;
-    height: calc(100vh - var(--header-h));
-    height: calc(100dvh - var(--header-h));
+    z-index: 2;
+    max-height: calc(100vh - var(--header-h));
+    max-height: calc(100dvh - var(--header-h));
     flex-direction: column;
     align-items: stretch;
-    justify-content: flex-end;
+    justify-content: flex-start;
     gap: 0;
     background: var(--paper);
     border-top: 1px solid var(--line);
-    /* Clear the fixed call bar that sits along the bottom of the screen. */
-    padding: 24px var(--gutter) calc(80px + env(safe-area-inset-bottom, 0px));
+    box-shadow: 0 18px 30px -12px rgba(28,29,31,0.25);
+    padding: 8px var(--gutter) 24px;
     overflow-y: auto;
     opacity: 0;
     visibility: hidden;
@@ -1368,10 +1438,19 @@ body.no-scroll { overflow: hidden; }
     transform: none;
   }
   .nav-list { flex-direction: column; gap: 0; }
+  .site-header.nav-open::after {
+    content: '';
+    position: absolute;
+    left: 0; right: 0;
+    top: 100%;
+    height: 100vh;
+    background: rgba(20,21,23,0.4);
+    z-index: 1;
+  }
   .nav-list a {
     display: block;
-    padding: 20px 0;
-    font-size: 1.4rem;
+    padding: 15px 0;
+    font-size: 1.3rem;
     font-family: 'Playfair Display', Georgia, serif;
     text-transform: none;
     letter-spacing: -0.01em;
@@ -1379,9 +1458,8 @@ body.no-scroll { overflow: hidden; }
     border-bottom: 1px solid var(--line);
   }
   .nav-list a::after { display: none; }
-  .nav-list li:first-child a { border-top: 1px solid var(--line); }
   .call-pill {
-    margin-top: 26px;
+    margin-top: 20px;
     text-align: center;
     padding: 18px 20px;
     background: var(--ink);
@@ -1390,19 +1468,23 @@ body.no-scroll { overflow: hidden; }
   }
 
   /* Rows with rules between, rather than columns. */
-  .trust-strip .container { grid-template-columns: 1fr; gap: 0; }
-  .trust-item {
-    padding: 24px 0;
+  .trust-strip .container { grid-template-columns: 1fr 1fr; gap: 0; }
+  .trust-item,
+  .trust-item:first-child,
+  .trust-item:last-child {
+    padding: 20px 16px 20px 0;
     border-left: none;
     border-top: 1px solid var(--line);
   }
-  .trust-item:first-child { padding-top: 0; border-top: none; }
-  .trust-item:last-child { padding-bottom: 0; }
+  .trust-item:nth-child(-n+2) { border-top: none; padding-top: 0; }
+  .trust-item:nth-child(even) { padding-left: 16px; padding-right: 0; border-left: 1px solid var(--line); }
   .trust-item__num { margin-bottom: 10px; }
   .services-grid { grid-template-columns: 1fr; }
-  .service-card { grid-template-columns: 1fr; gap: 0; padding: 26px 0; }
-  .service-card__num { margin-bottom: 10px; display: block; }
-  .service-card p { grid-column: 1; margin-top: 10px; }
+  .service-card { grid-template-columns: minmax(0, 1fr) 112px; gap: 0 18px; padding: 20px 0; }
+  .service-card__num { grid-column: 1; grid-row: auto; margin-bottom: 6px; display: block; }
+  .service-card h3 { grid-column: 1; grid-row: auto; }
+  .service-card p { grid-column: 1; grid-row: auto; margin-top: 6px; }
+  .service-card__media { grid-column: 2; grid-row: 1 / span 3; }
   .about-grid { grid-template-columns: 1fr; gap: 26px; }
   .contact-grid { grid-template-columns: 1fr; gap: 44px; }
   .contact-actions { width: 100%; }
@@ -1419,30 +1501,19 @@ body.no-scroll { overflow: hidden; }
   .cta-band .container { flex-direction: column; align-items: flex-start; }
   .hero { min-height: 0; }
 
-  /* Fixed call bar on phones — the single most useful action for a trade site. */
-  .sticky-call {
-    display: block;
-    position: fixed;
-    bottom: 0; left: 0; right: 0;
-    background: var(--ink);
-    color: var(--white);
-    text-align: center;
-    padding: 15px;
-    font-weight: 500;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-    font-size: 0.8rem;
-    z-index: 100;
-  }
-  .sticky-call a { color: var(--white); display: block; }
-  body { padding-bottom: 56px; }
-  .lightbox { padding-bottom: 70px; }
+  /* No fixed call bar: the call button lives in the header instead, so it
+     never covers content, buttons or form fields. */
 }
 
 @media (max-width: 680px) {
   /* The trailing rule strands itself beside a wrapped label on a phone. */
   .eyebrow::after { display: none; }
-  .eyebrow { font-size: 0.68rem; letter-spacing: 2.2px; }
+  .eyebrow { font-size: 0.72rem; letter-spacing: 0.12em; }
+  .trust-strip .container { grid-template-columns: 1fr; }
+  .trust-item,
+  .trust-item:nth-child(even) { padding: 16px 0; border-left: none; border-top: 1px solid var(--line); }
+  .trust-item:first-child { border-top: none; padding-top: 0; }
+  .trust-item:nth-child(2) { border-top: 1px solid var(--line); padding-top: 16px; }
 
   .project-grid,
   .project-grid--featured { grid-template-columns: 1fr; gap: 56px; }
@@ -1464,7 +1535,7 @@ body.no-scroll { overflow: hidden; }
 }
 
 @media (max-width: 400px) {
-  .logo-mark { width: 92px; height: 51px; }
+  .logo-mark { width: 124px; height: 40px; }
   .nav-list a { font-size: 1.25rem; padding: 17px 0; }
 }
 
