@@ -55,6 +55,15 @@
   /* ---- main image ------------------------------------------------------- */
   var leadImg = document.getElementById('project-lead-img');
   if (leadImg) {
+    /* An upright main photograph gets an upright frame (and the wider
+       column) instead of being cropped to landscape. Decided once the
+       photo's real proportions are known. */
+    var hero = document.getElementById('project-hero');
+    leadImg.addEventListener('load', function () {
+      if (hero && leadImg.naturalHeight > leadImg.naturalWidth) {
+        hero.classList.add('project-hero--portrait');
+      }
+    });
     leadImg.src = BC.imageSrc(project.mainImage);
     leadImg.alt = BC.imageAlt(project.mainImage, project.title + ' — Brock Contracts');
   }
@@ -151,6 +160,16 @@
   if (galleryGrid && gallery.length) {
     if (gallerySection) gallerySection.hidden = false;
     var wideFlags = galleryLayout(gallery);
+
+    /* A gallery made up entirely of upright photographs runs three or four
+       across on wide screens, so it never becomes a tall column of phone
+       shots. The count decides which, so the last row is never ragged. */
+    var allUpright = gallery.every(isPortrait);
+    if (allUpright && gallery.length > 2) {
+      var cols = gallery.length % 4 === 0 ? 4 : (gallery.length % 3 === 0 ? 3 : 2);
+      galleryGrid.classList.add('gallery-grid--upright');
+      galleryGrid.style.setProperty('--cols', cols);
+    }
 
     galleryGrid.innerHTML = gallery.map(function (photo, i) {
       var src = BC.imageSrc(photo);

@@ -14,11 +14,12 @@
 <meta property="og:image" content="https://brockcontracts.co.uk/brock-contracts-project-newbuild.jpg">
 <meta property="og:url" content="https://brockcontracts.co.uk/about">
 <meta property="og:locale" content="en_GB">
-<meta name="theme-color" content="#ffffff">
+<meta name="theme-color" content="#f6f2ea">
 
 <link rel="icon" href="/brock-contracts-logo-cropped.png">
 <link rel="apple-touch-icon" href="/brock-contracts-logo-cropped.png">
 <link rel="preload" href="/assets/fonts/hanken-grotesk-variable.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/assets/fonts/fraunces-variable.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="/assets/css/site.css">
 </head>
 <body>
@@ -28,7 +29,8 @@
 <header class="site-header">
   <div class="container site-header__inner">
     <a class="brand" href="/" aria-label="Brock Contracts, home">
-      <img src="/brock-contracts-logo-header.png" alt="Brock Contracts" width="505" height="160">
+      <img class="brand__ink" src="/brock-contracts-logo-header.png" alt="Brock Contracts" width="505" height="160">
+      <img class="brand__light" src="/brock-contracts-logo-header-white.png" alt="" width="505" height="160">
     </a>
 
     <nav class="nav" aria-label="Main">
@@ -41,12 +43,12 @@
     </nav>
 
     <div class="header-actions">
-      <a class="header-phone" href="tel:+447980136188" aria-label="Call 07980 136188"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 4h3.5l2 5-2.5 1.6a11 11 0 0 0 5.4 5.4L15 13.5l5 2V19a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z"/></svg><span>07980 136188</span></a>
-      <a class="btn btn--primary btn--small" href="/contact">Request a quote</a>
+      <a class="header-phone" href="tel:+447980136188" aria-label="Call 07980 136188"><svg class="icon-static" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 4h3.5l2 5-2.5 1.6a11 11 0 0 0 5.4 5.4L15 13.5l5 2V19a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z"/></svg><span>07980 136188</span></a>
+      <a class="btn btn--primary btn--small header-cta" href="/contact">Request a quote</a>
     </div>
 
     <div class="header-mobile">
-      <a class="icon-btn icon-btn--call" href="tel:+447980136188" aria-label="Call 07980 136188"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 4h3.5l2 5-2.5 1.6a11 11 0 0 0 5.4 5.4L15 13.5l5 2V19a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z"/></svg></a>
+      <a class="icon-btn icon-btn--call" href="tel:+447980136188" aria-label="Call 07980 136188"><svg class="icon-static" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 4h3.5l2 5-2.5 1.6a11 11 0 0 0 5.4 5.4L15 13.5l5 2V19a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z"/></svg></a>
       <button class="icon-btn menu-btn" type="button" aria-expanded="false" aria-controls="mobile-nav" aria-label="Open menu">
         <span class="menu-icon" aria-hidden="true"><span></span></span><span class="menu-btn__label" aria-hidden="true">Menu</span>
       </button>
@@ -65,10 +67,10 @@
         </ul>
       </nav>
       <div class="mobile-nav__actions">
-        <a class="btn btn--primary btn--block" href="tel:+447980136188"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 4h3.5l2 5-2.5 1.6a11 11 0 0 0 5.4 5.4L15 13.5l5 2V19a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z"/></svg>Call 07980 136188</a>
-        <a class="btn btn--secondary btn--block" href="/contact">Request a quote</a>
+        <a class="btn btn--primary btn--block" href="tel:+447980136188"><svg class="icon-static" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 4h3.5l2 5-2.5 1.6a11 11 0 0 0 5.4 5.4L15 13.5l5 2V19a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z"/></svg>Call us</a>
+        <a class="btn btn--outline btn--block" href="/contact">Request a quote</a>
       </div>
-      <p class="mobile-nav__meta">3 Holly Place, Crieff PH7 3EP</p>
+      <p class="mobile-nav__meta">07980 136188 &middot; 3 Holly Place, Crieff</p>
     </div>
   </div>
   <div class="nav-backdrop" aria-hidden="true"></div>
@@ -80,7 +82,7 @@
       <nav aria-label="Breadcrumb"><ol class="breadcrumb"><li><a href="/">Home</a></li><li><span aria-current="page">About</span></li></ol></nav>
       <div class="page-header__grid">
         <div>
-          <p class="eyebrow">About us</p>
+          <p class="label">About us</p>
           <h1>Joiners and builders based in Crieff</h1>
         </div>
         <p class="lede">A joinery and building contracting business based at Holly Place in Crieff, working across Strathearn and Perthshire for over 15 years.</p>
@@ -89,51 +91,51 @@
   </section>
 
   <section class="section">
-    <div class="container split split--top">
+    <div class="container split">
       <figure class="figure sticky-aside">
         <div class="figure__frame ratio ratio--4x5">
-          <img src="/images/projects/sierras/hallway-02.jpg" width="2048" height="1363" loading="lazy" decoding="async"
+          <img src="/images/projects/sierras/hallway-02.jpg" width="2048" height="1363" loading="lazy" decoding="async" style="object-position:40% 50%"
                alt="Entrance hall in Auchterarder with sage green full-height fitted cupboards beside the front door">
         </div>
         <figcaption>Fitted joinery, Auchterarder</figcaption>
       </figure>
 
       <div class="prose">
+        <p class="statement">We take on joinery and general building work across Strathearn and the wider Perthshire area, from a set of internal doors to a new house.</p>
+
         <h2>Who we are</h2>
-        <p>Brock Contracts is a joinery and building contracting business based in Crieff. We take on joinery and general building work across Strathearn and the wider Perthshire area.</p>
-        <p>We work as principal contractor or sub-contractor depending on what a job needs, managing every trade on site so the work runs to programme and finishes properly.</p>
+        <p>Brock Contracts is a joinery and building contracting business based in Crieff. We work as principal contractor or sub-contractor depending on what a job needs, managing every trade on site so the work runs to programme and finishes properly.</p>
 
         <h2>How we work</h2>
         <p>Most of the work we take on is local. Being based in Crieff means we know the housing stock, the suppliers and the building warrant process with Perth &amp; Kinross Council.</p>
-        <ul class="checklist">
+        <ul class="svc-list">
           <li>Joinery and carpentry, including bespoke fitted work and staircases</li>
+          <li>New builds, extensions and renovations</li>
           <li>Kitchens, doors and windows, supplied and fitted</li>
           <li>Flooring and roofing</li>
-          <li>New builds, extensions and renovations</li>
         </ul>
 
         <h2>Where we work</h2>
         <p>Our base is 3 Holly Place, Crieff, PH7 3EP. We work across Crieff, Strathearn and the wider Perthshire area. See our <a href="/projects">recent projects</a> for where we&rsquo;ve been lately.</p>
 
-        <dl class="facts" style="margin-top:2rem">
-          <div class="fact"><dt>In business</dt><dd>Over 15 years</dd></div>
-          <div class="fact"><dt>Based in</dt><dd>Crieff</dd></div>
+        <dl class="facts" style="margin-top:2.5rem">
+          <div class="fact"><dt>In business</dt><dd><span class="fact__value">15+ years</span></dd></div>
+          <div class="fact"><dt>Based in</dt><dd><span class="fact__value">Crieff</span></dd></div>
         </dl>
       </div>
     </div>
   </section>
 
-  <section class="section" aria-labelledby="cta-title">
-    <div class="container">
-      <div class="cta-panel">
-        <div>
-          <h2 id="cta-title">Planning work in Crieff or Perthshire?</h2>
-          <p>Call or send a few details about the job for a free, no-obligation quote.</p>
-        </div>
-        <div class="btn-row">
-          <a class="btn btn--light" href="tel:+447980136188"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 4h3.5l2 5-2.5 1.6a11 11 0 0 0 5.4 5.4L15 13.5l5 2V19a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z"/></svg>Call 07980 136188</a>
-          <a class="btn btn--outline-light" href="/contact">Request a quote</a>
-        </div>
+  <section class="cta-band" aria-labelledby="cta-title">
+    <div class="container cta-band__inner">
+      <div>
+        <p class="label">Start a project</p>
+        <h2 id="cta-title">Planning work in Crieff or Perthshire?</h2>
+        <p>Call or send a few details about the job for a free, no-obligation quote.</p>
+      </div>
+      <div class="btn-row">
+        <a class="btn btn--light" href="/contact">Request a quote<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="M13 6l6 6-6 6"/></svg></a>
+        <a class="btn btn--ghost-light" href="tel:+447980136188"><svg class="icon-static" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 4h3.5l2 5-2.5 1.6a11 11 0 0 0 5.4 5.4L15 13.5l5 2V19a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z"/></svg>07980 136188</a>
       </div>
     </div>
   </section>
@@ -145,9 +147,10 @@
       <div class="footer-brand">
         <img src="/brock-contracts-logo-header-white.png" alt="Brock Contracts" width="505" height="160" loading="lazy" decoding="async">
         <p>Joiners and building contractors based in Crieff, working across Strathearn and Perthshire for over 15 years.</p>
+        <a class="footer-phone" href="tel:+447980136188">07980 136188</a>
       </div>
       <nav aria-label="Footer">
-        <h2>Pages</h2>
+        <h2>Explore</h2>
         <ul>
           <li><a href="/">Home</a></li>
           <li><a href="/services">Services</a></li>
@@ -159,20 +162,19 @@
       <div>
         <h2>Services</h2>
         <ul>
-          <li><a href="/joiner-crieff">Joinery &amp; carpentry</a></li>
+          <li><a href="/services#joinery">Joinery &amp; carpentry</a></li>
+          <li><a href="/services#building">Building work</a></li>
           <li><a href="/services#kitchens">Kitchens</a></li>
           <li><a href="/services#doors-windows">Doors &amp; windows</a></li>
           <li><a href="/services#flooring">Flooring</a></li>
           <li><a href="/services#roofing">Roofing</a></li>
-          <li><a href="/services#building">Building work</a></li>
         </ul>
       </div>
       <div>
         <h2>Contact</h2>
         <ul>
-          <li><a href="tel:+447980136188">07980 136188</a></li>
           <li><a href="mailto:c.brock016@btinternet.com">c.brock016@btinternet.com</a></li>
-          <li><address>3 Holly Place, Crieff<br>PH7 3EP</address></li>
+          <li><address>3 Holly Place<br>Crieff PH7 3EP</address></li>
           <li><a class="footer-social" href="https://www.facebook.com/p/brock-contracts-100039208331893/" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 21v-7.5h2.8l.4-3.3H14V8.3c0-.9.3-1.6 1.6-1.6h1.7V3.8A22 22 0 0 0 14.8 3.7C12.4 3.7 10.8 5.2 10.8 7.9v2.3H8v3.3h2.8V21"/></svg>Facebook<span class="visually-hidden"> (opens in a new tab)</span></a></li>
         </ul>
       </div>

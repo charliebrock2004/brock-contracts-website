@@ -109,6 +109,7 @@
           '<p class="project-card__meta">' + meta + '</p>' +
           '<h3 class="project-card__title"><a href="' + esc(href) + '">' + esc(project.title) + '</a></h3>' +
           '<p class="project-card__summary">' + esc(project.summary) + '</p>' +
+          '<span class="project-card__more" aria-hidden="true">View project' + ICON_ARROW + '</span>' +
         '</div>' +
       '</article>';
   };

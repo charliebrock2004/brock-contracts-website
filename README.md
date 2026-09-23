@@ -152,36 +152,47 @@ images/placeholder.svg  Shown wherever a photo hasn't been added yet
 
 ## Swapping the homepage hero photograph
 
-The hero image is one `<img>` near the top of `index.html`, served at three
-sizes from `images/site/`:
+The hero is a `<picture>` near the top of `index.html`. Wide screens get the
+landscape photo at three sizes; phones get an upright crop:
 
 ```html
-<div class="hero__media">
+<picture class="hero__media">
+  <source media="(max-width: 699px)" srcset="/images/site/hero-hallway-portrait.jpg">
   <img src="/images/site/hero-hallway-1280.jpg"
        srcset="/images/site/hero-hallway-768.jpg 768w, /images/site/hero-hallway-1280.jpg 1280w, /images/site/hero-hallway-2048.jpg 2048w"
-       sizes="100vw" width="2048" height="1363" alt="..." fetchpriority="high" decoding="async">
-</div>
+       sizes="100vw" alt="...">
+</picture>
 ```
 
-To change it, save the new photograph at those three widths, update the file
-names (also in the `<link rel="preload">` in the page head, and the caption
-link beside it), and write an `alt` describing the photo. A landscape photo
-works best: on desktop it sits to the right of the headline, on phones above it.
+To change it, save the new photograph at 768, 1280 and 2048 pixels wide plus
+an upright 840 x 1120 crop for phones, update the file names here and in the
+two `<link rel="preload">` lines in the page head, and describe the photo in
+`alt`. The words sit over the photo with a dark shade behind them, so a photo
+whose left side and bottom are not too busy works best.
 
 ## Design system
 
 All styling is in `assets/css/site.css`. Colours, type sizes and spacing are
 tokens at the top of that file; change a token and every page follows.
 
-- Typeface: Hanken Grotesk, self-hosted in `assets/fonts/` (SIL Open Font
-  License, see `OFL-hanken-grotesk.txt`). No Google Fonts request.
-- Header logo: `brock-contracts-logo-header.png` (and `-header-white.png` in
-  the footer) are crops of the existing logo without the small tagline line,
-  which is unreadable at header size. The full logo files are unchanged.
-- Service and hero photographs in `images/site/` are crops of the project
-  photographs already in `images/projects/`. No stock photography.
-- On phones the menu is a panel that drops down under the header. There are
-  no fixed call bars.
+- **Colour:** warm charcoal, ivory and stone, with a muted brass accent used
+  for rules, numbers and small labels.
+- **Type:** Fraunces for display headings and large figures only; Hanken
+  Grotesk for everything else. Both are self-hosted in `assets/fonts/` (SIL
+  Open Font License). No Google Fonts request.
+- **Header:** on the homepage it sits over the hero photo and turns solid as
+  soon as the page scrolls. On every other page it is solid.
+- **Phones:** a call button and a menu that drops down under the header.
+  There are no fixed call bars covering the page.
+- **Header logo:** `brock-contracts-logo-header.png` (and `-header-white.png`
+  over photos and in the footer) are crops of the existing logo without the
+  small tagline line, which is unreadable at header size. The full logo files
+  are unchanged.
+- **Photos:** everything in `images/site/` is a crop of a photograph already
+  in `images/projects/`. No stock photography.
+- **Project pages:** a project whose main photo is upright gets an upright
+  frame automatically, and a gallery made up entirely of upright phone photos
+  runs three or four across on wide screens.
 
 ## Pages
 
