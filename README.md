@@ -150,19 +150,28 @@ images/placeholder.svg  Shown wherever a photo hasn't been added yet
 
 ---
 
-## Swapping the homepage hero photograph
+## The homepage
 
-The hero image is one `<img>` near the top of `index.html`:
+- **Hero:** `brock-contracts-project-newbuild.jpg` (the Dunkeld new build from
+  the air), with a second photograph (`images/site/hero-inset-joinery.jpg`)
+  breaking the lower edge on desktop. On phones the whole photo is shown above
+  the headline. The aerial is 1200 x 960, the only version in the repository;
+  a larger original would sharpen it on very wide screens.
+- **Selected work:** curated in `assets/js/home.js` (`HOME_FEATURES`): which
+  projects are shown large, which of their photographs, and the layout. Titles,
+  locations, categories and summaries always come from `projects-data.js`.
+- **Project index:** every project in `projects-data.js`, listed automatically
+  under Selected work. A new project appears there with no other change.
 
-```html
-<div class="hero__media" aria-hidden="true">
-  <img src="brock-contracts-project-newbuild.jpg" alt="" fetchpriority="high" decoding="async">
-</div>
-```
+## Design system
 
-Drop a new file in and change that one `src`. It is decorative (the headline
-carries the meaning), so `alt` stays empty. A wide landscape photograph works
-best — the frame is full-bleed and crops to the viewport.
+All styling is in `assets/css/site.css`; colours, type sizes and spacing are
+tokens at the top. The original identity is kept: Playfair Display for
+headings, Jost for everything else (both self-hosted, SIL OFL, in
+`assets/fonts/`), charcoal, warm paper and a muted slate blue. Photos in
+`images/site/` are crops of the photographs in `images/projects/`; there is no
+stock photography. On phones the call button sits in the header and the menu
+drops down under it; there is no fixed call bar.
 
 ## Adding an exterior photo to an existing project
 
