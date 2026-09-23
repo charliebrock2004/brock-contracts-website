@@ -152,17 +152,49 @@ images/placeholder.svg  Shown wherever a photo hasn't been added yet
 
 ## Swapping the homepage hero photograph
 
-The hero image is one `<img>` near the top of `index.html`:
+The hero image is one `<img>` near the top of `index.html`, served at three
+sizes from `images/site/`:
 
 ```html
-<div class="hero__media" aria-hidden="true">
-  <img src="brock-contracts-project-newbuild.jpg" alt="" fetchpriority="high" decoding="async">
+<div class="hero__media">
+  <img src="/images/site/hero-hallway-1280.jpg"
+       srcset="/images/site/hero-hallway-768.jpg 768w, /images/site/hero-hallway-1280.jpg 1280w, /images/site/hero-hallway-2048.jpg 2048w"
+       sizes="100vw" width="2048" height="1363" alt="..." fetchpriority="high" decoding="async">
 </div>
 ```
 
-Drop a new file in and change that one `src`. It is decorative (the headline
-carries the meaning), so `alt` stays empty. A wide landscape photograph works
-best — the frame is full-bleed and crops to the viewport.
+To change it, save the new photograph at those three widths, update the file
+names (also in the `<link rel="preload">` in the page head, and the caption
+link beside it), and write an `alt` describing the photo. A landscape photo
+works best: on desktop it sits to the right of the headline, on phones above it.
+
+## Design system
+
+All styling is in `assets/css/site.css`. Colours, type sizes and spacing are
+tokens at the top of that file; change a token and every page follows.
+
+- Typeface: Hanken Grotesk, self-hosted in `assets/fonts/` (SIL Open Font
+  License, see `OFL-hanken-grotesk.txt`). No Google Fonts request.
+- Header logo: `brock-contracts-logo-header.png` (and `-header-white.png` in
+  the footer) are crops of the existing logo without the small tagline line,
+  which is unreadable at header size. The full logo files are unchanged.
+- Service and hero photographs in `images/site/` are crops of the project
+  photographs already in `images/projects/`. No stock photography.
+- On phones the menu is a panel that drops down under the header. There are
+  no fixed call bars.
+
+## Pages
+
+| Page | File |
+|---|---|
+| Home | `index.html` |
+| Services | `services.html` (sections `#joinery`, `#kitchens`, `#doors-windows`, `#flooring`, `#roofing`, `#building`) |
+| Projects | `projects.html` |
+| Project detail | `project.html?p=<slug>` |
+| About | `about.html` |
+| Contact | `contact.html` (enquiry form opens the visitor's email app; there is no server) |
+| Joiner in Crieff | `joiner-crieff.html` |
+| Not found | `404.html` |
 
 ## Adding an exterior photo to an existing project
 
@@ -176,9 +208,8 @@ The gallery lays itself out for any number of photos, so nothing else changes.
 
 ## Still to do
 
-- Add a genuine client review (see the TESTIMONIAL comment in `index.html`;
-  the styles are already written).
-- Add a `<link rel="canonical">` to each page once the final domain is settled.
+- Add a genuine client review (see the CLIENT REVIEW comment in `index.html`).
+- Canonical tags point at https://brockcontracts.co.uk. Check that is the final domain before it goes live.
 - Confirm whether Renovation Auchterarder and New Build Dunkeld are the same property.
 
 ---
