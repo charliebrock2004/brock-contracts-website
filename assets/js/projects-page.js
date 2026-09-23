@@ -83,8 +83,6 @@
         b.setAttribute('aria-pressed', b === btn ? 'true' : 'false');
       });
       render();
-      /* New results settle in rather than snapping. */
-      if (BC.initReveal) BC.initReveal(grid, true);
     });
   }
 

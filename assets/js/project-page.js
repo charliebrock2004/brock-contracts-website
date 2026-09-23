@@ -161,7 +161,7 @@
         ? '<span class="gallery-item__caption">' + esc(caption) + '</span>'
         : '';
       return '' +
-        '<button class="gallery-item ratio ' + frameClass(photo) + wideClass + '" type="button" data-reveal="image"' +
+        '<button class="gallery-item ratio ' + frameClass(photo) + wideClass + '" type="button"' +
           ' data-lightbox data-full="' + esc(src) + '"' +
           ' data-alt="' + esc(alt) + '"' +
           ' data-caption="' + esc(caption) + '"' +
