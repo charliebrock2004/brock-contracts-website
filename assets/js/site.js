@@ -1,6 +1,6 @@
 /* ==========================================================================
    Brock Contracts — shared site behaviour
-     • mobile navigation
+     • mobile navigation (a drop-down panel under the header)
      • sticky header state
      • project card rendering (used by the homepage and Projects page)
      • image lightbox
@@ -68,39 +68,48 @@
 
   /* ---- project card ---------------------------------------------------- */
 
+  /* A project is unfinished if it carries a Status row that is not
+     "Completed". Its card says so, so an in-progress job is never passed
+     off as finished work. */
+  function projectStatus(project) {
+    var rows = Array.isArray(project.details) ? project.details : [];
+    for (var i = 0; i < rows.length; i++) {
+      var r = rows[i];
+      if (r && r.label && String(r.label).toLowerCase() === 'status' && r.value &&
+          String(r.value).toLowerCase() !== 'completed') {
+        return r.value;
+      }
+    }
+    return '';
+  }
+  BC.projectStatus = projectStatus;
+
   /* One card, used on both the homepage preview and the Projects page, so the
-     two can never drift apart. */
+     two can never drift apart. The title link covers the whole card. */
   BC.projectCard = function (project) {
     var href = 'project.html?p=' + encodeURIComponent(project.slug);
     var src = imageSrc(project.mainImage);
-    var alt = imageAlt(project.mainImage, project.title + ' — Brock Contracts');
+    var alt = imageAlt(project.mainImage, project.title + ' \u2014 Brock Contracts');
+    var status = projectStatus(project);
 
-    var exampleBadge = project.isExample
-      ? '<span class="project-card__example">Example</span>'
-      : '';
+    var badge = project.isExample
+      ? '<span class="project-card__status">Example</span>'
+      : (status ? '<span class="project-card__status">' + esc(status) + '</span>' : '');
 
-    var date = project.completed
-      ? '<span class="project-card__date">Completed ' + esc(project.completed) + '</span>'
-      : '<span class="project-card__date"></span>';
+    var meta = '<span>' + esc(project.category) + '</span>' +
+      (project.location ? '<span>' + esc(project.location) + '</span>' : '');
 
     return '' +
       '<article class="project-card" data-category="' + esc(project.category) + '">' +
-        '<div class="project-card__media ratio ratio--3x2">' +
+        '<div class="project-card__media">' +
           '<img src="' + esc(src) + '" alt="' + esc(alt) + '" loading="lazy" decoding="async">' +
-          exampleBadge +
+          badge +
         '</div>' +
         '<div class="project-card__body">' +
-          '<span class="project-card__tag">' + esc(project.category) + '</span>' +
-          '<h3 class="project-card__title">' + esc(project.title) + '</h3>' +
-          '<p class="project-card__location">' + ICON_PIN + esc(project.location) + '</p>' +
+          '<p class="project-card__meta">' + meta + '</p>' +
+          '<h3 class="project-card__title"><a href="' + esc(href) + '">' + esc(project.title) + '</a></h3>' +
           '<p class="project-card__summary">' + esc(project.summary) + '</p>' +
-          '<div class="project-card__foot">' +
-            '<a class="link-arrow project-card__link" href="' + esc(href) + '">' +
-              'View Project<span class="visually-hidden">: ' + esc(project.title) + '</span>' +
-              ICON_ARROW +
-            '</a>' +
-            date +
-          '</div>' +
+          '<span class="project-card__more" aria-hidden="true">View project' + ICON_ARROW + '</span>' +
         '</div>' +
       '</article>';
   };
@@ -108,40 +117,47 @@
 
   /* ---- mobile navigation ----------------------------------------------- */
 
+  /* Below 960px the menu button opens a panel that drops down under the
+     header bar. It closes on Escape, on a tap outside it, on following a
+     link, and when the window grows back to the desktop layout. */
   function initNav() {
     var header = document.querySelector('.site-header');
-    var toggle = document.querySelector('.nav-toggle');
-    if (!header || !toggle) return;
+    var toggle = document.querySelector('.menu-btn');
+    var panel = document.getElementById('mobile-nav');
+    if (!header || !toggle || !panel) return;
+    var label = toggle.querySelector('.menu-btn__label');
 
-    function close() {
-      header.classList.remove('nav-open');
-      toggle.setAttribute('aria-expanded', 'false');
-      document.body.classList.remove('no-scroll');
+    function setOpen(open) {
+      header.classList.toggle('nav-open', open);
+      toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+      toggle.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+      if (label) label.textContent = open ? 'Close' : 'Menu';
+      document.body.classList.toggle('no-scroll', open);
     }
 
     toggle.addEventListener('click', function () {
-      var open = header.classList.toggle('nav-open');
-      toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
-      /* The panel is full height, so stop the page scrolling behind it. */
-      document.body.classList.toggle('no-scroll', open);
+      setOpen(!header.classList.contains('nav-open'));
     });
 
-    /* Close after tapping a link, otherwise the panel covers the target. */
-    header.addEventListener('click', function (e) {
-      if (e.target.closest('.nav-list a, .call-pill')) close();
+    panel.addEventListener('click', function (e) {
+      if (e.target.closest('a')) setOpen(false);
     });
 
     document.addEventListener('click', function (e) {
-      if (!header.contains(e.target)) close();
+      if (header.classList.contains('nav-open') && !panel.contains(e.target) && !toggle.contains(e.target)) {
+        setOpen(false);
+      }
     });
 
     document.addEventListener('keydown', function (e) {
-      if (e.key === 'Escape') close();
+      if (e.key === 'Escape' && header.classList.contains('nav-open')) {
+        setOpen(false);
+        toggle.focus();
+      }
     });
 
-    /* Reset when resizing back up to the desktop layout. */
     window.addEventListener('resize', function () {
-      if (window.innerWidth > 900) close();
+      if (window.innerWidth >= 960 && header.classList.contains('nav-open')) setOpen(false);
     });
   }
 
@@ -199,7 +215,7 @@
         '<svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></svg>' +
       '</button>' +
       '<figure class="lightbox__figure">' +
-        '<img class="lightbox__img" src="" alt="">' +
+        '<img class="lightbox__img" alt="">' +
         '<figcaption class="lightbox__caption"></figcaption>' +
         '<p class="lightbox__counter" aria-live="polite"></p>' +
       '</figure>';
@@ -287,54 +303,12 @@
   };
 
 
-  /* ---- section reveal ---------------------------------------------------- */
-
-  /* A short fade-and-rise as each block first comes into view. Applied from
-     script so that with JS off, or reduced motion on, nothing is ever hidden.
-     Blocks are selected rather than tagged in the markup, so project pages
-     added later pick this up with no extra work. */
-  var REVEAL_SELECTOR = [
-    '.section-head',
-    '.about-grid',
-    '.services-grid',
-    '.project-grid',
-    '.gallery-grid',
-    '.project-body',
-    '.footer-lead'
-  ].join(', ');
-
-  function initReveal() {
-    if (!('IntersectionObserver' in window)) return;
-    if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-
-    var els = document.querySelectorAll(REVEAL_SELECTOR);
-    if (!els.length) return;
-
-    document.documentElement.classList.add('js-reveal');
-
-    var io = new IntersectionObserver(function (entries) {
-      entries.forEach(function (entry) {
-        if (!entry.isIntersecting) return;
-        entry.target.classList.add('is-revealed');
-        io.unobserve(entry.target);
-      });
-    }, { rootMargin: '0px 0px -6% 0px', threshold: 0.04 });
-
-    Array.prototype.forEach.call(els, function (el) {
-      el.setAttribute('data-reveal', '');
-      io.observe(el);
-    });
-  }
-  BC.initReveal = initReveal;
-
-
   /* ---- boot -------------------------------------------------------------- */
 
   function init() {
     initNav();
     initHeaderScroll();
     initYear();
-    initReveal();
   }
 
   if (document.readyState === 'loading') {
