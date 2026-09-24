@@ -1,14 +1,15 @@
 /* ==========================================================================
    Brock Contracts — site configuration
    --------------------------------------------------------------------------
-   Change SITE_URL here when the production domain is connected.
-   Canonical tags, Open Graph URLs, JSON-LD and the sitemap all read this
-   value. Do not scatter the domain across individual pages.
+   SITE_URL is the address the site is served from. It is also written into
+   every page's canonical link, the sitemap and robots.txt, so to change it
+   run  python3 tools/set-domain.py https://new-domain  which updates all of
+   them together. project-page.js reads it for each project's canonical link.
    ========================================================================== */
 (function (root) {
   'use strict';
 
-  var SITE_URL = 'https://brockcontracts.co.uk';
+  var SITE_URL = 'https://brock-contracts-website.vercel.app';
 
   root.BC_SITE = {
     url: SITE_URL.replace(/\/$/, ''),

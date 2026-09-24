@@ -38,6 +38,24 @@
   }
   BC.imageSrc = imageSrc;
 
+  /* The smaller copy of a project photograph, if tools/make-thumbs.py has
+     made one (see assets/js/image-sizes.js); otherwise the original. */
+  function smallSrc(image) {
+    var src = imageSrc(image);
+    var sizes = window.BC_IMAGE_SIZES || {};
+    return sizes[src] || src;
+  }
+  BC.smallSrc = smallSrc;
+
+  /* srcset pairing the small copy with the 2048px original, so wide screens
+     and high-density phones still get a sharp picture. */
+  function srcset(image) {
+    var src = imageSrc(image);
+    var small = smallSrc(image);
+    return small === src ? '' : small + ' 960w, ' + src + ' 2048w';
+  }
+  BC.srcset = srcset;
+
   function imageAlt(image, fallbackText) {
     if (image && image.alt) return image.alt;
     return fallbackText || 'Brock Contracts project photograph';
@@ -88,7 +106,8 @@
      two can never drift apart. The title link covers the whole card. */
   BC.projectCard = function (project) {
     var href = 'project.html?p=' + encodeURIComponent(project.slug);
-    var src = imageSrc(project.mainImage);
+    var src = smallSrc(project.mainImage);
+    var set = srcset(project.mainImage);
     var alt = imageAlt(project.mainImage, project.title + ' \u2014 Brock Contracts');
     var status = projectStatus(project);
 
@@ -102,7 +121,9 @@
     return '' +
       '<article class="project-card" data-category="' + esc(project.category) + '">' +
         '<div class="project-card__media">' +
-          '<img src="' + esc(src) + '" alt="' + esc(alt) + '" loading="lazy" decoding="async">' +
+          '<img src="' + esc(src) + '"' +
+            (set ? ' srcset="' + esc(set) + '" sizes="(min-width: 760px) 50vw, 100vw"' : '') +
+            ' alt="' + esc(alt) + '" loading="lazy" decoding="async">' +
           badge +
         '</div>' +
         '<div class="project-card__body">' +

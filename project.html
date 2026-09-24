@@ -9,14 +9,18 @@
 <meta property="og:site_name" content="Brock Contracts">
 <meta property="og:title" content="Project | Brock Contracts">
 <meta property="og:description" content="A joinery or building project by Brock Contracts, Crieff.">
-<meta property="og:image" content="https://brockcontracts.co.uk/brock-contracts-project-newbuild.jpg">
+<meta property="og:image" content="https://brock-contracts-website.vercel.app/images/site/og-brock-contracts.jpg">
+<meta name="twitter:card" content="summary_large_image">
 <meta property="og:locale" content="en_GB">
 <meta name="theme-color" content="#1c1d1f">
-<link rel="icon" href="/brock-contracts-logo-cropped.png">
-<link rel="apple-touch-icon" href="/brock-contracts-logo-cropped.png">
+<link rel="icon" href="/favicon.ico" sizes="32x32">
+<link rel="icon" href="/favicon-48.png" type="image/png" sizes="48x48">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <link rel="preload" href="/assets/fonts/playfair-display-variable.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/assets/fonts/jost-variable.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="/assets/css/site.css">
+<script>document.documentElement.className += ' js';</script>
+<script>document.documentElement.classList.add('project-loading');</script>
 </head>
 <body>
 
@@ -90,7 +94,7 @@
   <!-- Every field below is filled in by assets/js/project-page.js from the
        project whose slug matches ?p=. projects-data.js is the only place a
        project is described. -->
-  <article id="project-article" class="case" hidden>
+  <article id="project-article" class="case">
     <header class="case-header">
       <div class="container">
         <nav aria-label="Breadcrumb"><ol class="breadcrumb"><li><a href="/">Home</a></li><li><a href="/projects">Projects</a></li><li><span id="project-crumb" aria-current="page"></span></li></ol></nav>
@@ -119,7 +123,7 @@
         <aside class="case-details" id="project-details" aria-labelledby="project-details-title">
           <h2 id="project-details-title">Project details</h2>
           <dl id="project-details-list"></dl>
-          <a class="btn btn--dark" href="/contact">Discuss a similar project</a>
+          <a class="btn btn--dark" href="/contact" data-enquire-project>Discuss a similar project</a>
           <p class="case-details__note">or call <a href="tel:+447980136188">07980 136188</a></p>
         </aside>
       </div>
@@ -221,7 +225,9 @@
   </div>
 </footer>
 
+<script src="/assets/js/site-config.js"></script>
 <script src="/assets/js/projects-data.js"></script>
+<script src="/assets/js/image-sizes.js"></script>
 <script src="/assets/js/site.js"></script>
 <script src="/assets/js/project-page.js"></script>
 </body>

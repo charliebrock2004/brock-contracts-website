@@ -163,6 +163,35 @@ images/placeholder.svg  Shown wherever a photo hasn't been added yet
 - **Project index:** every project in `projects-data.js`, listed automatically
   under Selected work. A new project appears there with no other change.
 
+## Domain, search and sharing
+
+- The site's address is `https://brock-contracts-website.vercel.app`, the only
+  domain attached to the Vercel project. It appears in every page's canonical
+  link, the sitemap, robots.txt and the structured data. When a custom domain
+  is connected, run `python3 tools/set-domain.py https://your-domain` once and
+  commit; that updates all of them together.
+- Each project page sets its own canonical address, title, description and
+  sharing image from `projects-data.js`.
+- Icons: `favicon.ico`, `favicon-48.png`, `apple-touch-icon.png`,
+  `icon-512.png`. Sharing image: `images/site/og-brock-contracts.jpg`.
+
+## Photo sizes
+
+Cards and galleries use copies of the project photographs no more than 960px
+wide (`images/projects/<project>/w960/`), listed with each original's size in
+`assets/js/image-sizes.js`. After adding photos, run
+`python3 tools/make-thumbs.py` (needs Pillow). It's optional: a photo without
+a small copy still shows, it's just a larger download.
+
+## The enquiry form
+
+There is no server behind the site. The form on the Contact page checks the
+details, then opens the visitor's own email app with the message addressed to
+Brock Contracts; nothing is sent until they press send, and the page says so.
+If the email app doesn't open, the message is shown on the page with a button
+to copy it. Links from a service (`/contact?service=kitchens`) or a project
+(`/contact?project=sierras`) pre-fill the form.
+
 ## Design system
 
 All styling is in `assets/css/site.css`; colours, type sizes and spacing are

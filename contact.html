@@ -5,21 +5,24 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Contact Brock Contracts | Request a Quote in Crieff</title>
 <meta name="description" content="Call 07980 136188 or email c.brock016@btinternet.com for a free, no-obligation quote. Brock Contracts, 3 Holly Place, Crieff, PH7 3EP.">
-<link rel="canonical" href="https://brockcontracts.co.uk/contact">
+<link rel="canonical" href="https://brock-contracts-website.vercel.app/contact">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Brock Contracts">
 <meta property="og:title" content="Contact Brock Contracts | Request a Quote in Crieff">
 <meta property="og:description" content="Call 07980 136188 or email c.brock016@btinternet.com for a free, no-obligation quote. Brock Contracts, 3 Holly Place, Crieff, PH7 3EP.">
-<meta property="og:image" content="https://brockcontracts.co.uk/brock-contracts-project-newbuild.jpg">
-<meta property="og:url" content="https://brockcontracts.co.uk/contact">
+<meta property="og:image" content="https://brock-contracts-website.vercel.app/images/site/og-brock-contracts.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta property="og:url" content="https://brock-contracts-website.vercel.app/contact">
 <meta property="og:locale" content="en_GB">
 <meta name="theme-color" content="#1c1d1f">
-<link rel="icon" href="/brock-contracts-logo-cropped.png">
-<link rel="apple-touch-icon" href="/brock-contracts-logo-cropped.png">
+<link rel="icon" href="/favicon.ico" sizes="32x32">
+<link rel="icon" href="/favicon-48.png" type="image/png" sizes="48x48">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <link rel="preload" href="/assets/fonts/playfair-display-variable.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/assets/fonts/jost-variable.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="/assets/css/site.css">
-<script type="application/ld+json">{"@context": "https://schema.org", "@type": "HomeAndConstructionBusiness", "name": "Brock Contracts", "description": "Joiners and building contractors based in Crieff, working across Strathearn and Perthshire.", "url": "https://brockcontracts.co.uk/", "logo": "https://brockcontracts.co.uk/brock-contracts-logo-cropped.png", "image": "https://brockcontracts.co.uk/brock-contracts-project-newbuild.jpg", "telephone": "+447980136188", "email": "c.brock016@btinternet.com", "address": {"@type": "PostalAddress", "streetAddress": "3 Holly Place", "addressLocality": "Crieff", "addressRegion": "Perth and Kinross", "postalCode": "PH7 3EP", "addressCountry": "GB"}, "areaServed": ["Crieff", "Strathearn", "Perthshire"], "sameAs": ["https://www.facebook.com/p/brock-contracts-100039208331893/", "https://www.yell.com/biz/brock-contracts-crieff-10071389/"]}</script>
+<script>document.documentElement.className += ' js';</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "HomeAndConstructionBusiness", "name": "Brock Contracts", "description": "Joiners and building contractors based in Crieff, working across Strathearn and Perthshire.", "url": "https://brock-contracts-website.vercel.app/", "logo": "https://brock-contracts-website.vercel.app/icon-512.png", "image": "https://brock-contracts-website.vercel.app/images/site/og-brock-contracts.jpg", "telephone": "+447980136188", "email": "c.brock016@btinternet.com", "address": {"@type": "PostalAddress", "streetAddress": "3 Holly Place", "addressLocality": "Crieff", "addressRegion": "Perth and Kinross", "postalCode": "PH7 3EP", "addressCountry": "GB"}, "areaServed": [{"@type": "Place", "name": "Crieff"}, {"@type": "Place", "name": "Strathearn"}, {"@type": "Place", "name": "Perthshire"}], "sameAs": ["https://www.facebook.com/p/brock-contracts-100039208331893/", "https://www.yell.com/biz/brock-contracts-crieff-10071389/"]}</script>
 </head>
 <body>
 
@@ -104,7 +107,8 @@
 
       <div class="form-card">
         <h2>Send an enquiry</h2>
-        <p>Tell us a little about the job. This opens your own email app with the details filled in, ready to send to us.</p>
+        <p>Tell us a little about the job. When you press the button, your own email app opens with the details filled in, ready to send to us.</p>
+        <p class="enquiry__context" id="enquiry-context" hidden></p>
         <form class="enquiry" id="enquiry-form" action="mailto:c.brock016@btinternet.com" method="post" enctype="text/plain" novalidate>
           <div class="enquiry__row">
             <div class="field">
@@ -145,9 +149,17 @@
           <div class="enquiry__foot">
             <button class="btn btn--dark" type="submit">Continue in your email app<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="M13 6l6 6-6 6"/></svg></button>
             <p class="enquiry__note">Nothing is sent until you press send in your email app. If it doesn&rsquo;t open, email <a href="mailto:c.brock016@btinternet.com">c.brock016@btinternet.com</a> or call <a href="tel:+447980136188">07980 136188</a>.</p>
-            <p class="enquiry__status" id="enquiry-status" role="status" hidden></p>
+            <p class="enquiry__status" id="enquiry-status" role="alert" hidden></p>
           </div>
         </form>
+
+        <div class="enquiry-done" id="enquiry-done" tabindex="-1" hidden>
+          <h3>Your email app should now be open</h3>
+          <p>Your message is ready to send to us. <strong>Nothing has been sent yet</strong>: press send in your email app and we&rsquo;ll get back to you.</p>
+          <p>If your email app didn&rsquo;t open, <a data-mailto href="mailto:c.brock016@btinternet.com">try again</a>, copy the message below into an email to <a href="mailto:c.brock016@btinternet.com">c.brock016@btinternet.com</a>, or call <a href="tel:+447980136188">07980 136188</a>.</p>
+          <pre class="enquiry-done__message" data-message></pre>
+          <button class="btn btn--outline btn--small" type="button" data-copy><span>Copy message</span></button>
+        </div>
       </div>
     </div>
   </section>
@@ -197,6 +209,7 @@
   </div>
 </footer>
 
+<script src="/assets/js/projects-data.js"></script>
 <script src="/assets/js/site.js"></script>
 <script src="/assets/js/contact.js"></script>
 </body>

@@ -163,7 +163,7 @@ h3 { font-size: var(--fs-h3); line-height: 1.2; }
   font-size: var(--fs-label);
   font-weight: 500;
   line-height: 1.3;
-  letter-spacing: .12em;
+  letter-spacing: .09em;
   text-transform: uppercase;
   color: var(--slate);
 }
@@ -182,10 +182,9 @@ h3 { font-size: var(--fs-h3); line-height: 1.2; }
   border: 1px solid transparent;
   border-radius: 0;
   font-family: var(--sans);
-  font-size: .875rem;
+  font-size: 1rem;
   font-weight: 500;
-  letter-spacing: .08em;
-  text-transform: uppercase;
+  letter-spacing: .01em;
   text-decoration: none;
   white-space: nowrap;
   cursor: pointer;
@@ -196,23 +195,23 @@ h3 { font-size: var(--fs-h3); line-height: 1.2; }
 .btn--dark:hover { background: var(--slate); }
 .btn--slate { background: var(--slate); color: #fff; }
 .btn--slate:hover { background: var(--slate-deep); }
-.btn--outline { border-color: var(--ink); color: var(--ink); }
+.btn--outline { border-color: var(--ink); color: var(--ink); background: transparent; }
 .btn--outline:hover { background: var(--ink); color: #fff; }
 .btn--light { background: #fff; color: var(--ink); }
 .btn--light:hover { background: var(--stone); }
 .btn--outline-light { border-color: rgba(255,255,255,.55); color: #fff; }
 .btn--outline-light:hover { border-color: #fff; background: rgba(255,255,255,.1); }
 .btn-row { display: flex; flex-wrap: wrap; gap: 12px; }
+.btn--small { min-height: 46px; padding: 0 20px; font-size: .9375rem; }
 
 .link-arrow {
   display: inline-flex;
   align-items: center;
   gap: 10px;
   padding: 6px 0;
-  font-size: .875rem;
+  font-size: 1rem;
   font-weight: 500;
-  letter-spacing: .08em;
-  text-transform: uppercase;
+  letter-spacing: .01em;
   color: var(--ink);
   text-decoration: none;
   border-bottom: 1px solid currentColor;
@@ -268,11 +267,10 @@ h3 { font-size: var(--fs-h3); line-height: 1.2; }
   position: relative;
   display: block;
   padding: 8px 0;
-  font-size: .875rem;
+  font-size: 1rem;
   font-weight: 500;
-  letter-spacing: .1em;
-  text-transform: uppercase;
-  color: rgba(255,255,255,.92);
+  letter-spacing: .01em;
+  color: rgba(255,255,255,.94);
   text-decoration: none;
   transition: color var(--dur) var(--ease);
 }
@@ -306,7 +304,7 @@ h3 { font-size: var(--fs-h3); line-height: 1.2; }
   border: 1px solid rgba(255,255,255,.5);
   background: transparent;
   color: #fff;
-  font-size: .8125rem; font-weight: 500; letter-spacing: .1em; text-transform: uppercase;
+  font-size: .9375rem; font-weight: 500; letter-spacing: .01em;
   text-decoration: none; cursor: pointer;
   transition: color var(--dur) var(--ease), border-color var(--dur) var(--ease), background-color var(--dur) var(--ease);
 }
@@ -391,7 +389,6 @@ h3 { font-size: var(--fs-h3); line-height: 1.2; }
 }
 .hero__lede { max-width: 33rem; margin-bottom: 26px; font-size: var(--fs-lede); line-height: 1.55; color: #e2e4e7; }
 .hero__actions .btn { flex: 1 1 200px; }
-.hero__inset { display: none; }
 .hero__bar {
   display: flex; flex-wrap: wrap; justify-content: space-between; gap: 10px 32px;
   padding: 18px 0 22px;
@@ -429,40 +426,36 @@ h3 { font-size: var(--fs-h3); line-height: 1.2; }
   .hero__content { position: relative; z-index: 1; }
   .hero__copy { padding: calc(var(--header-h) + 60px) 0 clamp(40px, 5vw, 64px); max-width: 44rem; }
   .hero__actions .btn { flex: 0 0 auto; }
-  .hero__inset {
-    display: block; position: absolute; z-index: 2;
-    right: var(--gutter); bottom: calc(-1 * clamp(70px, 7vw, 110px));
-    width: clamp(220px, 20vw, 300px);
-  }
-  .hero__inset img { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; box-shadow: 0 24px 50px -24px rgba(0,0,0,.55); }
-  .hero__inset figcaption { margin-top: 10px; font-size: .8125rem; color: var(--muted); }
-  .hero__bar { padding-right: calc(clamp(220px, 20vw, 300px) + 40px); }
-}
-@media (min-width: 1500px) {
-  .hero__inset { right: calc((100% - var(--maxw)) / 2); }
 }
 
-/* Introduction */
-.intro { padding-top: calc(var(--section) * .9); }
-.intro__grid { display: grid; gap: 28px 64px; }
+/* Introduction: statement, body and facts beside a portrait of fitted
+   joinery, so the first thing after the building is the craft. */
+.intro__layout { display: grid; gap: 40px clamp(40px, 6vw, 96px); }
 .intro__statement {
-  margin: 0;
+  margin: 0 0 24px;
   font-size: clamp(1.6rem, 1.2rem + 1.6vw, 2.6rem);
   line-height: 1.2;
   letter-spacing: -.015em;
   max-width: 21em;
 }
+.intro__body { max-width: 38rem; }
 .intro__body p { color: var(--text); }
-.facts { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 28px; margin: clamp(32px, 4vw, 52px) 0 0; border-top: 1px solid var(--ink); }
+.intro__media img { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; }
+.intro__media figcaption { margin-top: 10px; font-size: .8125rem; color: var(--muted); }
+.facts { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 28px; margin: clamp(32px, 4vw, 48px) 0 0; border-top: 1px solid var(--ink); }
 .fact { padding: 18px 0 20px; border-bottom: 1px solid var(--line); }
-.fact dt { margin-bottom: 6px; font-size: var(--fs-label); font-weight: 500; letter-spacing: .1em; text-transform: uppercase; color: var(--slate); }
+.fact dt { margin-bottom: 6px; font-size: var(--fs-label); font-weight: 500; letter-spacing: .08em; text-transform: uppercase; color: var(--slate); }
 .fact dd { margin: 0; font-family: var(--serif); font-size: clamp(1.25rem, 1.1rem + .6vw, 1.6rem); font-weight: 600; line-height: 1.2; color: var(--ink); }
 .fact dd small { display: block; margin-top: 4px; font-family: var(--sans); font-size: var(--fs-sm); font-weight: 400; color: var(--muted); }
+@media (max-width: 959px) {
+  .intro__media img { aspect-ratio: 4 / 3; object-position: 50% 60%; }
+}
 @media (min-width: 960px) {
-  .intro__grid { grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); align-items: end; }
-  .intro__grid .label { grid-column: 1 / -1; margin-bottom: 0; }
-  .intro__body { padding-bottom: 6px; }
-  .facts { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 0 32px; }
+  .intro__layout { grid-template-columns: minmax(0, 8fr) minmax(0, 4fr); align-items: start; }
+  .intro__media { position: sticky; top: calc(var(--header-h) + 32px); margin-top: 40px; }
+}
+@media (min-width: 1200px) {
+  .facts { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 0 28px; }
 }
 
 
@@ -523,7 +516,7 @@ a:hover > .svc-media img, a:focus-visible > .svc-media img { transform: scale(1.
 .feature__images figure { position: relative; overflow: hidden; background: var(--line-soft); }
 .feature__images img { width: 100%; height: 100%; object-fit: cover; transition: transform .9s var(--ease); }
 .feature__images a:hover img { transform: scale(1.025); }
-.feature__meta { display: flex; flex-wrap: wrap; gap: 4px 16px; margin: 0 0 12px; font-size: var(--fs-label); font-weight: 500; letter-spacing: .12em; text-transform: uppercase; color: var(--slate); }
+.feature__meta { display: flex; flex-wrap: wrap; gap: 4px 16px; margin: 0 0 12px; font-size: var(--fs-label); font-weight: 500; letter-spacing: .08em; text-transform: uppercase; color: var(--slate); }
 .feature__meta span + span::before { content: ''; display: inline-block; width: 18px; height: 1px; margin-right: 16px; vertical-align: middle; background: currentColor; opacity: .5; }
 .feature__title { margin: 0 0 14px; font-size: var(--fs-h2); }
 .feature__title a:hover { color: var(--slate); }
@@ -662,7 +655,7 @@ a:hover > .svc-media img, a:focus-visible > .svc-media img { transform: scale(1.
 .page-header--image + .section { padding-top: clamp(48px, 5vw, 80px); }
 @media (max-width: 699px) { .page-header__image img { aspect-ratio: 4 / 3; } }
 
-.breadcrumb { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 22px; padding: 0; list-style: none; font-size: .8125rem; font-weight: 500; letter-spacing: .1em; text-transform: uppercase; color: var(--on-dark-2); }
+.breadcrumb { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 22px; padding: 0; list-style: none; font-size: .9375rem; font-weight: 400; color: var(--on-dark-2); }
 .breadcrumb a { color: var(--on-dark-2); text-decoration: none; }
 .breadcrumb a:hover { color: #fff; text-decoration: underline; }
 .breadcrumb li + li::before { content: '/'; margin-right: 8px; opacity: .5; }
@@ -677,6 +670,7 @@ a:hover > .svc-media img, a:focus-visible > .svc-media img { transform: scale(1.
 .svc-block h2 { font-size: clamp(1.7rem, 1.35rem + 1.4vw, 2.5rem); margin-bottom: 14px; }
 .svc-block p { color: var(--text); max-width: 34rem; }
 .svc-block .svc-points { margin-top: 18px; }
+.svc-block__actions { display: flex; flex-wrap: wrap; align-items: center; gap: 14px 28px; margin-top: 24px; }
 @media (min-width: 900px) {
   .svc-block { grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); }
   .svc-block:nth-child(even) { grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); }
@@ -698,7 +692,7 @@ a:hover > .svc-media img, a:focus-visible > .svc-media img { transform: scale(1.
   display: inline-flex; align-items: center; gap: 10px;
   min-height: 46px; padding: 0 18px;
   border: 1px solid var(--line); background: transparent;
-  font-size: .875rem; font-weight: 500; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-2);
+  font-size: .9375rem; font-weight: 500; letter-spacing: .01em; color: var(--ink-2);
   cursor: pointer; transition: border-color var(--dur) var(--ease), background-color var(--dur) var(--ease), color var(--dur) var(--ease);
 }
 .filter-btn:hover { border-color: var(--ink); }
@@ -711,13 +705,13 @@ a:hover > .svc-media img, a:focus-visible > .svc-media img { transform: scale(1.
 .project-card__media { position: relative; overflow: hidden; aspect-ratio: 4 / 3; background: var(--line-soft); }
 .project-card__media img { width: 100%; height: 100%; object-fit: cover; transition: transform .9s var(--ease); }
 .project-card__body { padding-top: 18px; }
-.project-card__meta { display: flex; flex-wrap: wrap; gap: 4px 16px; margin: 0 0 8px; font-size: var(--fs-label); font-weight: 500; letter-spacing: .12em; text-transform: uppercase; color: var(--slate); }
+.project-card__meta { display: flex; flex-wrap: wrap; gap: 4px 16px; margin: 0 0 8px; font-size: var(--fs-label); font-weight: 500; letter-spacing: .08em; text-transform: uppercase; color: var(--slate); }
 .project-card__meta span + span::before { content: ''; display: inline-block; width: 16px; height: 1px; margin-right: 16px; vertical-align: middle; background: currentColor; opacity: .5; }
 .project-card__title { margin: 0 0 10px; font-size: clamp(1.45rem, 1.2rem + 1vw, 2.1rem); }
 .project-card__title a { color: inherit; text-decoration: none; }
 .project-card__title a::after { content: ''; position: absolute; inset: 0; z-index: 1; }
 .project-card__summary { margin: 0 0 16px; color: var(--text); max-width: 36rem; }
-.project-card__more { display: inline-flex; align-items: center; gap: 10px; font-size: .875rem; font-weight: 500; letter-spacing: .08em; text-transform: uppercase; color: var(--ink); border-bottom: 1px solid currentColor; padding-bottom: 4px; align-self: flex-start; }
+.project-card__more { display: inline-flex; align-items: center; gap: 10px; font-size: 1rem; font-weight: 500; color: var(--ink); border-bottom: 1px solid currentColor; padding-bottom: 4px; align-self: flex-start; }
 .project-card__more svg { width: 16px; height: 16px; transition: transform var(--dur) var(--ease); }
 .project-card__status { position: absolute; left: 14px; top: 14px; padding: 5px 10px; background: var(--paper); font-size: .75rem; font-weight: 500; letter-spacing: .08em; text-transform: uppercase; color: var(--ink); }
 .project-card:hover .project-card__media img { transform: scale(1.03); }
@@ -840,7 +834,7 @@ a:hover > .svc-media img, a:focus-visible > .svc-media img { transform: scale(1.
 
 #project-video-section { padding-bottom: var(--section); }
 #project-video-section .section-head { margin-bottom: 24px; }
-#project-video-section .eyebrow { margin: 0; font-size: var(--fs-label); font-weight: 500; letter-spacing: .12em; text-transform: uppercase; color: var(--slate); }
+#project-video-section .eyebrow { margin: 0; font-size: var(--fs-label); font-weight: 500; letter-spacing: .08em; text-transform: uppercase; color: var(--slate); }
 .project-video { max-width: 960px; }
 .project-video--upright { max-width: 400px; }
 .project-video__player { width: 100%; height: auto; background: #000; }
@@ -913,7 +907,13 @@ select.field__input {
 .enquiry__foot { display: grid; gap: 12px; justify-items: start; }
 .enquiry__note { margin: 0; font-size: var(--fs-sm); color: var(--muted); }
 .enquiry__note a { color: var(--ink); }
-.enquiry__status { margin: 0; padding: 12px 16px; border-left: 2px solid var(--slate); background: #fff; font-size: var(--fs-sm); }
+.enquiry__status { margin: 0; padding: 12px 16px; border-left: 2px solid #a4332b; background: #fff; font-size: var(--fs-sm); color: #8c2a23; }
+.enquiry__context { margin: 12px 0 0; padding: 12px 16px; border-left: 2px solid var(--slate); background: #fff; font-size: var(--fs-sm); color: var(--ink-2); }
+.enquiry-done { margin-top: 24px; padding: 24px; background: #fff; border-top: 3px solid var(--slate); outline: none; }
+.enquiry-done h3 { font-size: 1.35rem; margin-bottom: 10px; }
+.enquiry-done p { color: var(--text); font-size: var(--fs-sm); }
+.enquiry-done a { color: var(--ink); }
+.enquiry-done__message { margin: 16px 0; padding: 14px; max-height: 240px; overflow: auto; background: var(--stone); font-family: var(--sans); font-size: .875rem; line-height: 1.55; white-space: pre-wrap; overflow-wrap: anywhere; color: var(--ink-2); }
 @media (max-width: 479px) { .enquiry__foot .btn { width: 100%; } }
 
 
@@ -968,3 +968,22 @@ select.field__input {
   .enquiry__foot .btn { white-space: normal; text-align: center; padding: 12px 18px; }
   .form-card { padding: 22px 18px; }
 }
+
+/* The project page is laid out from the first paint so nothing jumps when
+   the project fills in; without JavaScript it stays hidden and the
+   <noscript> message shows instead. */
+html:not(.js) #project-article { display: none; }
+
+/* Project pages are written in by project-page.js. Until it finishes (a few
+   milliseconds) the page area is kept invisible so the layout doesn't jump.
+   If the script ever failed, the failsafe shows the page after 2.5s. */
+.project-loading :is(#main, .site-footer) { visibility: hidden; animation: project-failsafe 0s 2.5s forwards; }
+@keyframes project-failsafe { to { visibility: visible; } }
+@media (prefers-reduced-motion: reduce) {
+  .project-loading :is(#main, .site-footer) { animation: project-failsafe 0s 2.5s forwards !important; }
+}
+
+/* Projects page: the cards and filters are written in by projects-page.js.
+   Reserve their space so the section below doesn't jump when they arrive. */
+.js #project-filters:empty { min-height: 46px; }
+.js #projects-grid:empty { min-height: 100vh; }

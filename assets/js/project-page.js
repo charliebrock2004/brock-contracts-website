@@ -14,10 +14,15 @@
   var notFound = document.getElementById('project-not-found');
   var article  = document.getElementById('project-article');
 
+  /* The page area stays invisible (see .project-loading in site.css) until
+     the project has been written in, so nothing jumps as it fills. */
+  function ready() { document.documentElement.classList.remove('project-loading'); }
+
   if (!project) {
     if (notFound) notFound.hidden = false;
     if (article) article.hidden = true;
     document.title = 'Project not found | Brock Contracts';
+    ready();
     return;
   }
 
@@ -30,6 +35,38 @@
   document.title = project.title + ' | Brock Contracts';
   var metaDesc = document.querySelector('meta[name="description"]');
   if (metaDesc) metaDesc.setAttribute('content', project.summary || '');
+
+  /* Each project is its own page as far as search engines and link
+     previews are concerned: its own canonical address, title, description
+     and image. */
+  var siteUrl = (window.BC_SITE && window.BC_SITE.url) || window.location.origin;
+  var pageUrl = siteUrl + '/project?p=' + encodeURIComponent(project.slug);
+  function setMeta(attr, key, value) {
+    var el = document.querySelector('meta[' + attr + '="' + key + '"]');
+    if (!el) {
+      el = document.createElement('meta');
+      el.setAttribute(attr, key);
+      document.head.appendChild(el);
+    }
+    el.setAttribute('content', value);
+  }
+  var canonical = document.querySelector('link[rel="canonical"]');
+  if (!canonical) {
+    canonical = document.createElement('link');
+    canonical.rel = 'canonical';
+    document.head.appendChild(canonical);
+  }
+  canonical.href = pageUrl;
+  setMeta('property', 'og:title', project.title + ' | Brock Contracts');
+  setMeta('property', 'og:description', project.summary || '');
+  setMeta('property', 'og:url', pageUrl);
+  setMeta('property', 'og:image', siteUrl + '/' + BC.imageSrc(project.mainImage).replace(/^\//, ''));
+
+  /* "Discuss a similar project" opens the enquiry form with this project
+     named in the message. */
+  Array.prototype.forEach.call(document.querySelectorAll('[data-enquire-project]'), function (a) {
+    a.href = '/contact?project=' + encodeURIComponent(project.slug);
+  });
 
   function setText(id, value) {
     var el = document.getElementById(id);
@@ -59,11 +96,18 @@
     /* An upright main photograph gets an upright frame (and the wider
        column) instead of being cropped to landscape. Decided once the
        photo's real proportions are known. */
+    var dims = (window.BC_IMAGE_DIMS || {})[BC.imageSrc(project.mainImage)];
+    if (article && dims && dims[1] > dims[0]) article.classList.add('case--portrait');
     leadImg.addEventListener('load', function () {
       if (article && leadImg.naturalHeight > leadImg.naturalWidth) {
         article.classList.add('case--portrait');
       }
     });
+    var leadSet = BC.srcset(project.mainImage);
+    if (leadSet) {
+      leadImg.srcset = leadSet;
+      leadImg.sizes = '(min-width: 1380px) 1340px, 100vw';
+    }
     leadImg.src = BC.imageSrc(project.mainImage);
     leadImg.alt = BC.imageAlt(project.mainImage, project.title + ' — Brock Contracts');
   }
@@ -173,6 +217,8 @@
 
     galleryGrid.innerHTML = gallery.map(function (photo, i) {
       var src = BC.imageSrc(photo);
+      var small = BC.smallSrc(photo);
+      var set = BC.srcset(photo);
       var alt = BC.imageAlt(photo, project.title + ' — photograph ' + (i + 1));
       var caption = photo && photo.caption ? photo.caption : '';
       var wideClass = wideFlags[i] ? ' gallery-item--wide' : '';
@@ -185,7 +231,9 @@
           ' data-alt="' + esc(alt) + '"' +
           ' data-caption="' + esc(caption) + '"' +
           ' aria-label="View larger: ' + esc(alt) + '">' +
-          '<img src="' + esc(src) + '" alt="' + esc(alt) + '" loading="lazy" decoding="async">' +
+          '<img src="' + esc(small) + '"' +
+            (set ? ' srcset="' + esc(set) + '" sizes="' + (wideFlags[i] ? '100vw' : '(min-width: 600px) 50vw, 100vw') + '"' : '') +
+            ' alt="' + esc(alt) + '" loading="lazy" decoding="async">' +
           captionEl +
           '<span class="gallery-item__zoom" aria-hidden="true">' +
             '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">' +
@@ -277,7 +325,7 @@
     /* The next-project panel carries that project's photograph. */
     var img = link.querySelector('[data-image]');
     if (img) {
-      img.src = BC.imageSrc(target.mainImage);
+      img.src = BC.smallSrc(target.mainImage);
       img.alt = '';
     }
   }
@@ -287,4 +335,6 @@
 
   wire(prevLink, idx > 0 ? all[idx - 1] : null);
   wire(nextLink, all.length > 1 ? all[(idx + 1) % all.length] : null);
+
+  ready();
 })();
