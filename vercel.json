@@ -1,5 +1,5 @@
 {
-  "cleanUrls": true,
+  "cleanUrls": false,
   "trailingSlash": false,
   "headers": [
     {
@@ -113,6 +113,60 @@
       ],
       "destination": "/work/new-build-perthshire",
       "permanent": true
+    }
+  ],
+  "rewrites": [
+    {
+      "source": "/services",
+      "destination": "/services.html"
+    },
+    {
+      "source": "/projects",
+      "destination": "/projects.html"
+    },
+    {
+      "source": "/about",
+      "destination": "/about.html"
+    },
+    {
+      "source": "/contact",
+      "destination": "/contact.html"
+    },
+    {
+      "source": "/areas",
+      "destination": "/areas.html"
+    },
+    {
+      "source": "/building-work-crieff",
+      "destination": "/building-work-crieff.html"
+    },
+    {
+      "source": "/renovations",
+      "destination": "/renovations.html"
+    },
+    {
+      "source": "/joiner-crieff",
+      "destination": "/joiner-crieff.html"
+    },
+    {
+      "source": "/project",
+      "destination": "/project.html"
+    },
+    {
+      "source": "/work/garage",
+      "destination": "/work/garage.html"
+    },
+    {
+      "source": "/work/sierras",
+      "destination": "/work/sierras.html"
+    },
+    {
+      "source": "/work/flooring-bridge-of-allan",
+      "destination": "/work/flooring-bridge-of-allan.html"
+    },
+    {
+      "source": "/work/new-build-perthshire",
+      "destination": "/work/new-build-perthshire.html"
     }
   ]
 }
