@@ -32,7 +32,7 @@ of that file, paste it into the `PROJECTS` list, and fill it in:
 
 ```js
 {
-  slug: 'muthill-road-extension',        // becomes project.html?p=muthill-road-extension
+  slug: 'muthill-road-extension',        // static page at /work/muthill-road-extension
   title: 'Two Storey Side Extension',
   location: 'Muthill, Perthshire',
   category: 'Extensions',                 // must match the CATEGORIES list
@@ -133,7 +133,8 @@ No project uses it. Delete the flag when an entry holds a real project.
 ```
 index.html              Homepage
 projects.html           Projects listing, with category filters
-project.html            Individual project page (reads ?p=slug)
+project.html            Noindex JavaScript fallback (known slugs redirect to /work/<slug>)
+work/*.html             Static project pages
 404.html                Not-found page
 
 assets/css/site.css     All styling for every page
@@ -187,7 +188,7 @@ The gallery lays itself out for any number of photos, so nothing else changes.
 
 - Add a genuine client review (see the TESTIMONIAL comment in `index.html`;
   the styles are already written).
-- Add a `<link rel="canonical">` to each page once the final domain is settled.
+- When a custom domain is connected and redirects here, switch the public origin in `assets/js/site-config.js` and the matching canonicals, Open Graph URLs, JSON-LD, sitemap and robots file.
 - Confirm whether Renovation Auchterarder and New Build Dunkeld are the same property.
 
 ---

@@ -52,7 +52,7 @@
   function feature(cfg) {
     var project = BC.findProject(cfg.slug);
     if (!project) return '';
-    var href = 'project.html?p=' + encodeURIComponent(project.slug);
+    var href = BC.projectHref(project.slug);
     var meta = '<span>' + esc(project.category) + '</span>' +
       (project.location ? '<span>' + esc(project.location) + '</span>' : '');
 
@@ -88,7 +88,7 @@
     index.innerHTML = BC.projects().map(function (p) {
       var status = BC.projectStatus(p);
       return '<li class="index__row">' +
-        '<a class="index__link" href="project.html?p=' + encodeURIComponent(p.slug) + '">' +
+        '<a class="index__link" href="' + esc(BC.projectHref(p.slug)) + '">' +
           '<span class="index__title">' + esc(p.title) +
             (status ? '<span class="index__status">' + esc(status) + '</span>' : '') +
           '</span>' +

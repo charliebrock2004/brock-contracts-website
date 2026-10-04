@@ -29,8 +29,10 @@
    ---------------------------------------------------------------------------
    REQUIRED
      slug         Web address for the project page. Lowercase, hyphens, no
-                  spaces. Must be unique. Becomes:
-                  /project.html?p=your-slug
+                  spaces. Must be unique. Static pages are
+                  work/<slug>.html, served as /work/<slug>.
+                  Add the slug to STATIC_PROJECT_SLUGS in site.js.
+                  /project?p=<slug> is only the noindex JavaScript fallback.
      title        Project name, e.g. "Stone Cottage Renovation"
      location     e.g. "Comrie, Perthshire"
      category     Must match one of the CATEGORIES listed below, exactly.

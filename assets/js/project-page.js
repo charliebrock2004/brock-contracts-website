@@ -272,7 +272,7 @@
     if (!link) return;
     if (!target) { link.hidden = true; return; }
     link.hidden = false;
-    link.href = 'project.html?p=' + encodeURIComponent(target.slug);
+    link.href = BC.projectHref(target.slug);
     link.querySelector('[data-label]').textContent = target.title;
     /* The next-project panel carries that project's photograph. */
     var img = link.querySelector('[data-image]');

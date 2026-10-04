@@ -84,10 +84,26 @@
   }
   BC.projectStatus = projectStatus;
 
+
+  /* Public URLs for project pages. Slugs listed here have static HTML at
+     /work/<slug>. Any other slug falls back to the noindex JavaScript shell
+     at /project?p=<slug>. Add a slug here when its static page exists. */
+  var STATIC_PROJECT_SLUGS = {
+    'garage': true,
+    'flooring-bridge-of-allan': true,
+    'sierras': true,
+    'new-build-perthshire': true
+  };
+
+  BC.projectHref = function (slug) {
+    if (STATIC_PROJECT_SLUGS[slug]) return '/work/' + encodeURIComponent(slug);
+    return '/project?p=' + encodeURIComponent(slug);
+  };
+
   /* One card, used on both the homepage preview and the Projects page, so the
      two can never drift apart. The title link covers the whole card. */
   BC.projectCard = function (project) {
-    var href = 'project.html?p=' + encodeURIComponent(project.slug);
+    var href = BC.projectHref(project.slug);
     var src = imageSrc(project.mainImage);
     var alt = imageAlt(project.mainImage, project.title + ' \u2014 Brock Contracts');
     var status = projectStatus(project);

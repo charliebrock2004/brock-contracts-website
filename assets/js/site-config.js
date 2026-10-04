@@ -1,14 +1,15 @@
 /* ==========================================================================
    Brock Contracts — site configuration
    --------------------------------------------------------------------------
-   Change SITE_URL here when the production domain is connected.
-   Canonical tags, Open Graph URLs, JSON-LD and the sitemap all read this
-   value. Do not scatter the domain across individual pages.
+   SITE_URL is the preferred public origin. HTML canonicals, Open Graph,
+   JSON-LD, sitemap.xml and robots.txt use the same origin and must be
+   updated together with this value.
    ========================================================================== */
 (function (root) {
   'use strict';
 
-  var SITE_URL = 'https://brockcontracts.co.uk';
+  // custom domain brockcontracts.co.uk is not connected yet; switch SITE_URL back when that domain resolves and 301s to it.
+  var SITE_URL = 'https://brock-contracts-website.vercel.app';
 
   root.BC_SITE = {
     url: SITE_URL.replace(/\/$/, ''),

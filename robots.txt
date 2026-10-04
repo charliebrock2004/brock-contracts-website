@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://brockcontracts.co.uk/sitemap.xml
+Sitemap: https://brock-contracts-website.vercel.app/sitemap.xml
