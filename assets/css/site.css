@@ -931,6 +931,8 @@ select.field__input {
 .site-footer a:hover { color: #fff; text-decoration: underline; text-underline-offset: .2em; }
 .footer-bottom { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px 24px; margin-top: clamp(40px, 5vw, 64px); padding-top: 22px; border-top: 1px solid var(--on-dark-line); font-size: .8125rem; color: #9ea1a5; }
 .footer-bottom a { color: #9ea1a5; }
+.footer-credit { margin: 14px 0 0; font-size: .75rem; line-height: 1.45; color: #9ea1a5; }
+.footer-credit a { color: inherit; text-decoration: underline; text-underline-offset: .2em; text-decoration-thickness: 1px; }
 @media (min-width: 900px) { .footer-grid { grid-template-columns: minmax(0, 4fr) repeat(3, minmax(0, 2fr)); } .footer-brand { grid-column: auto; } }
 
 
